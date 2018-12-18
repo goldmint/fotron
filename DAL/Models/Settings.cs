@@ -4,7 +4,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_settings")]
+	[Table("ft_settings")]
 	public class Settings : DbBaseEntity, IConcurrentUpdate {
 
 		[Column("key"), MaxLength(MaxKeyFieldLength), Required]

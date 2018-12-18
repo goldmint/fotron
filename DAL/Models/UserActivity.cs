@@ -6,7 +6,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_user_activity")]
+	[Table("ft_user_activity")]
 	public class UserActivity : DbBaseUserEntity {
 
 		[Column("type"), MaxLength(32), Required]

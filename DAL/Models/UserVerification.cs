@@ -5,7 +5,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_user_verification")]
+	[Table("ft_user_verification")]
 	public class UserVerification : DbBaseUserEntity {
 
 		[Column("first_name"), MaxLength(64)]

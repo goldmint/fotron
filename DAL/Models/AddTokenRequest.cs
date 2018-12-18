@@ -5,7 +5,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models
 {
-    [Table("er_add_token_request")]
+    [Table("ft_add_token_request")]
     public class AddTokenRequest : DbBaseEntity
     {
         [Column("company_name"), Required, MaxLength(128)]

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_mutex")]
+	[Table("ft_mutex")]
 	public class Mutex {
 
 		[Key, Column("id"), MaxLength(64), Required]

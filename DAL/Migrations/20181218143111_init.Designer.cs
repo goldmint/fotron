@@ -12,8 +12,8 @@ using System;
 namespace Fotron.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181116143648_m4")]
-    partial class m4
+    [Migration("20181218143111_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,58 @@ namespace Fotron.DAL.Migrations
             modelBuilder
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+
+            modelBuilder.Entity("Fotron.DAL.Models.AddTokenRequest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnName("company_name")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("ContactEmail")
+                        .IsRequired()
+                        .HasColumnName("contact_email")
+                        .HasMaxLength(128);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnName("is_deleted");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnName("is_enabled");
+
+                    b.Property<decimal>("StartPriceEth")
+                        .HasColumnName("start_price_eth")
+                        .HasColumnType("decimal(38, 18)");
+
+                    b.Property<DateTime>("TimeCreated")
+                        .HasColumnName("time_created");
+
+                    b.Property<string>("TokenContractAddress")
+                        .HasColumnName("token_contract_address")
+                        .HasMaxLength(43);
+
+                    b.Property<string>("TokenTicker")
+                        .IsRequired()
+                        .HasColumnName("token_ticker")
+                        .HasMaxLength(128);
+
+                    b.Property<long>("TotalSupply")
+                        .HasColumnName("total_supply");
+
+                    b.Property<string>("WebsiteUrl")
+                        .IsRequired()
+                        .HasColumnName("website_url")
+                        .HasMaxLength(128);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ft_add_token_request");
+                });
 
             modelBuilder.Entity("Fotron.DAL.Models.BannedCountry", b =>
                 {
@@ -55,7 +107,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_banned_country");
+                    b.ToTable("ft_banned_country");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.Role", b =>
@@ -83,7 +135,7 @@ namespace Fotron.DAL.Migrations
                         .IsUnique()
                         .HasName("RoleNameIndex");
 
-                    b.ToTable("er_role");
+                    b.ToTable("ft_role");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.RoleClaim", b =>
@@ -107,7 +159,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("er_role_claim");
+                    b.ToTable("ft_role_claim");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.User", b =>
@@ -197,7 +249,7 @@ namespace Fotron.DAL.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
-                    b.ToTable("er_user");
+                    b.ToTable("ft_user");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.UserClaim", b =>
@@ -221,7 +273,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_claim");
+                    b.ToTable("ft_user_claim");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.UserLogin", b =>
@@ -245,7 +297,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_login");
+                    b.ToTable("ft_user_login");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.UserRole", b =>
@@ -260,7 +312,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("er_user_role");
+                    b.ToTable("ft_user_role");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.UserToken", b =>
@@ -282,7 +334,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("er_user_token");
+                    b.ToTable("ft_user_token");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.KycTicket", b =>
@@ -355,7 +407,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_kyc_shuftipro_ticket");
+                    b.ToTable("ft_kyc_shuftipro_ticket");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Mutex", b =>
@@ -377,7 +429,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("er_mutex");
+                    b.ToTable("ft_mutex");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Settings", b =>
@@ -409,7 +461,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("er_settings");
+                    b.ToTable("ft_settings");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.SignedDocument", b =>
@@ -462,7 +514,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_signed_document");
+                    b.ToTable("ft_signed_document");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Token", b =>
@@ -472,20 +524,25 @@ namespace Fotron.DAL.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("CurrentPriceEth")
+                        .HasColumnName("current_price_eth")
+                        .HasColumnType("decimal(38, 18)")
+                        .HasMaxLength(1024);
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnName("description")
                         .HasMaxLength(1024);
 
-                    b.Property<string>("Erc20ContractAddress")
-                        .IsRequired()
-                        .HasColumnName("erc20_contract_address")
-                        .HasMaxLength(43);
-
                     b.Property<string>("FotronContractAddress")
                         .IsRequired()
                         .HasColumnName("fotron_contract_address")
                         .HasMaxLength(43);
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnName("full_name")
+                        .HasMaxLength(128);
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnName("is_deleted");
@@ -493,15 +550,35 @@ namespace Fotron.DAL.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnName("is_enabled");
 
+                    b.Property<string>("LogoUrl")
+                        .IsRequired()
+                        .HasColumnName("logo_url")
+                        .HasMaxLength(1024);
+
+                    b.Property<decimal>("StartPriceEth")
+                        .HasColumnName("start_price_eth")
+                        .HasColumnType("decimal(38, 18)")
+                        .HasMaxLength(1024);
+
+                    b.Property<string>("Ticker")
+                        .IsRequired()
+                        .HasColumnName("ticker")
+                        .HasMaxLength(16);
+
                     b.Property<DateTime>("TimeCreated")
                         .HasColumnName("time_created");
 
                     b.Property<DateTime>("TimeUpdated")
                         .HasColumnName("time_updated");
 
+                    b.Property<string>("TokenContractAddress")
+                        .IsRequired()
+                        .HasColumnName("token_contract_address")
+                        .HasMaxLength(43);
+
                     b.HasKey("Id");
 
-                    b.ToTable("er_token");
+                    b.ToTable("ft_token");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.TokenStatistics", b =>
@@ -510,6 +587,12 @@ namespace Fotron.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("BlockNum")
+                        .HasColumnName("block_num");
+
+                    b.Property<long>("BuyCount")
+                        .HasColumnName("buy_count");
 
                     b.Property<DateTime>("Date")
                         .HasColumnName("date");
@@ -524,14 +607,29 @@ namespace Fotron.DAL.Migrations
                         .HasColumnName("price_eth")
                         .HasColumnType("decimal(38, 18)");
 
+                    b.Property<long>("SellCount")
+                        .HasColumnName("sell_count");
+
+                    b.Property<decimal>("ShareReward")
+                        .HasColumnName("share_reward")
+                        .HasColumnType("decimal(38, 18)");
+
                     b.Property<long>("TokenId")
                         .HasColumnName("token_id");
+
+                    b.Property<decimal>("VolumeEth")
+                        .HasColumnName("volume_eth")
+                        .HasColumnType("decimal(38, 18)");
+
+                    b.Property<decimal>("VolumeToken")
+                        .HasColumnName("volume_token")
+                        .HasColumnType("decimal(38, 18)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TokenId");
 
-                    b.ToTable("er_token_statistics");
+                    b.ToTable("ft_token_statistics");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserActivity", b =>
@@ -580,7 +678,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_activity");
+                    b.ToTable("ft_user_activity");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserLimits", b =>
@@ -620,7 +718,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_limits");
+                    b.ToTable("ft_user_limits");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserOpLog", b =>
@@ -664,7 +762,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_oplog");
+                    b.ToTable("ft_user_oplog");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserOptions", b =>
@@ -691,7 +789,7 @@ namespace Fotron.DAL.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("er_user_options");
+                    b.ToTable("ft_user_options");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserVerification", b =>
@@ -780,7 +878,7 @@ namespace Fotron.DAL.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("er_user_verification");
+                    b.ToTable("ft_user_verification");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.BannedCountry", b =>

@@ -5,7 +5,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models
 {
-    [Table("er_token_statistics")]
+    [Table("ft_token_statistics")]
     public class TokenStatistics : DbBaseEntity
     {
         [Column("token_id"), Required]

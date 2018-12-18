@@ -5,7 +5,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models
 {
-    [Table("er_token")]
+    [Table("ft_token")]
     public class Token : DbBaseEntity
     {
         [Column("token_contract_address"), Required, MaxLength(43)]

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Fotron.DAL.Models.Identity {
 
-	[Table("er_user")]
+	[Table("ft_user")]
 	public class User : IdentityUser<long> {
 
 		public User() : base() { }

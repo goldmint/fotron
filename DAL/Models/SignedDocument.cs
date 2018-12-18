@@ -6,7 +6,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_signed_document")]
+	[Table("ft_signed_document")]
 	public class SignedDocument : DbBaseUserEntity {
 
 		[Column("type"), Required]

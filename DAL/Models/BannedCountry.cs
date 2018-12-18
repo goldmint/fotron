@@ -5,7 +5,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_banned_country")]
+	[Table("ft_banned_country")]
 	public class BannedCountry : DbBaseUserEntity {
 
 		[Column("code"), MaxLength(3), Required]
