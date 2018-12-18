@@ -1,0 +1,180 @@
+<!-- host: .page -->
+
+<h1 class="page__heading">{{ "PAGES.AddToken.Heading" | translate }}</h1>
+
+<section class="page__section section">
+  <h2 class="section__title">{{ "PAGES.AddToken.Heading" | translate }}</h2>
+
+  <div class="progress-linear progress-linear--tiny" *ngIf="loading">
+    <div class="container"></div>
+  </div>
+
+  <div class="section__content py-4">
+
+    <form #form="ngForm">
+      <div class="row">
+        <div class="col-12 form-group d-none" [ngClass]="{'d-block': currentStep === 1}">
+          <label for="company">{{ "PAGES.AddToken.Labels.Name" | translate }}</label>
+          <input type="text" class="form-control" id="company" [name]="controlsMap[1]"
+                 #company="ngModel"
+                 [(ngModel)]="addTokenData.company"
+                 [ngClass]="{'is-invalid': company.invalid && company.dirty}"
+                 (input)="checkField(null)"
+                 autocomplete="off"
+                 placeholder='{{ "PAGES.AddToken.Placeholders.Name" | translate }}'
+                 required>
+          <div class="invalid-feedback" *ngIf="company.errors?.required">
+            {{ "PAGES.AddToken.Errors.Required" | translate }}
+          </div>
+        </div>
+
+        <div class="col-12 form-group d-none" [ngClass]="{'d-block': currentStep === 2}">
+          <label for="ticker">{{ "PAGES.AddToken.Labels.Email" | translate }}</label>
+          <input type="text" class="form-control" id="email" [name]="controlsMap[2]"
+                 #email="ngModel"
+                 [(ngModel)]="addTokenData.email"
+                 [ngClass]="{'is-invalid': email.invalid && email.dirty}"
+                 (input)="checkField(null)"
+                 autocomplete="off"
+                 placeholder='Email'
+                 pattern="[^а-яА-ЯёЁ]*"
+                 emailValidator
+                 required>
+          <div class="invalid-feedback" *ngIf="email.errors?.required">
+            {{ "PAGES.AddToken.Errors.Required" | translate }}
+          </div>
+          <div class="invalid-feedback" *ngIf="email.errors?.pattern">
+            {{ "PAGES.AddToken.Errors.Pattern" | translate }}
+          </div>
+          <div class="invalid-feedback" *ngIf="!email.errors?.required && email.errors?.emailValidator">
+            {{ "PAGES.AddToken.Errors.Email" | translate }}
+          </div>
+        </div>
+
+        <div class="col-12 form-group d-none" [ngClass]="{'d-block': currentStep === 3}">
+          <label for="ticker">{{ "PAGES.AddToken.Labels.Website" | translate }}</label>
+          <input type="text" class="form-control" id="webSite" [name]="controlsMap[3]"
+                 #webSite="ngModel"
+                 [(ngModel)]="addTokenData.webSite"
+                 [ngClass]="{'is-invalid': webSite.invalid && webSite.dirty}"
+                 (input)="checkField(null)"
+                 autocomplete="off"
+                 placeholder='www.fotron.io'
+                 pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})"
+          >
+          <div class="invalid-feedback" *ngIf="webSite.errors?.pattern">
+            {{ "PAGES.AddToken.Errors.Website" | translate }}
+          </div>
+        </div>
+
+
+        <div class="col-12 form-group d-none" [ngClass]="{'d-block': currentStep === 4}">
+          <label for="ticker">{{ "PAGES.AddToken.Labels.Ticker" | translate }}</label>
+          <input type="text" class="form-control" id="ticker" [name]="controlsMap[4]"
+                 #ticker="ngModel"
+                 [(ngModel)]="addTokenData.ticker"
+                 [ngClass]="{'is-invalid': ticker.invalid && ticker.dirty}"
+                 (input)="checkField(null)"
+                 autocomplete="off"
+                 placeholder='{{ "PAGES.AddToken.Placeholders.Ticker" | translate }}'
+                 pattern="[^а-яА-ЯёЁ]*"
+                 required>
+          <div class="invalid-feedback" *ngIf="ticker.errors?.required">
+            {{ "PAGES.AddToken.Errors.Required" | translate }}
+          </div>
+          <div class="invalid-feedback" *ngIf="ticker.errors?.pattern">
+            {{ "PAGES.AddToken.Errors.Pattern" | translate }}
+          </div>
+        </div>
+
+        <div class="col-12 form-group d-none" [ngClass]="{'d-block': currentStep === 5}">
+          <label for="ticker">{{ "PAGES.AddToken.Labels.Price" | translate }}</label>
+          <input type="number" class="form-control" id="price" [name]="controlsMap[5]"
+                 #price="ngModel"
+                 [(ngModel)]="addTokenData.price"
+                 [ngClass]="{'is-invalid': price.invalid && price.dirty}"
+                 (input)="checkField(null)"
+                 autocomplete="off"
+                 placeholder='{{ "PAGES.AddToken.Placeholders.Price" | translate }}'
+                 required>
+          <div class="invalid-feedback" *ngIf="price.errors?.required">
+            {{ "PAGES.AddToken.Errors.Required" | translate }}
+          </div>
+        </div>
+
+        <div class="col-12 form-group d-none" [ngClass]="{'d-block': currentStep === 6}">
+          <label>{{ "PAGES.AddToken.Labels.CreateLabel" | translate }}</label>
+          <div class="mt-3">
+            <label for="new" class="radio mb-2">{{ "PAGES.AddToken.Labels.Create" | translate }}
+              <input type="radio" [value]="true" name="new" id="new" [(ngModel)]="addTokenData.isCreate">
+              <span class="checkmark"></span>
+            </label>
+
+            <label for="exist" class="radio">{{ "PAGES.AddToken.Labels.Exist" | translate }}
+              <input type="radio" [value]="false" name="exist" id="exist" [(ngModel)]="addTokenData.isCreate">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-12 form-group d-none" [ngClass]="{'d-block': currentStep === 7 && !addTokenData.isCreate}">
+          <label for="contract">{{ "PAGES.AddToken.Labels.Contract" | translate }}</label>
+          <input type="text" class="form-control" id="contract" [name]="controlsMap[7]"
+                 #contract="ngModel"
+                 [(ngModel)]="addTokenData.contract"
+                 [ngClass]="{'is-invalid': contract.invalid && contract.dirty}"
+                 (input)="checkField(null)"
+                 autocomplete="off"
+                 placeholder='{{ "PAGES.AddToken.Placeholders.Contract" | translate }}'
+                 ethAddressValidator
+                 required>
+          <div class="invalid-feedback" *ngIf="contract.errors?.required">
+            {{ "PAGES.AddToken.Errors.Required" | translate }}
+          </div>
+          <div class="invalid-feedback" *ngIf="contract.errors?.pattern">
+            {{ "PAGES.AddToken.Errors.Pattern" | translate }}
+          </div>
+          <div class="invalid-feedback" *ngIf="!contract.errors?.required && contract.errors?.addressValidator">
+            {{ "PAGES.AddToken.Errors.Address" | translate }}
+          </div>
+        </div>
+
+        <div class="col-12 form-group d-none" [ngClass]="{'d-block': currentStep === 8}">
+          <label for="supply">{{ "PAGES.AddToken.Labels.Supply" | translate }}</label>
+          <input type="number" class="form-control" id="supply" [name]="controlsMap[8]"
+                 #supply="ngModel"
+                 [(ngModel)]="addTokenData.supply"
+                 [ngClass]="{'is-invalid': supply.invalid && supply.dirty}"
+                 (input)="checkField(null)"
+                 autocomplete="off"
+                 placeholder='{{ "PAGES.AddToken.Placeholders.Supply" | translate }}'
+                 required>
+          <div class="invalid-feedback" *ngIf="supply.errors?.required">
+            {{ "PAGES.AddToken.Errors.Required" | translate }}
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <button class="btn btn-sm btn-primary" type="button" routerLink="/">{{ "PAGES.AddToken.Buttons.Cancel" | translate }}</button>
+
+        <div class="text-right d-flex align-items-center">
+          <div class="mr-4" *ngIf="currentStep === lastStep">
+            <re-captcha class="form-captcha" #captchaRef="reCaptcha" (resolved)="captchaResolved($event)"></re-captcha>
+          </div>
+
+          <button class="btn btn-sm btn-primary mr-2" type="button" *ngIf="currentStep > 1" (click)="prevStep(false)">
+            {{ "PAGES.AddToken.Buttons.Back" | translate }}
+          </button>
+          <button class="btn btn-sm btn-primary" type="button" *ngIf="currentStep !== lastStep" [disabled]="invalidField" (click)="nextStep(true)">
+            {{ "PAGES.AddToken.Buttons.Next" | translate }}
+          </button>
+          <button class="btn btn-sm btn-primary" type="button" *ngIf="currentStep === lastStep" [disabled]="invalidField || !recaptcha" (click)="addToken()">
+            {{ "PAGES.AddToken.Buttons.AddToken" | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</section>

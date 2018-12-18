@@ -1,0 +1,72 @@
+$pagination-color:               $color-black
+$pagination-bg:                  $color-white
+$pagination-border-width:        1px
+$pagination-border-color:        $color-brand
+
+$pagination-hover-color:         $color-black
+$pagination-hover-bg:            $color-brand-hover
+$pagination-hover-border-color:  $color-brand
+
+$pagination-active-color:        $color-white
+$pagination-active-bg:           $color-brand
+$pagination-active-border-color: $color-brand
+
+@import "~bootstrap/scss/pagination"
+.pagination
+  margin-top: 40px    /* 65px */
+  margin-bottom: 0    /* 5px */
+  justify-content: center
+
+  &--small
+    margin-top: -2px
+    justify-content: flex-end
+
+.page-item
+  transition: opacity .2s ease
+
+  &.hidden
+    opacity: 0.25
+    pointer-events: none
+
+.page-link
+  padding: rem(8px)
+  min-width: 58px
+  height: 58px
+  font-size: rem(18px)
+  line-height: rem(40px)
+  letter-spacing: .085em
+  text-align: center
+  user-select: none
+
+  &:focus
+    color: $pagination-color
+    background-color: $pagination-bg
+
+  &:hover
+    color: $pagination-hover-color
+    background-color: $pagination-hover-bg
+
+  &:active
+    color: $pagination-active-color
+    font-weight: 500
+
+  &--tiny
+    min-width: 38px
+    height: 38px
+    line-height: rem(18px)
+    margin-left: 2px
+    background-color: $color-brand
+
+    &:focus
+      background-color: $color-brand
+
+    &:hover,
+    &:active
+      border-color: $color-brand-hover
+      background-color: $color-brand-hover
+
+    .icon--next
+      margin-left: 1px
+
+  .page-item.active &
+    font-weight: 700

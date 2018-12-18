@@ -1,0 +1,47 @@
+@import 'variables'
+
+@function strip-units($number)
+  @if type-of($number) == 'number' and not unitless($number)
+    @return $number / ($number * 0 + 1)
+  @return $number
+
+@function rem($size)
+  $remSize: strip-units($size) / strip-units($default-font-size)
+  @return #{$remSize}rem
+
+@function em($size, $parentSize)
+  $emSize: strip-units($size) / strip-units($parentSize)
+  @return #{$emSize}em
+
+@function tint($color, $percentage)
+  @return mix(white, $color, $percentage)
+
+@function shade($color, $percentage)
+  @return mix(black, $color, $percentage)
+
+@function str-replace($string, $search, $replace: '')
+  $index: str-index($string, $search)
+  @if $index
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace)
+  @return $string
+
+@function repeat($character, $n)
+  $c: ''
+  @for $i from 1 through $n
+    $c: $c + $character
+  @return $c
+
+@mixin font-face($name, $path, $weight: null, $style: null, $file-formats: eot woff2 woff ttf svg)
+  $src: null
+  $extmods: (eot: '?', svg: '#' + str-replace($name, ' ', '_'))
+  $formats: (otf: 'opentype', ttf: 'truetype')
+  @each $ext in $file-formats
+    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext)
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext)
+    $src: append($src, url(quote($path + '.' + $extmod)) format(quote($format)), comma)
+  @font-face
+    font-family: quote($name)
+    font-style: $style
+    font-weight: $weight
+    src: $src
+

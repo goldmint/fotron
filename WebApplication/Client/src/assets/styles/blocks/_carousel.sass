@@ -1,0 +1,22 @@
+@import "../variables"
+
+.carousel-control-prev, .carousel-control-next
+  width: auto
+  margin: 0 10px
+
+.carousel-control-prev-icon
+  cursor: pointer
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='" + '%23e9cb6b' +"' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E")
+
+.carousel-control-next-icon
+  cursor: pointer
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='" + '%23e9cb6b' +"' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E")
+
+.carousel-indicators
+  bottom: 0
+
+.carousel-indicators li
+  background-color: $color-brand-active
+
+.carousel-indicators .active
+  background-color: $color-brand

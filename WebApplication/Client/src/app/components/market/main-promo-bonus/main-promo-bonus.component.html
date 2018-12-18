@@ -1,0 +1,59 @@
+<div class="progress-linear progress-linear--tiny" *ngIf="!isDataLoaded">
+  <div class="container"></div>
+</div>
+
+<div class="text-center promo-bonus-container my-5 my-lg-0">
+  <div class="promo-bonus-info-container mb-3">
+    <div class="promo-bonus-info-block col-12 col-sm-6">
+      <div class="d-flex align-items-center justify-content-center mb-2">
+        <b>{{ "PAGES.PromoBonus.Labels.BigBonus" | translate }}</b>
+        <span class="ml-2" [popover]='"POPOVER.BigBank" | translate' triggers="mouseenter:mouseleave" placement="top">
+          <svg class="icon gold" width="22" height="22">
+            <use xlink:href="#info"></use>
+          </svg>
+        </span>
+      </div>
+
+      <div class="w-100">
+        <svg class="icon" width="150" height="150">
+          <use xlink:href="#gm-circle"></use>
+        </svg>
+      </div>
+
+      <div class="promo-bonus-info">
+        <b>{{ +promoBonus?.big | noexp:18 }}</b>
+        <div class="fz-13">(ETH)</div>
+      </div>
+
+      <div class="mt-2 c-red" [innerHTML]="'PAGES.PromoBonus.Labels.BigBlocksToWin' |  translate:{value: bigWinPromoBonus}"></div>
+      <div class="mt-2" *ngIf="bigBankTimer">
+        <app-timer [time]="bigBankTimer"></app-timer>
+      </div>
+    </div>
+    <div class="promo-bonus-info-block col-12 col-sm-6">
+      <div class="d-flex align-items-center justify-content-center mb-2"><b>{{ "PAGES.PromoBonus.Labels.QuickBonus" | translate }}</b>
+        <span class="ml-2" [popover]='"POPOVER.QuickBank" | translate' triggers="mouseenter:mouseleave" placement="top">
+          <svg class="icon gold" width="22" height="22">
+            <use xlink:href="#info"></use>
+          </svg>
+        </span>
+      </div>
+
+      <div class="w-100">
+        <svg class="icon" width="150" height="150">
+          <use xlink:href="#gm-circle"></use>
+        </svg>
+      </div>
+
+      <div class="promo-bonus-info">
+        <b>{{ +promoBonus?.quick | noexp:18 }}</b>
+        <div class="fz-13">(ETH)</div>
+      </div>
+
+      <div class="mt-2 c-red" [innerHTML]="'PAGES.PromoBonus.Labels.QuickBlocksToWin' |  translate:{value: quickWinPromoBonus}"></div>
+      <div class="mt-2" *ngIf="quickBankTimer">
+        <app-timer [time]="quickBankTimer"></app-timer>
+      </div>
+    </div>
+  </div>
+</div>

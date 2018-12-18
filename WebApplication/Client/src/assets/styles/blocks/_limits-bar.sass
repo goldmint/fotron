@@ -1,0 +1,61 @@
+.limits-bar
+  &:not(:last-child)
+    margin-bottom: rem(36px)
+
+  &--tiny
+    margin-bottom: rem(2px)
+
+    &:not(:last-child)
+      margin-bottom: rem(24px)
+
+  &__caption
+    font-size: rem(16px)
+    font-weight: 500
+    line-height: rem(28px)
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin-bottom: 5px
+
+    .limits-bar--tiny &
+      margin-bottom: 0
+
+  &__progress
+    height: 6px
+    background-color: $color-gray-2
+
+    .limits-bar--tiny &
+      height: 2px
+      background-color: $color-white
+
+    .progress-bar
+      background-color: $color-gold
+
+      .limits-bar--tiny &
+        background-color: $color-green
+
+  &__value
+    font-weight: 400
+
+  &__increase
+    color: $color-green
+    font-weight: 500
+
+    &:hover
+      color: $color-green
+      font-weight: 500
+      text-decoration: none
+
+  &__list
+    @include make-row()
+    margin-top: 10px
+    font-size: rem(18px)
+
+    dt
+      // @include make-col(6, 12)
+      font-weight: 400
+      color: $color-gray-2
+
+    dd
+      // @include make-col(6, 12)
+      text-align: right

@@ -1,0 +1,107 @@
+@import '../../../assets/styles/variables'
+@import '../../../assets/styles/functions'
+
+a:hover
+  text-decoration: none
+
+.home-container
+  border: 3px solid $color-gray-0
+
+.home-buy-block
+  width: 50%
+  border-right: 3px solid $color-gray-0
+
+.home-sell-block
+  width: 50%
+
+.holdings-block
+  border-top: 3px solid $color-gray-0
+
+.metamask-info-container
+  display: flex
+  background: rgba(255, 255, 255, 0.80)
+  width: 100%
+  height: calc(100% - 4px)
+  position: absolute
+  top: 4px
+  z-index: 1
+
+  div
+    margin: auto
+
+    .metamask-logo
+      width: 100%
+      height: 80px
+      background-image: url(../../../assets/icons/metamask.svg)
+      background-repeat: no-repeat
+      background-size: 70px
+      background-position: center bottom
+
+    .metamask-text
+      font-size: 18px
+      font-weight: 500
+      margin-top: 1rem
+
+.masternode-block
+  line-height: 1.4
+
+.token-logo-container
+  display: flex
+  align-items: center
+
+  .token-logo
+    width: 80px
+    height: 80px
+    border-radius: 50%
+    overflow: hidden
+
+    img
+      width: 80px
+      height: 80px
+
+  .token-logo-name
+    font-size: rem(20px)
+    margin-left: 1.5rem
+
+.action-info-block
+  display: flex
+  align-items: center
+  justify-content: space-between
+  font-size: 1rem
+  button
+    margin-bottom: 0.5rem
+    display: flex
+    align-items: center
+    min-height: 47px
+    justify-content: center
+    min-width: 250px
+
+    svg
+      margin-right: 0.5rem
+
+.total-info-block
+  line-height: 1.5
+  text-align: justify
+  margin: 42px 0
+
+.trade-info-block
+  border: 3px solid $color-gray-0
+
+.trade-invalid-address
+  text-align: center
+  border-bottom: 3px solid $color-gray-0
+  padding-bottom: 50px
+
+@media only screen and (max-width: 768px)
+  .home-buy-block
+    width: 100%
+    border-right: none
+    border-bottom: 3px solid $color-gray-0
+
+  .home-sell-block
+    width: 100%
+
+@media only screen and (max-width: 576px)
+  .action-info-block
+    display: block
+    margin-bottom: 1rem

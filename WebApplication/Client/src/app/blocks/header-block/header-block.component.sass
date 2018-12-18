@@ -1,0 +1,225 @@
+@import 'functions'
+@import 'variables'
+
+.header
+  background-color: $color-black
+  color: $color-white
+  position: relative
+  width: 100%
+  height: $header-height
+  display: flex
+  flex-direction: column
+  padding-top: 2px
+
+  > .container
+    height: 100%
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+  &__row
+    @include make-row()
+    height: 100%
+    align-items: center
+    flex-wrap: nowrap
+
+
+.rate
+  text-transform: uppercase
+  font-weight: 400
+  font-size: rem(18px)
+
+  &__value
+    color: $color-gold
+
+
+.balance
+  font-weight: 400
+  font-size: rem(14px)
+
+  &__label
+    display: inline-block
+    line-height: rem(20px)
+    margin-right: 14px
+
+  &__metamask
+    display: inline-block
+    max-width: rem(40px)
+    line-height: rem(20px)
+    vertical-align: bottom
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+  &__item
+    display: inline-block
+    line-height: rem(20px)
+    text-transform: uppercase
+    &:not(:last-child)
+      margin-right: 20px
+
+  &__value
+    color: $color-gold
+    display: inline-block
+    line-height: rem(20px)
+
+  &__exchange
+    color: $color-gray-1
+    display: inline-block
+    line-height: rem(20px)
+
+
+.auth-info
+  display: flex
+  align-items: center
+  font-weight: 500
+  font-size: rem(14px)
+  line-height: rem(19px)
+
+  a:not(.btn)
+    color: $color-brand
+    transition: $transition-link
+    text-decoration: none
+
+  .language
+    font-size: rem(14px)
+
+    &__select
+      .dropdown-toggle
+      text-transform: none
+      letter-spacing: 0
+
+      .dropdown-menu
+        font-size: rem(14px)
+
+.language__select
+  .add-server-btn
+    a
+      color: $color-black
+      &:hover
+        background: $color-brand-hover
+        color: $color-black
+
+.header-info-container
+  display: flex
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  height: 100%
+
+.mobile-menu-icon
+  color: $color-brand
+
+#mobile-menu-container
+  position: absolute
+  justify-content: space-between
+  flex-direction: column
+  display: flex
+  overflow: auto
+  width: 100%
+  top: 100%
+  height: calc(100vh - 100%)
+  background: black
+  z-index: 100
+
+  .nav
+    display: block
+    .nav-item
+      border: none
+      margin: 0
+      .nav-link
+        background-color: black
+        color: $color-brand
+        justify-content: flex-start
+        font-size: 1rem
+        padding: 0.625rem 1rem
+
+  .mobile-account-info
+    .dropdown-toggle
+      font-size: 1rem
+
+  .nav-item.active
+    a
+      color: $color-brand-active !important
+
+  .nav-link
+    border: none
+
+  .nav-link.active, .nav-link:hover
+    color: $color-brand-active !important
+    border: none
+
+  .input-copy-link
+    max-width: 100%
+
+.action-info-block
+  display: flex
+  align-items: center
+  justify-content: space-between
+  margin-right: 1rem
+  font-size: 14px
+
+  button
+    margin-bottom: 0.5rem
+    display: flex
+    align-items: center
+    min-height: 47px
+    justify-content: center
+    min-width: 200px
+
+    svg
+      margin-right: 0.5rem
+
+.pop-up-in-btn
+  width: 100%
+  display: flex
+  align-items: center
+  min-height: 47px
+  justify-content: center
+  min-width: 200px
+
+  svg
+    margin-right: 0.5rem
+
+.input-copy
+  width: 5px
+  border: none
+  color: transparent
+  visibility: visible
+  margin-left: -8px
+
+.input-copy-link
+  display: inline-block
+  width: 100%
+  max-width: 175px
+  cursor: pointer
+  text-overflow: ellipsis
+  overflow: hidden
+
+.my-bonus-pop-up
+  display: block
+
+  .my-bonus-pop-up-block
+    width: auto
+    margin-bottom: 10px
+
+.mobile-bonus-info
+  padding-left: 1rem
+  margin-bottom: 1rem
+
+.ref-link-not-available
+  color: $color-red
+
+.my-ref-link-container
+  margin-bottom: 2px
+
+@media only screen and (max-width: 576px)
+  .header-info-container
+    flex-wrap: wrap
+
+  .rate
+    font-size: 1rem
+
+  .action-info-block
+    display: block
+    margin-bottom: 1rem

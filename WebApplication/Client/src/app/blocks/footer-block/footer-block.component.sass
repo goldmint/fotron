@@ -1,0 +1,41 @@
+@import '../../../assets/styles/functions'
+@import '../../../assets/styles/variables'
+
+.footer
+  position: absolute
+  bottom: 0
+  width: 100%
+  min-height: $footer-height
+  line-height: $footer-height
+  background-color: $color-black
+  display: flex
+  align-items: center
+
+  .nav-item
+    margin: 0 10px
+
+    &:first-child
+      margin-left: 0
+
+      .nav-link
+        padding-left: 0
+
+  .nav-link
+    padding: 2px 1px
+    color: $color-brand
+    font-weight: 700
+    font-size: rem(14px)
+    line-height: rem(16px)
+    letter-spacing: .1em
+    text-transform: uppercase
+    transition: $transition-link
+    border-bottom: rem(0.5px) solid transparent
+    &:hover
+      border-bottom-color: $color-brand-hover
+      color: $color-brand-hover
+      text-decoration: none
+
+.copyright
+  color: $color-white
+  font-size: rem(14px)
+  line-height: rem(16px)

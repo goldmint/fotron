@@ -1,0 +1,106 @@
+$section-title-font-size: 18px
+$section-title-height: ($section-title-font-size - 1px) * 2
+$section-border-height: 3px
+
+
+.section
+  display: flex
+  flex-direction: column
+  margin-top: $section-title-height
+  margin-bottom: 35px
+  border-top:    $section-border-height solid $color-gold
+  border-bottom: $section-border-height solid $color-gold
+
+  &--table
+    border-bottom: none
+
+  &--no-bottom
+    border-bottom: none
+    margin-bottom: 0
+
+  &--muted
+    border-top-color: $color-gray-3
+
+  &--warning
+    border-top-color: $color-red
+    border-top-width: $section-border-height - 1
+    min-height: auto
+
+    .icon
+      margin-right: 4px
+
+  &__title
+    font-weight: 500
+    font-size: rem($section-title-font-size)
+    line-height: rem($section-title-font-size - 2px)
+    min-height:  (rem($section-title-height + $section-border-height))
+    margin-top: -(rem($section-title-height + $section-border-height))
+    margin-bottom: 0
+    padding-bottom: $section-border-height
+    display: flex
+    align-items: center
+
+    .section--muted &
+      font-weight: 400
+      color: $color-gray-1
+
+    .section--warning &
+      font-weight: 400
+      color: $color-red
+
+    &> span
+      line-height: rem(20px)
+
+  &__title-widget
+    margin-left: auto
+
+  &__content
+    padding-top: 1.5rem
+    position: relative
+
+    .section--table &
+      padding-top: 0
+
+    &:not(&--clean)
+      p
+        font-size: rem(14px)
+        line-height: rem(17px)
+        &:last-child
+          margin-bottom: rem(26px)
+
+    &--lead
+      padding-top: rem(26px)
+      padding-bottom: rem(36px)
+      font-size: rem(18px)
+
+      ol
+        padding-left: rem(20px)
+
+      li
+        font-size: rem(18px)
+        line-height: rem(21px)
+
+      p
+        font-size: rem(18px)
+        line-height: rem(21px)
+        margin-bottom: rem(38px)
+        &:last-child
+          margin-bottom: rem(36px)
+
+      > p
+        &:last-child
+          margin-bottom: 0
+
+      b
+        font-weight: 500
+
+  &__preface
+    font-size: rem(18px)
+    list-style: rem(22px)
+    margin-top: rem(-5px)
+    margin-bottom: rem(20px)
+
+  &__footer
+    margin-top: auto
+    margin-bottom: rem(6px)
+    padding-top: 25px

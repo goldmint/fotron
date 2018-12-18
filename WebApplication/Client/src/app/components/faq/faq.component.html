@@ -1,0 +1,246 @@
+<!-- host: .page -->
+
+<h1 class="page__heading">{{ "PAGES.FAQ.Heading" | translate }}</h1>
+
+<section class="page__section section">
+  <h2 class="section__title">{{ "PAGES.FAQ.Heading" | translate }}</h2>
+
+  <div class="progress-linear progress-linear--tiny" *ngIf="false">
+    <div class="container"></div>
+  </div>
+
+  <div class="section__content py-4 faq-container">
+
+    <div class="lead mb-4">{{ "PAGES.FAQ.Support" | translate }} <a href="mailto:support@fotron.io" target="_blank">support@fotron.io</a></div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item1}" (click)="collapse.item1 = !collapse.item1">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.1th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item1">
+          <div [innerHTML]="'PAGES.About.Sections.1th.Text' | translate"></div>
+
+          <ul class="mt-2">
+            <li><div [innerHTML]="'PAGES.About.Sections.1th.List.1th' | translate"></div></li>
+            <li><div [innerHTML]="'PAGES.About.Sections.1th.List.2th' | translate"></div></li>
+            <li><div [innerHTML]="'PAGES.About.Sections.1th.List.3th' | translate"></div></li>
+            <li><div [innerHTML]="'PAGES.About.Sections.1th.List.4th' | translate"></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item2}" (click)="collapse.item2 = !collapse.item2">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.2th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item2">
+          <div [innerHTML]="'PAGES.About.Sections.2th.Text' | translate"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item3}" (click)="collapse.item3 = !collapse.item3">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.3th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item3">
+          <div class="mt-2" [innerHTML]="'PAGES.About.Sections.3th.Text' | translate"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item4}" (click)="collapse.item4 = !collapse.item4">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.4th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item4">
+          <div [innerHTML]="'PAGES.About.Sections.4th.Text' | translate"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item5}" (click)="collapse.item5 = !collapse.item5">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.5th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item5">
+          <div [innerHTML]="'PAGES.About.Sections.5th.Text' | translate"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item6}" (click)="collapse.item6 = !collapse.item6">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.6th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item6">
+          <div [innerHTML]="'PAGES.About.Sections.6th.Text' | translate"></div>
+
+          <ul class="mt-2 no-list-type pl-4">
+            <li><div [innerHTML]="'PAGES.About.Sections.6th.List.1th' | translate"></div></li>
+            <li><div [innerHTML]="'PAGES.About.Sections.6th.List.2th' | translate"></div></li>
+            <li><div [innerHTML]="'PAGES.About.Sections.6th.List.3th' | translate"></div></li>
+            <li><div [innerHTML]="'PAGES.About.Sections.6th.List.4th' | translate"></div></li>
+            <li><div [innerHTML]="'PAGES.About.Sections.6th.List.5th' | translate"></div></li>
+            <li><div [innerHTML]="'PAGES.About.Sections.6th.List.6th' | translate"></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item7}" (click)="collapse.item7 = !collapse.item7">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.7th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item7">
+          <div class="mt-2" [innerHTML]="'PAGES.About.Sections.7th.Text' | translate"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item8}" (click)="collapse.item8 = !collapse.item8">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.8th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item8">
+          <div>
+            <div class="mb-1" [innerHTML]="'PAGES.About.Sections.8th.List1.Heading' | translate"></div>
+            <div class="text-indent-4" [innerHTML]="'PAGES.About.Sections.8th.List1.Items.1th' | translate"></div>
+          </div>
+
+          <div class="mt-2">
+            <div class="mb-1" [innerHTML]="'PAGES.About.Sections.8th.List2.Heading' | translate"></div>
+            <ul class="no-list-type pl-4">
+              <li [innerHTML]="'PAGES.About.Sections.8th.List2.Items.1th' | translate"></li>
+              <li [innerHTML]="'PAGES.About.Sections.8th.List2.Items.2th' | translate"></li>
+              <li [innerHTML]="'PAGES.About.Sections.8th.List2.Items.3th' | translate"></li>
+              <li [innerHTML]="'PAGES.About.Sections.8th.List2.Items.4th' | translate"></li>
+              <li [innerHTML]="'PAGES.About.Sections.8th.List2.Items.5th' | translate"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item9}" (click)="collapse.item9 = !collapse.item9">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.9th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item9">
+          <ul class="no-list-type">
+            <li [innerHTML]="'PAGES.About.Sections.9th.List.1th' | translate"></li>
+            <li [innerHTML]="'PAGES.About.Sections.9th.List.2th' | translate"></li>
+            <li [innerHTML]="'PAGES.About.Sections.9th.List.3th' | translate"></li>
+          </ul>
+          <div class="mt-2" [innerHTML]="'PAGES.About.Sections.9th.Text' | translate"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-container">
+      <div class="collapse-heading" [ngClass]="{'open': !collapse.item10}" (click)="collapse.item10 = !collapse.item10">
+        <div class="font-weight-500 lead" [innerHTML]="'PAGES.About.Sections.10th.Heading' | translate"></div>
+        <div class="collapse-arrow">
+          <svg class="icon" width="20" height="20">
+            <use xlink:href="#next"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="collapse-content">
+        <div class="card card-block card-header" [collapse]="collapse.item10">
+          <ul class="no-list-type">
+            <li [innerHTML]="'PAGES.About.Sections.10th.List.1th' | translate"></li>
+            <li [innerHTML]="'PAGES.About.Sections.10th.List.2th' | translate"></li>
+            <li [innerHTML]="'PAGES.About.Sections.10th.List.3th' | translate"></li>
+            <li [innerHTML]="'PAGES.About.Sections.10th.List.4th' | translate"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="collapse-container" *ngFor="let a of ngForArray; index as i">
+        <div class="collapse-heading" [ngClass]="{'open': !collapse['item'+(i+totalCollapses.about+1)]}" (click)="collapse['item'+(i+totalCollapses.about+1)] = !collapse['item'+(i+totalCollapses.about+1)]">
+          <div class="font-weight-500 lead" [innerHTML]="'PAGES.FAQ.Answers.'+ (i+1) +'th.Heading' | translate"></div>
+          <div class="collapse-arrow">
+            <svg class="icon" width="20" height="20">
+              <use xlink:href="#next"></use>
+            </svg>
+          </div>
+        </div>
+
+        <div class="collapse-content">
+          <div class="card card-block card-header" [collapse]="collapse['item'+(i+totalCollapses.about+1)]">
+            <div [innerHTML]="'PAGES.FAQ.Answers.'+ (i+1) +'th.Text' | translate"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

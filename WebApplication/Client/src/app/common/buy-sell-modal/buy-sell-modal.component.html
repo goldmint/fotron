@@ -1,0 +1,33 @@
+<div class="message-box__header">
+  <h4 class="modal-title pull-left">ETHERAMA</h4>
+  <button type="button" class="message-box__close" (click)="hide()">
+    <svg class="icon">
+      <use xlink:href="#close"></use>
+    </svg>
+  </button>
+</div>
+
+<div class="message-box__body position-relative">
+  <div class="col-auto btn-group p-0 w-100">
+    <label class="btn btn-primary btn-sm active wrap w-50"
+           name="limitsSwitchModel.type"
+           [(ngModel)]="switchModel.type"
+           btnRadio="buy">Buy</label>
+    <label class="btn btn-primary btn-sm active wrap w-50"
+           name="limitsSwitchModel.type"
+           [(ngModel)]="switchModel.type"
+           btnRadio="sell">Sell</label>
+  </div>
+
+  <div class="progress-linear progress-linear--tiny trade-progress-linear" *ngIf="!isDataLoaded">
+    <div class="container"></div>
+  </div>
+
+  <div *ngIf="switchModel.type === 'buy' && isDataLoaded">
+    <app-buy [tokenInfo]="tokenInfo"></app-buy>
+  </div>
+  <div *ngIf="switchModel.type === 'sell' && isDataLoaded">
+    <app-sell [tokenInfo]="tokenInfo"></app-sell>
+  </div>
+
+</div>

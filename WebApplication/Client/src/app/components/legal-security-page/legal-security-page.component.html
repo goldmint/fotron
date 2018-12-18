@@ -1,0 +1,29 @@
+<div class="page">
+  <h1 class="page__heading">{{ "PAGES.LegalSecurity.Heading" | translate }}</h1>
+
+  <div class="page__section">
+    <h2 class="section__title justify-content-center mt-4 mb-5">{{ "PAGES.LegalSecurity.Label" | translate }}</h2>
+    <div class="row">
+      <div class="col-sm-4 text-center mb-3">
+        <a class="static-page-link d-block" routerLink="serviceAgreement">
+          <svg class="icon gold" width="100">
+            <use xlink:href="#agreement"></use>
+          </svg>
+          <div>
+            {{ "PAGES.LegalSecurity.Links.Agreement" | translate }}
+          </div>
+        </a>
+      </div>
+      <div class="col-sm-4 text-center mb-3">
+        <a class="static-page-link d-block" routerLink="termsOfService">
+          <svg class="icon gold" width="100">
+            <use xlink:href="#terms"></use>
+          </svg>
+          <div>
+            {{ "PAGES.LegalSecurity.Links.Terms" | translate }}
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

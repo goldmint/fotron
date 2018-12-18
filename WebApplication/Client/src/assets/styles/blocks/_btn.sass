@@ -1,0 +1,208 @@
+$input-btn-padding-y: rem(8px)
+$input-btn-padding-x: rem(20px)
+
+$btn-font-weight: 700
+
+
+@import "~bootstrap/scss/buttons"
+.btn
+  font-size: rem(18px)
+  letter-spacing: .1em
+  text-transform: uppercase
+  color: $color-black
+  padding: rem(14px) rem(20px)
+  min-height: 57px
+  min-width: 150px
+  cursor: pointer
+
+  &[disabled],
+  &.disabled
+    cursor: not-allowed
+    // cursor: default
+
+  &-wide
+    min-width: 210px
+
+  &-sm
+    font-size: rem(14px)
+    line-height: rem(16px)
+    letter-spacing: 0
+    text-transform: none
+    color: $color-black
+    padding: rem(10px) rem(14px)
+    min-height: 38px
+    min-width: 75px
+
+    span
+      font-size: rem(22px)
+      font-weight: 400
+      vertical-align: bottom
+
+  &-social
+    width: 100%
+    display: block
+    position: relative
+    background-color: $color-black
+    color: $color-white
+    font-weight: 500
+    font-size: rem(14px)
+    line-height: rem(27px)
+    letter-spacing: 0
+    text-transform: none
+    &:hover
+      color: $color-white
+
+    span
+      vertical-align: middle
+
+    .icon
+      position: absolute
+      left: rem(20px)
+      top: 50%
+      transform: translateY(-50%)
+      &:only-child
+        left: 50%
+        transform: translate(-50%, -50%)
+
+    &--fb
+      $facebook-hover: tint(saturate($color-social-facebook, 10%), 12%)
+      @include button-variant($color-social-facebook, $color-social-facebook, $facebook-hover, $facebook-hover, $facebook-hover, $facebook-hover)
+      .icon
+        height: 25px
+        width: 12px
+        &:not(:only-child)
+          width: 50px
+          padding-right: 14px
+
+    &--gp
+      $google-hover: tint(saturate($color-social-google, 10%), 12%)
+      @include button-variant($color-social-google, $color-social-google, $google-hover, $google-hover, $google-hover, $google-hover)
+      .icon
+        height: 24px
+        width: 37px
+        &:not(:only-child)
+          width: 50px
+
+    &--vk
+      $vkcom-hover: tint(saturate($color-social-vkcom, 10%), 12%)
+      @include button-variant($color-social-vkcom, $color-social-vkcom, $vkcom-hover, $vkcom-hover, $vkcom-hover, $vkcom-hover)
+      .icon
+        height: 21px
+        width: 36px
+
+    &--gh
+      $github-hover: tint(saturate($color-social-github, 10%), 12%)
+      @include button-variant($color-social-github, $color-social-github, $github-hover, $github-hover, $github-hover, $github-hover)
+      .icon
+        height: 24px
+        width: 25px
+
+
+    &--lg
+      padding-left: rem(60px)
+      padding-right: rem(11px)
+
+      &:after
+        content: ''
+        position: absolute
+        display: block
+        bottom: -8px
+        right: -1px
+        left: -1px
+        background-color: $color-green
+        transition: all .15s ease-in-out
+        height: 0
+
+      &.selected
+        &:after
+          height: 6px
+          bottom: -14px
+
+      .icon
+        left: rem(11px)
+
+      &.btn-social--fb
+        .icon
+          height: 34px
+          width: 17px
+          &:not(:only-child)
+            width: 17px
+            padding-right: 0
+
+      &.btn-social--gp
+        .icon
+          height: 32px
+          width: 48px
+          &:not(:only-child)
+            width: 48px
+            padding-right: 0
+
+      &.btn-social--vk
+        .icon
+          height: 26px
+          width: 45px
+
+      &.btn-social--gh
+        .icon
+          height: 34px
+          width: 35px
+
+  &-group
+    display: inline-flex
+
+    .btn + .btn
+      &:not([disabled]):not(.disabled)
+        border-left: none
+
+    .btn-primary
+      text-transform: uppercase
+
+      &:not([disabled]):not(.disabled)
+        background-color: #fff
+        border: 2px solid $color-gold
+        color: $color-black
+
+        &.active
+          background-color: $color-gold
+          border-color: $color-gold
+          color: $color-black
+
+      &[disabled],
+      &.disabled
+        background-color: #fff
+        border: 2px solid $color-gray-0
+        color: $color-gray-3
+
+  &-wrapper
+    display: inline-block
+    margin-bottom: rem(27px)
+
+  &__help-text
+    display: block
+    font-size: rem(18px)
+    font-weight: 500
+    line-height: rem(18px)
+    text-align: center
+    text-transform: uppercase
+    margin-top: rem(8px)
+
+    &--success
+      color: $color-green
+
+    &--warning
+      color: $color-red
+
+// @import "~bootstrap/scss/variables"
+@import "variables"
+//@debug $theme-colors
+
+@each $color, $value in $theme-colors
+  .btn-#{$color}
+    @include button-variant($value, $value, $color-brand-hover, $color-brand-hover, $color-brand-hover, $color-brand-hover)
+    color: $color-black
+
+    &:not([disabled]):not(.disabled):active,
+    &:not([disabled]):not(.disabled).active
+      color: $color-white
+      box-shadow: none
+      background-image: none

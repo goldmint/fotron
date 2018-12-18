@@ -1,0 +1,52 @@
+.progress-linear
+  display: block
+  width: 100%
+  height: 5px
+  padding: 0
+  margin: 0
+  position: absolute
+  overflow-x: hidden
+
+  &--tiny
+    top: 0
+    height: 5px
+    border-top: 1px solid transparent
+
+  .container
+    position: absolute
+    background: $color-brand-active
+    width: 150%
+    height: 100%
+
+    &:before,
+    &:after
+      content: ''
+      display: block
+      background-color: $color-brand
+      position: absolute
+      top: 0
+      bottom: 0
+      height: 100%
+
+    &:before
+      animation: increase 2s infinite
+
+    &:after
+      animation: decrease 2s 0.5s infinite
+
+
+@keyframes increase
+ from
+   left: -5%
+   width: 5%
+ to
+   left: 130%
+   width: 100%
+
+@keyframes decrease
+ from
+   left: -80%
+   width: 80%
+ to
+   left: 110%
+   width: 10%

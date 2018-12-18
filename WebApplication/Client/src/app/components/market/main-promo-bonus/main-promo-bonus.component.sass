@@ -1,0 +1,39 @@
+@import '../../../../assets/styles/variables'
+
+.promo-bonus-container
+
+.promo-bonus-info-container
+  display: flex
+  flex-wrap: wrap
+  margin: auto
+  justify-content: space-between
+
+  > div:first-child
+    border-right: 1px solid $color-brand
+
+  > div:last-child
+    border-left: 1px solid $color-brand
+
+.promo-bonus-info-block
+  position: relative
+
+.promo-bonus-info
+  line-height: 1.4
+  position: absolute
+  top: 85px
+  left: 0
+  right: 0
+  margin: 0 19px
+  overflow: hidden
+
+.fz-13
+  font-size: 13px
+
+@media only screen and (max-width: 576px)
+  .promo-bonus-info-container
+    > div:first-child
+      border: none
+      margin-bottom: 1rem
+
+    > div:last-child
+      border: none

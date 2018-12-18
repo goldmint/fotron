@@ -1,0 +1,87 @@
+// @import '~@swimlane/ngx-datatable/release/index.css'
+// @import '~@swimlane/ngx-datatable/release/bootstrap.css'
+// margin-bottom: 11px/assets/icons.css'
+.table-heading
+  font-size: 1.125rem
+  font-weight: 500
+
+.table
+  &.ngx-datatable
+    margin-bottom: 0
+
+    .datatable-header
+      display: flex
+      align-items: center
+      border-bottom: 1px solid $color-gold
+
+      .datatable-header-cell
+        position: relative
+        font-size: rem(18px)
+        user-select: none
+
+        &--history-type
+          padding-left: 18px
+
+    .datatable-body
+      .datatable-scroll
+        width: 100% !important
+
+      .datatable-row-wrapper
+        width: 100% !important
+        border-bottom: 2px solid $color-gray-0
+
+        &:last-child
+          border-bottom-width: 3px
+
+      .datatable-body-row
+        min-height: 50px
+        display: flex
+        align-items: center
+
+      .datatable-body-cell
+        display: flex
+        align-items: center
+        font-size: rem(12px)
+
+      .datatable-body-cell-label
+        white-space: normal
+
+    .empty-row
+      padding-top: rem(25px)
+
+  &--no-footer
+    &.ngx-datatable
+      .datatable-body
+        .datatable-row-wrapper
+          &:last-child
+            border-bottom: 2px solid $color-gold
+
+      .datatable-footer
+        display: none
+
+
+.sortable
+  cursor: pointer
+
+  span
+    vertical-align: middle
+
+  .sort-btn
+    display: inline-block
+    opacity: .3
+    background-image: url(../../assets/img/icons/sort.svg)
+    background-repeat: no-repeat
+    background-position: center center
+    width: 11px
+    height: 20px
+
+  .sort-btn
+    &.sort-asc
+      opacity: 1
+      background-image: url(../../assets/img/icons/sort-asc.svg)
+      background-position: center top
+
+    &.sort-desc
+      opacity: 1
+      background-image: url(../../assets/img/icons/sort-desc.svg)
+      background-position: center bottom

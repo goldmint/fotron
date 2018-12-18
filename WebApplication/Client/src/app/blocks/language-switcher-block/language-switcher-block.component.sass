@@ -1,0 +1,72 @@
+@import 'functions'
+@import 'variables'
+
+// @todo: make generic header dropdown styles for usermenu and language switcher
+.language
+  font-size: rem(16px)
+  padding: 3px 0
+  cursor: pointer
+
+  &__select
+    display: inline-block
+    font-weight: 500
+    cursor: pointer
+    user-select: none
+
+    .dropdown-toggle
+      padding: rem(3px)
+      vertical-align: middle
+      text-transform: uppercase
+      letter-spacing: rem(1.5px)
+
+      &:after
+        transition: transform .16s ease-out
+
+      &.active
+        &:after
+          transform: rotate(180deg)
+
+    .dropdown-menu
+      min-width: 100px
+      margin-top: 0
+      margin-left: -7px
+      border-radius: 0
+      background-color: rgba(#212529, .97)
+      box-shadow: 0 3px 10px 0px rgba($color-black, .45)
+      border: none
+
+      &.show
+        display: block
+        animation: fadeInFromNone .2s ease-out
+
+      &:not(.show)
+        animation-direction: reverse
+
+    .dropdown-item
+      padding: rem(4px) rem(22px)
+      margin: rem(2px) 0
+      color: $color-brand
+      cursor: pointer
+      user-select: none
+      transition: $transition-link
+
+      &:hover
+        background-color: rgba($color-black, .85)
+        color: $color-brand-hover
+        color: $color-white
+
+      .language__icon
+        margin-bottom: rem(2px)
+        margin-right: rem(3px)
+
+
+@keyframes fadeInFromNone
+  0%
+    display: none
+    opacity: 0
+  1%
+    display: block
+    opacity: 0
+  100%
+    display: block
+    opacity: 1

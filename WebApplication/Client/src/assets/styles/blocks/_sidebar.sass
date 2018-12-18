@@ -1,0 +1,31 @@
+.sidebar
+  .nav
+    flex-direction: column
+
+  .nav-link
+    min-height: rem(38px)
+    // border-radius: 0
+    background-color: $color-brand
+    color: $color-black
+    font-weight: 500
+    font-size: rem(18px)
+    line-height: rem(20px)
+    padding: rem(8px) rem(16px)
+
+    &:not(:last-of-type)
+      margin-bottom: 2px
+
+    &:not(:hover),
+    &:not(:active)
+      transition: $transition-nav-sidebar
+
+    &:hover
+      color: $color-black
+      background-color: $color-brand-hover
+
+    &:active:not(.active)
+      color: $color-white
+      background-color: $color-brand-hover
+
+    &.active
+      background-color: $color-brand-active

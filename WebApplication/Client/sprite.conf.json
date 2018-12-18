@@ -1,0 +1,63 @@
+{
+    "log": "info",
+    "shape": {
+        "transform": [
+            {
+                "svgo": {
+                    "plugins": [
+                        { "cleanupEnableBackground": true },
+                        {
+                          "convertColors": {
+                            "currentColor": false,
+                            "names2hex": false,
+                            "rgb2hex": false,
+                            "shorthex": false,
+                            "shortname": false
+                          }
+                        },
+                        { "convertPathData": true },
+                        { "convertShapeToPath": true },
+                        { "mergePaths": true },
+                        { "prefixIds": true },
+                        { "removeAttrs": true },
+                        { "removeComments": true },
+                        { "removeDesc": true },
+                        { "removeDimensions": true },
+                        { "removeDoctype": true },
+                        { "removeEditorsNSData": true },
+                        { "removeElementsByAttr": true },
+                        { "removeEmptyAttrs": true },
+                        { "removeEmptyContainers": true },
+                        { "removeEmptyText": true },
+                        { "removeHiddenElems": true },
+                        { "removeMetadata": true },
+                        { "removeNonInheritableGroupAttrs": true },
+                        { "removeRasterImages": true },
+                        { "removeScriptElement": true },
+                        { "removeStyleElement": true },
+                        { "removeTitle": true },
+                        { "removeUnknownsAndDefaults": true },
+                        { "removeUnusedNS": true },
+                        { "removeUselessStrokeAndFill": true },
+                        {
+                          "removeViewBox": false
+                        },
+                        { "removeXMLNS": true },
+                        { "removeXMLProcInst": true },
+                        { "sortAttrs": true }
+                    ]
+                }
+            }
+        ]
+    },
+    "mode": {
+        "symbol": {
+            "dest": ".",
+            "sprite": "src/app/common/sprite/sprite.component.html",
+            "inline": true,
+            "example": {
+                "dest": "sprite-preview.html"
+            }
+        }
+    }
+}

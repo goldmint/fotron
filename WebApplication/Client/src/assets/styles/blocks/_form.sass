@@ -1,0 +1,293 @@
+$form-columns-gutter: 8px
+$form-control-bottom-margin: 8px
+
+$custom-control-indicator-size:       24px
+$custom-control-indicator-bg:         #fff
+$custom-control-indicator-bg-size:    70% 70%
+$custom-control-indicator-box-shadow: none
+
+$custom-control-indicator-checked-color:    $color-gold
+$custom-control-indicator-checked-bg:       #fff
+$custom-control-indicator-focus-box-shadow: none
+
+$custom-control-indicator-active-color:      $color-gold
+$custom-control-indicator-active-bg:         #fff
+$custom-control-indicator-active-box-shadow: none
+
+$custom-checkbox-indicator-border-radius: 0
+$custom-checkbox-indicator-icon-checked:  str-replace(url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='#{$custom-control-indicator-checked-color}' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E"), "#", "%23")
+
+$custom-select-bg-size:            11px 20px
+$custom-select-indicator-color:    $color-gold
+$custom-select-indicator:          str-replace(url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 20'%3E%3Cpath fill='#{$custom-select-indicator-color}' d='M5.5 0l4.763 8.25H.737L5.5 0z'/%3E%3Cpath fill='#{$custom-select-indicator-color}' d='M5.5 0l4.763 8.25H.737L5.5 0z' transform='rotate(180 5.5 10)' /%3E%3C/svg%3E"), "#", "%23")
+$custom-select-disabled-color:     $color-gray-3
+$custom-select-disabled-bg:        $color-gray-0
+$custom-select-disabled-indicator: str-replace(url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 20'%3E%3Cpath fill='#{$custom-select-disabled-color}' d='M5.5 0l4.763 8.25H.737L5.5 0z'/%3E%3Cpath fill='#{$custom-select-disabled-color}' d='M5.5 0l4.763 8.25H.737L5.5 0z' transform='rotate(180 5.5 10)' /%3E%3C/svg%3E"), "#", "%23")
+$custom-select-border-width:       2px
+$custom-select-border-color:       $color-gray-0
+
+$custom-select-focus-border-color: $color-gold
+$custom-select-focus-box-shadow:   none
+
+$input-placeholder-color: #cfcfcf
+
+
+@import "~bootstrap/scss/forms"
+@import "~bootstrap/scss/custom-forms"
+.form
+  &-row
+    margin-left: -($form-columns-gutter / 2)
+    margin-right: -($form-columns-gutter / 2)
+
+    & > .col,
+    & > [class*="col-"]
+      padding-left: $form-columns-gutter / 2
+      padding-right: $form-columns-gutter / 2
+
+    .form-group
+      margin-bottom: 0
+      &:last-child
+        &:not(:first-child)
+          margin-bottom: 0
+
+
+  &-control
+    font-size: rem(18px)
+    line-height: rem(22px)
+    padding: rem(6px) rem(10px)
+    margin-bottom: $form-control-bottom-margin
+    border: 2px solid $color-gray-0
+
+    &:disabled,
+    &[readonly]
+      background-color: $color-gray-0
+
+    &:focus
+      box-shadow: none
+      border: 2px solid $color-gold
+
+      &:disabled,
+      &[readonly]
+        border-color: $color-gray-0
+
+    &.is-invalid
+      &:focus
+        box-shadow: none
+        border-color: $color-red
+
+      &:disabled,
+      &[readonly]
+        border-color: $color-gray-0
+
+    &[type="number"]
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button
+        appearance: textfield
+        margin: 0
+
+    &--w-auto
+      width: auto
+
+    &-plaintext
+      margin-bottom: $form-control-bottom-margin
+
+
+  &-group
+    margin-bottom: rem(20px)
+
+    &:last-child
+      &:not(:first-child)
+        margin-bottom: rem(40px)
+
+    label
+      font-size: rem(18px)
+      line-height: rem(22px)
+      color: $color-gray-2
+      margin-bottom: 3px
+
+      &.disabled,
+      &[disabled]
+        color: $color-gray-1
+        mouse-events: none
+
+      + .form-help
+        margin-top: -3px
+
+      + .btn-block
+        margin-top: 2px
+
+    .flagInput
+      display: none
+
+
+  &-text
+    display: flex
+    flex-direction: column
+    justify-content: center
+    margin-top: 0
+    font-size: rem(18px)
+    line-height: rem(26px)
+
+    b,
+    strong
+      font-weight: 500
+
+    &--small
+      font-size: rem(12px)
+      line-height: rem(19px)
+
+    &.disabled
+      color: $color-gray-3
+
+
+  &-help
+    font-size: rem(12px)
+
+
+  &-captcha
+    min-height: 78px
+    display: inline-block
+
+    &.is-invalid
+      ~ .invalid-feedback
+        display: block
+
+      .recaptcha-checkbox-border
+        border-color: $color-red
+
+  &-loader
+    margin: 0 rem(3px)
+
+    &.absolute
+      position: absolute
+      right: -30px
+      top: calc(50% - 9px)
+
+    .btn &
+      margin: 0 0 rem(4px) rem(10px)
+
+
+  &-currency
+    display: flex
+    align-items: center
+    font-size: rem(18px)
+    line-height: rem(38px)
+    font-weight: 500
+    text-transform: uppercase
+
+    .icon
+      color: $color-gold
+      fill: $color-gold
+      margin-right: rem(8px)
+
+    &--gold .icon
+      height: 30px
+      width: 30px
+
+    &--usd .icon
+      height: 30px
+      width: 19px
+
+    &.disabled
+      color: $color-gray-3
+
+      .icon
+        color: $color-gray-3
+
+
+.custom-control
+  padding-left: rem(42px)
+
+  &-label
+    font-size: rem(18px)
+    line-height: rem(22px)
+    cursor: pointer
+
+    &:before
+      border: 1px solid $color-gray-0
+      transition: $transition-link
+      top: -2px
+
+    &:after
+      top: -2px
+
+    &:hover
+      &:before
+        border-color: $color-brand-hover
+
+
+.custom-select
+  margin-bottom: $form-control-bottom-margin
+  font-size: rem(18px)
+  line-height: rem(22px)
+  background-position: right 7px center
+  padding-right: 30px
+
+  &--currency
+    font-weight: 500
+
+  &[disabled]
+    background: $custom-select-disabled-bg $custom-select-disabled-indicator no-repeat right 7px center
+    background-size: $custom-select-bg-size
+
+
+.invalid-feedback
+  font-size: rem(12px)
+
+  &--abs
+    position: absolute
+    margin: 0
+    bottom: 5px
+
+// custom radio btn
+.radio
+  display: block
+  position: relative
+  padding-left: 35px
+  margin-bottom: 12px
+  cursor: pointer
+  font-size: 22px
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+/* Hide the browser's default radio button */
+.radio input
+  position: absolute
+  opacity: 0
+  cursor: pointer
+  height: 0
+  width: 0
+
+/* Create a custom radio button */
+.checkmark
+  position: absolute
+  top: 0
+  left: 0
+  height: 25px
+  width: 25px
+  background-color: #eee
+  border-radius: 50%
+
+.radio:hover input ~ .checkmark
+  background-color: #ccc
+
+.radio input:checked ~ .checkmark
+  background-color: $color-brand
+
+.checkmark:after
+  content: ""
+  position: absolute
+  display: none
+
+.radio input:checked ~ .checkmark:after
+  display: block
+
+.radio .checkmark:after
+  top: 9px
+  left: 9px
+  width: 8px
+  height: 8px
+  border-radius: 50%
+  background: #fff

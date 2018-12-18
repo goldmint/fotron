@@ -1,0 +1,28 @@
+<div class="message-box__header">
+  <h4 class="modal-title pull-left">{{ title }}</h4>
+  <button type="button" class="message-box__close" (click)="hide()">
+    <svg class="icon">
+      <use xlink:href="#close"></use>
+    </svg>
+  </button>
+</div>
+
+<div class="message-box__body">
+  <p [innerHTML]="message"></p>
+
+  <input type="text" name="promptValue" class="form-control mb-0"
+         *ngIf="messageType === _types.Prompt"
+         [(ngModel)]="_promptValue" />
+</div>
+
+<div class="message-box__footer">
+  <button type="button" class="btn btn-primary btn-sm mx-1"
+          [disabled]="messageType === _types.Prompt && !_promptValue"
+          (click)="onConfirm()">OK</button>
+  <button type="button" class="btn btn-primary btn-sm mx-1"
+          *ngIf="messageType === _types.Confirm"
+          (click)="onCancel()">Cancel</button>
+  <button type="button" class="btn btn-primary btn-sm mx-1"
+          *ngIf="messageType === _types.Prompt"
+          (click)="onCancel()">Close</button>
+</div>

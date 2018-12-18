@@ -1,0 +1,31 @@
+@import "../variables"
+
+.collapse-container
+  border-bottom: 1px solid
+  &:last-child
+    border-bottom: none
+    .collapse-heading.open ~ .collapse-content
+      border-bottom: 2px solid $color-brand
+
+  ul
+    margin-bottom: 0
+
+.collapse-heading
+  background: $color-brand
+  padding: 10px 20px
+  cursor: pointer
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+  .collapse-arrow
+    transform: rotate(-90deg)
+
+.collapse-heading.open
+  .collapse-arrow
+    transform: rotate(90deg)
+
+.collapse-heading.open ~ .collapse-content
+  border-left: 2px solid $color-brand
+  border-right: 2px solid $color-brand
+  padding: 20px

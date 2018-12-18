@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.1</Version>
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</Version>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Fotron.WebApplication</AssemblyName>
+    <PackageId>Goldmint.WebApplication</PackageId>
+    <RootNamespace>Fotron.WebApplication</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <DefaultItemExcludes>Client/node_modules/**;Dashboard/node_modules/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>RELEASE;NETCOREAPP2_0</DefineConstants>
+    <Optimize>true</Optimize>
+    <DocumentationFile>bin\Release\netcoreapp2.0\Fotron.WebApplication.xml</DocumentationFile>
+    <NoWarn>1701;1702;1705;CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.0\Fotron.WebApplication.xml</DocumentationFile>
+    <NoWarn>1701;1702;1705;CS1591</NoWarn>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Totp" Version="2.3.0" />
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.36.1.1412" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" PrivateAssets="All" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="UAParser" Version="3.0.0" />
+    <PackageReference Include="Wiry.Base32" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\CoreLogic\CoreLogic.csproj" />
+    <ProjectReference Include="..\DAL\DAL.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove=".gitignore" />
+    <Compile Remove="Client\**" />
+    <Compile Remove="Services\Bus\**" />
+    <Content Remove="Client\**" />
+    <Content Remove="Services\Bus\**" />
+    <EmbeddedResource Remove="Client\**" />
+    <EmbeddedResource Remove="Services\Bus\**" />
+	<None Remove="Client/*.json" CopyToPublishDirectory="Never" />
+	<None Remove="Client\**" />
+	<None Remove="Services\Bus\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.Production.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Services\Email\" />
+  </ItemGroup>
+  
+</Project>

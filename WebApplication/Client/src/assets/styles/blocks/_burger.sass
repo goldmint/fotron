@@ -1,0 +1,43 @@
+.burger
+  width: 34px
+  height: 28px
+  position: relative
+  transform: rotate(0deg)
+  transition: .5s ease-in-out
+  cursor: pointer
+
+  &__layer
+    display: block
+    position: absolute
+    height: 4px
+    width: 100%
+    background: $color-brand
+    opacity: 1
+    left: 0
+    transform: rotate(0deg)
+    transition: all .16s ease-in-out
+
+    &:nth-child(1)
+      top: 0px
+
+    &:nth-child(2),
+    &:nth-child(3)
+      top: 12px
+
+    &:nth-child(4)
+      top: 24px
+
+  &--open
+    .burger__layer
+      &:nth-child(1),
+      &:nth-child(4)
+        top: 12px
+        width: 0%
+        left: 50%
+
+      &:nth-child(2)
+        transform: rotate(45deg)
+
+      &:nth-child(3)
+        transform: rotate(-45deg)
+

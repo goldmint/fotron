@@ -1,0 +1,359 @@
+{
+  "HEADER": {
+    "Menu": {
+      "Market": "Market",
+      "FAQ": "FAQ"
+    },
+    "Buttons": {
+      "Add": "Add your token"
+    }
+  },
+  "FOOTER": {
+    "Menu": {
+      "LegalSecurity": "Legal & Security"
+    },
+    "Copyright": "Goldmint PTE. Ltd © {{year}}"
+  },
+  "PAGES": {
+    "Home": {
+      "Masternode": {
+        "Heading": "You are currently running a masternode",
+        "Description": "You are currently holding enough tokens to run a Masternode! <br/>You receive <b>{{ percent }}% of the fee</b> someone would otherwise pay into the contract when buying in!",
+        "MasternodeLink": "Your unique masternode link is:"
+      }
+    },
+    "Trade": {
+      "Labels": {
+        "ExpDate": "Lookup exp. date:",
+        "EthContract": "ETH in contract:",
+        "TokensContract": "Tokens sold:",
+        "TotalSupply": "Total token supply:",
+        "Tokens": "My tokens:",
+        "Balances": "My balances:",
+        "Bonus": "My bonus:",
+        "RefLink": "My ref link:",
+        "Description": "Project description:",
+        "ClickToCopy": "Click to copy",
+        "ShareReward": "Share reward",
+        "RefBonus": "Ref bonus",
+        "PromoBonus": "Promo bonus",
+        "TotalSpent": "Total spent:",
+        "RefNotAvailable": "not available yet",
+        "GettingRef": "To get you ref link you have to buy any tokens for at least <b>{{ token }}</b> ETH. You're missing <b>{{ missing }}</b> ETH"
+      },
+      "Buttons": {
+        "BuySell": "Buy/sell token",
+        "Withdraw": "Withdraw bonus",
+        "View": "View Etherscan"
+      },
+      "Errors": {
+        "InvalidAddress": "Invalid the contract address"
+      }
+    },
+    "Statistics": {
+      "Charts": {
+        "Headings": {
+          "priceEth": "Token price by days",
+          "shareReward": "Collected share bonus by days",
+          "buySellCount": "Total tx amount by days"
+        }
+      }
+    },
+    "Buy": {
+      "Heading": "Buy",
+      "Buttons": {
+        "Buy": "Buy"
+      },
+      "Labels": {
+        "TypeNumber": "Type a valid number.",
+        "Result": "Approximately {{ amount }} MNTP.",
+        "Fee": "Estimated fee:",
+        "TokenPrice": "Average token price:",
+        "CurrentPrice": "Current buy price for 1 token:",
+        "MaxPurchase": "You can buy maximum {{ max }} tokens",
+        "MinReturn": "Min return"
+      },
+      "Errors": {
+        "InvalidBalance": "You don't have enough money.",
+        "MaxPurchase": "You are allowed to buy max {{ max }} MNTP",
+        "Limits": "Minimal value is {{ min }}. Maximum value is {{ max }}.",
+        "minReturn": "Minimal value must be greater than <b>0</b>. Maximal value is <b>{{ max }}</b>."
+      }
+    },
+    "Sell": {
+      "Heading": "Sell",
+      "Buttons": {
+        "Sell": "Sell"
+      },
+      "Labels": {
+        "TypeNumber": "Type a valid number.",
+        "Result": "Approximately {{ amount }} ETH.",
+        "Fee": "Estimated fee",
+        "TokenPrice": "Average token price",
+        "CurrentPrice": "Current sell price for 1 token:",
+        "MinReturn": "Min return"
+      },
+      "Errors": {
+        "InvalidBalance": "You don't have enough money",
+        "Limits": "Minimal value is {{ min }}. Maximum value is {{ max }}.",
+        "minReturn": "Minimal value must be greater than <b>0</b>. Maximal value is <b>{{ max }}</b>."
+      }
+    },
+    "PromoBonus": {
+      "Labels": {
+        "BigBonus": "WIN BIG BANK",
+        "QuickBonus": "WIN QUICK BANK",
+        "QuickBlocksToWin": "Amount of blocks to win QUICK BANK: <b>{{ value }}</b> blocks",
+        "BigBlocksToWin": "Amount of blocks to win BIG BANK: <b>{{ value }}</b> blocks"
+      },
+      "Info": "You're gonna win a promo bonus if your buy transaction for <b>more than {{ value }} tokens</b> is the first in a particular block!"
+    },
+    "AddToken": {
+      "Heading": "Add token",
+      "Labels": {
+        "Name": "Your company name",
+        "Email": "Contact email",
+        "Website": "Your website url",
+        "Ticker": "Token ticker",
+        "Price": "Start price",
+        "CreateLabel": "Would you like to create a new token or use your existing one?",
+        "Create": "Create a new token for me",
+        "Exist": "I'd like use me ERC20 token",
+        "Contract": "Token contract address",
+        "Supply": "Total supply"
+      },
+      "Placeholders": {
+        "Name": "Goldmint",
+        "Ticker": "MNTP",
+        "Price": "0.01",
+        "Contract": "0x0160ae697a3538668cdb4698d3b89c7f36ad990d",
+        "Supply": "10000000000"
+      },
+      "Buttons": {
+        "Cancel": "Cancel",
+        "Back": "Back",
+        "Next": "Next",
+        "AddToken": "Add token"
+      },
+      "Errors": {
+        "Required": "Field is required",
+        "Pattern": "Field must contains digits and latin letters",
+        "Email": "Incorrect email format",
+        "Website": "Incorrect website url format",
+        "Address": "Invalid contract address"
+      }
+    },
+    "Market": {
+      "Table": {
+        "Name": "Name",
+        "24HChange": "24H Change, %",
+        "PriceETH": "Price, ETH",
+        "24HVolume": "24H Volume, ETH",
+        "Graph": "7D price graph",
+        "MoreInfo": "More info",
+        "Trade": "Trade"
+      },
+      "Chart": {
+        "Detail": "Token price for last 7 days"
+      },
+      "Placeholder": {
+        "Search": "Search..."
+      },
+      "Buttons": {
+        "ViewContract": "View smart contract on Etherscan"
+      }
+    },
+    "About": {
+      "Sections": {
+        "1th": {
+          "Heading": "Что такое Fotron?",
+          "Text": "Fotron – market place для продажи токенов ERC20 различных проектов, использующих для дистрибуции следующие общие принципы, заложенные в открытый и аудированный смарт-контракт:",
+          "List": {
+            "1th": "<b>Эскроу</b> - хранение ETH, полученных от продажи токенов, и возможность обратной продажи токенов до момента окончания lockup-периода.",
+            "2th": "<b>Реферальная система</b> - за привлечение покупателя токенов, выплачивается вознаграждение в ETH.",
+            "3th": "<b>Ценообразование и ликвидность</b> - динамическое изменение стоимости токена, выраженной в ETH в зависимости от покупок и возвратов; возможность полного выкупа ранее проданных токенов.",
+            "4th": "<b>Геймификация</b> - дополнительные бонусы для покупателей токенов, привязанные к моменту покупки."
+          }
+        },
+        "2th": {
+          "Heading": "Вы очередная пирамида?",
+          "Text": "Нет, мы не пирамида, так как мы не используем тело вложенных инвестиций для выплаты реферальных вознаграждений; для этого используется добавленная комиссия за покупку и продажу токенов в смарт-контракте. Тело инвестиций в ETH хранится в смарт-контракте до востребования покупателем."
+        },
+        "3th": {
+          "Heading": "Как функционирует Fotron?",
+          "Text": "Проект, допущенный на платформу, заливает выбранный им объём своих токенов в смарт контракт, определяет начальную цену в ETH, ниже которой цена не может опуститься, и lockup-период, в течении которого он не может забрать ничего из смарт-контракта.<br><br>Инвесторы, приходя на платформу, покупают токены выбранного проекта, перечисляя ETH на смарт-контракт.<br><br>Цена токена рассчитывается по сложной формуле, повышается при каждой покупке и снижается при каждой продаже.<br><br>Инвестор уплачивает комиссию при покупке и продаже, которая зависит от суммы сделки и составляет от 1 до 10%.  Чем больше объем сделки, тем выше комиссия.<br><br>В любой момент в течении lockup-периода инвестор может продать токены по текущей цене обратно в смарт-контракт и забрать ETH. Инвестор также может оставить токены себе или продать их на любой крипто-бирже. Также инвестор имеет возможность купить токены на крипто-бирже и продать их в смарт-контракт, но на сумму не более своей первоначальной покупки.<br><br>По окончании lockup-периода, проект получает из смарт-контракта оставшиеся токены и/или ETH."
+        },
+        "4th": {
+          "Heading": "Насколько безопасна Fotron?",
+          "Text": "Смарт-контракт имеет открытый код и может быть провалидирован. Ни у одного из проектов, включая основателей Fotron, нет доступа к ETH, хранящимся внутри смарт-контракта. Отчет по код-ревью смарт-контракта можно найти на нашем <a href='https://github.com/Goldmint/fotron/blob/master/SmartContracts/Fotron-code-review.pdf' target='_blank'>Github</a>."
+        },
+        "5th": {
+          "Heading": "Как происходит расчет комиссий?",
+          "Text": "- комиссия для покупки = (цена токена после транзакции – текущая цена токена)/2;<br><br>- комиссия для продажи = (текущая цена токена – цена после транзакции)/2."
+        },
+        "6th": {
+          "Heading": "Как происходит распределение комиссий?",
+          "Text": "Комиссия от сделок делится следующим образом:",
+          "List": {
+            "1th": "1) 30% – получает проект;",
+            "2th": "2) 25% – бонусный фонд для токен-холдеров;",
+            "3th": "3) 20% – получает владелец реферальной ссылки, если была совершена покупка;",
+            "4th": "4) 5% от спреда идет на быстрый джекпот – QUICK promo (выплачивается раз в 20 минут, при попадании транзакции в 100-ый блок Etherum);",
+            "5th": "5) 5% от спреда идет на большой джекпот – BIG promo (выплачивается раз в три дня, при попадании транзакции в 9999-ый блок Etherum);",
+            "6th": "6) 15% идет оператору платформы на развитие проекта Fotron."
+          }
+        },
+        "7th": {
+          "Heading": "Как будет изменяться цена токена?",
+          "Text": "Цена токена относительно ETH изменяется согласно следующим формулам: <br/> для покупки P1 = T*P0*exp(TS),  где T - кол-во покупаемых токенов, P0 - текущая цена токена в ETH, P1 - цена токена в ETH после совершения транзакции, S - скорость прироста цены (напр, 0.05/10000 - прирост цены на 5% на каждые 10000 токенов); <br/>- для продажи P1 = T*P0*exp(-TS)."
+        },
+        "8th": {
+          "Heading": "Что Fotron дает пользователю?",
+          "List1": {
+            "Heading": "Безопасность:",
+            "Items": {
+              "1th": "В отличии от покупки токенов на ICO, пользователю для их продажи не надо ждать листинга, он всегда знает минимальную цену, ниже которой токен не упадет."
+            }
+          },
+          "List2": {
+            "Heading": "Возможность заработать несколькими способами:",
+            "Items": {
+              "1th": "а) купить токен дешевле (оказаться в начале  периода покупки) и продать дороже (оказаться в начале периода продаж);",
+              "2th": "б) получить джекпот при покупке токенов;",
+              "3th": "в) получить 2% бонус по реферальной ссылке (для «общительных инвесторов»);",
+              "4th": "г) получить часть общего для всех бонуса – 3% комиссий делится на всех, пропорционально сумме токенов в кошельке;",
+              "5th": "д) заработать на арбитраже при разнице стоимости токена в Fotron и на бирже."
+            }
+          }
+        },
+        "9th": {
+          "Heading": "Что Fotron дает проекту?",
+          "List": {
+            "1th": "А) Возможность популяризировать свой токен и увеличить число инвесторов. Попадание на платформу означает определенный уровень качества проектов.",
+            "2th": "Б) Возможность реализовать дополнительный объём токенов.",
+            "3th": "В) Возможность заработать 3,5% от каждой продажи своих токенов."
+          },
+          "Text": "На свое усмотрение, post-ICO проект может защитить интересы своих ранних инвесторов, позволив им покупать через Fotron токены на сумму, не превышающую объём, купленный ранним инвестором на ICO."
+        },
+        "10th": {
+          "Heading": "Роль команды Fotron",
+          "List": {
+            "1th": "а) Продвижение платформы;",
+            "2th": "б) Обеспечение регулярной поддержки пользователей и проектов в чате telegram;",
+            "3th": "в) Предоставление технического функционала платформы;",
+            "4th": "г) Предоставление договорной базы пользователям и проектам."
+          }
+        }
+      }
+    },
+    "FAQ": {
+      "Heading": "FAQ",
+      "Support": "If you didn't find the answer to your question in our FAQ, send us an email",
+      "Answers": {
+        "1th": {
+          "Heading": "Ваш смарт-контракт открытый?",
+          "Text": "Да."
+        },
+        "2th": {
+          "Heading": "Как купить токены через реферальную ссылку?",
+          "Text": "При каждой покупке токенов на смарт-контракте создается аккаунт, соответствующий номеру публичного ключа Вашего кошелька, и доступ к этой ячейке имеет только владелец приватного ключа, соответствующего этому публичному адресу."
+        },
+        "3th": {
+          "Heading": "У меня есть токены купленные на бирже, могу ли я участвовать в распределении вознаграждения?",
+          "Text": "Нет, для участия в разделении вознаграждения необходимо купить токены в смарт-контракте."
+        },
+        "4th": {
+          "Heading": "Можете ли вы этот смарт-контракт аннулировать?",
+          "Text": "Нет."
+        },
+        "5th": {
+          "Heading": "Как нам убедиться, что вы не выведете оттуда все деньги?",
+          "Text": "Прочитайте условия смарт-контракта и результаты аудита."
+        },
+        "6th": {
+          "Heading": "Можно ли купить токены, получить вашу реферальную ссылку, и сразу продать купленные токены?",
+          "Text": "Можно, но тогда Вы будете получать только вознаграждение от привлечения новых инвесторов по реферальной ссылке. Остальные вознаграждения реферальной программы не будут распределяться на Вас из-за отсутствия токенов на Вашем кошельке."
+        },
+        "7th": {
+          "Heading": "Если покупка токенов произошла без реферальной ссылки, куда деваются проценты?",
+          "Text": "В случае покупки токенов в обход реферальной ссылки, вознаграждение добавляется к общему реферальному фонду всем участниками реферальной программы."
+        },
+        "8th": {
+          "Heading": "Реферальное вознаграждение автоматически попадает на мой кошелек Ethereum?",
+          "Text": "Нет, все вознаграждения накапливаются в саморегулируемом смарт-контракте, для снятия вознаграждения необходимо сделать запрос к смарт-контракту путем авторизации в кошельке MetaMask на сайте платформы."
+        },
+        "9th": {
+          "Heading": "Что делать, если я потерял доступ к своему Ethereum кошельку, на который я купил токены в смарт-контракте?",
+          "Text": "Тут уже ничего не поделаешь."
+        },
+        "10th": {
+          "Heading": "Какое минимальное количество токенов необходимо купить в смарт-контракте для участия в реферальной программе?",
+          "Text": "Минимальное количество устанавливается для каждого токена индивидуально и позволяет получать вознаграждение от покупок по Вашей реферальной ссылке, а также часть вознаграждения от общего реферального фонда."
+        },
+        "11th": {
+          "Heading": "Могу ли я сделать свой собственный сайт с описанием проекта и разместить там свою реферальную ссылку?",
+          "Text": "Конечно, можно! Мы поддерживаем популяризацию Fotron в сети Интернет при условии достоверности распространяемой информации. С другой стороны, мы всячески противодействуем распространению искаженной информации о правилах и условиях Fotron."
+        },
+        "12th": {
+          "Heading": "Комиссии в Fotron",
+          "Text": "При покупке и продажи уплачивается небольшая комиссия, а также стоимость газа, которую можно указать самостоятельно в процессе сделки.<br>При небольших транзакциях потери на газ могут оказаться достаточно значительными в процентном соотношении. Рекомендуем выставлять газ вручную и не совершать множества  мелких транзакций."
+        }
+      }
+    },
+	"MainModal": {
+      "Slide1": "The platform for the ERC-20 tokens distribution which based on a smart contract with a back sale guarantee.",
+      "Slide2": "ETH reward from every purchase / sale for all token holders.",
+      "Slide3": "The additional remuneration in ETH for attracting users by referral link.",
+      "Slide4": "The possibility of a super bonus obtaining while buying tokens."
+    },
+    "ErrorPage": {
+      "404": {
+        "Heading": "Error 404. Page not found",
+        "SectionTitle": "Use the menu to navigate the site"
+      }
+    },
+    "LegalSecurity": {
+      "Heading": "Legal & Security",
+      "Label": "1. Documents",
+      "Links": {
+        "Agreement": "Fotron service agreement",
+        "Terms": "Fotron terms of service"
+      }
+    }
+  },
+  "MESSAGE": {
+    "MetaMask": {
+      "Heading": "To continue you'll need to have MetaMask",
+      "Text": "MetaMask is a bridge that allows you to visit the distributed web of tomorrow in your browser today. It allows you to run Ethereum dApps right in your browser without running a full Ethereum node. Please, install the MetaMask add-on in Chrome, Firefox or Opera browser. Get <a href=\"https://metamask.io\" target=\"_blank\">MetaMask</a>"
+    },
+    "MMHandingOut": "Seems like your MetaMask is hanging out or doesn't work properly at the moment. Please try to turn it off and then on at your extension settings. After reloading MetaMask please click OK.",
+    "LoginToMM": {
+      "HeadingBuy": "BUY TOKEN",
+      "HeadingSell": "SELL TOKEN",
+      "Text": "Please login to your account or approve access to the Ethereum blockchain"
+    },
+    "SentTransaction": {
+      "Heading": "Transaction in Process:",
+      "Hash": "Your transaction hash is:",
+      "Link": "View your transaction on Etherscan"
+    },
+    "AddToken": "Token request has been sent",
+    "ConnectingMM": "Connecting to MetaMask...",
+    "InvalidNetwork": "You must use {{ networkName }} network",
+    "ServiceUnavailable": "Service is temporarily unavailable"
+  },
+  "POPOVER": {
+    "MyTokens": "Your current balance of tokens",
+    "MyBalances": "The current value of all your tokens purchased on the Fotron platform in ETH",
+    "MyBonus": "Your total earned bonus including your share bonus, referral bonus and promotional bonuses received",
+    "MyRefLink": "Your referral link",
+    "BigBank": "You can get this big promo bonus if your transaction turns out to be the first in each block whose number is a multiple of 9999",
+    "QuickBank": "You can get this promo bonus if your transaction turns out to be the first in each block whose number is a multiple of 100",
+    "PercentBtnBuy": "Amount of ETH for the active Metamask wallet for which you want to buy tokens",
+    "PercentBtnSell": "Amount of tokens for the active Metamask wallet for which you want to sell tokens",
+    "TokenFee": "Size of the Fotron's commission excluding the cost of gas per transaction",
+    "AveragePrice": "Calculated average token price of the deal",
+    "EstimateBuy": "The minimum amount of tokens you will receive as soon as the transaction is confirmed",
+    "EstimateSell": "The minimum amount of ETH you will receive as soon as the transaction is confirmed"
+  }
+}

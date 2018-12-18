@@ -1,0 +1,7 @@
+<iframe [src]="pagePath | safe"
+        frameborder="0"
+        id="static-page-iframe"
+        class="static-page-iframe"
+        scrolling="no"
+        *ngIf="pagePath && pagePath.length">
+</iframe>

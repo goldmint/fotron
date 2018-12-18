@@ -1,0 +1,88 @@
+// $modal-inner-padding:               15px !default;
+
+$modal-title-line-height:           rem(28px)
+
+$modal-content-border-width:        0
+$modal-content-box-shadow-xs:       0px 44px 88px rgba(0, 0, 0, .25)
+// $modal-content-box-shadow-sm-up:    0 5px 15px rgba($black,.5) !default;
+
+$modal-backdrop-bg:                 $color-black
+$modal-backdrop-opacity:            .75
+$modal-header-border-color:         $color-brand
+$modal-header-border-width:         3px
+// $modal-header-padding:              15px !default;
+
+$modal-xl:                          1000px
+// $modal-lg:                          800px !default;
+// $modal-md:                          500px !default;
+// $modal-sm:                          300px !default;
+
+// $modal-transition:                  transform .3s ease-out !default;
+
+
+@import "~bootstrap/scss/modal"
+.modal
+  display: flex !important
+  height: 100vh
+  &-open
+    overflow: hidden !important
+    padding-right: 0 !important
+
+  &-content
+    padding-top: 0
+    padding-left: 115px
+    padding-right: 115px
+    padding-bottom: 110px
+    min-height: 320px
+    border: none
+    box-shadow: 0px 44px 88px rgba(0, 0, 0, .25)
+
+  /*&-backdrop
+   background-color: rgba(255,255,255,0.75)*/
+
+  &-header
+    justify-content: center
+    align-items: flex-end
+    min-height: 150px
+
+    .close
+      position: absolute
+      top: 6px
+      right: 6px
+      margin: 0
+      padding: 5px
+      color: $color-brand
+      opacity: 1
+      cursor: pointer
+      transition: $transition-link
+
+      &:hover
+        color: $color-brand-hover
+
+
+  &-title
+    font-weight: 400
+    font-size: rem(24px)
+    letter-spacing: .1em
+    text-transform: uppercase
+    text-align: center
+
+
+  &-body
+    border-bottom: 3px solid $color-gray-0
+    font-size: rem(18px)
+    line-height: rem(24px)
+
+    > .row
+      margin: 0 -30px
+
+    b
+      font-weight: 500
+
+    // strong
+    //   font-weight: 700
+
+
+@include media-breakpoint-up(xl)
+  .modal-lg
+    max-width: $modal-xl

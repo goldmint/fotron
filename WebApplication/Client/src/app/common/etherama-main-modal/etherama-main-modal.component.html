@@ -1,0 +1,16 @@
+<div class="message-box__header">
+  <h4 class="modal-title pull-left">ETHERAMA QUICK TOUR</h4>
+  <button type="button" class="message-box__close" (click)="hide()">
+    <svg class="icon">
+      <use xlink:href="#close"></use>
+    </svg>
+  </button>
+</div>
+
+<div class="message-box__body position-relative">
+  <carousel [interval]="0" [noWrap]="false" [(activeSlide)]="currentSlide" >
+    <slide *ngFor="let slide of slides; let i = index">
+      <div class="main-modal-slide">{{ "PAGES.MainModal.Slide" + (i+1) | translate }}</div>
+    </slide>
+  </carousel>
+</div>

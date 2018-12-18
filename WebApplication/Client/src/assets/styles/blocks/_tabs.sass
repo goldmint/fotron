@@ -1,0 +1,31 @@
+.tabs
+  &.tab-container
+
+  .nav-tabs
+    border-bottom: none
+
+    .nav-item
+      margin-bottom: 0
+
+    .nav-link
+      font-size: rem(14px)
+      font-weight: 700
+      line-height: rem(18px)
+      letter-spacing: .1em
+      text-align: center
+      text-transform: uppercase
+      background-color: $color-gold
+      color: $color-white
+      padding: rem(10px) rem(14px)
+      max-height: rem(38px)
+      min-width: 112px
+
+    .nav-link.active,
+    .nav-item.show .nav-link
+      background-color: $color-gray-0
+      color: $color-black
+      border: none
+
+  .tab-content
+    background-color: $color-gray-0
+    padding: rem(20px) rem(16px)

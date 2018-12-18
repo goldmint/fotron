@@ -1,0 +1,21 @@
+.logo
+  display: flex
+  flex-direction: row
+  align-items: center
+  height: 32px
+  color: $color-brand
+  text-decoration: none !important
+  &--text
+    margin-left: 10px
+    letter-spacing: 2px
+    text-transform: uppercase
+    display: inline-block
+    padding-top: 5px
+
+  &:active, &:focus
+    color: $color-brand
+
+  &:hover
+    color: $color-white
+    svg
+      fill: $color-white

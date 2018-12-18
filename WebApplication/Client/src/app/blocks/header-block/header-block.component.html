@@ -1,0 +1,196 @@
+<header class="header">
+  <div class="container">
+    <div class="header__row justify-content-between">
+      <div class="header-info-container">
+        <div>
+          <a class="logo" routerLink="">
+            <svg class="icon gold" width="50px" height="50px">
+              <use xlink:href="#logo"></use>
+            </svg>
+            <span class="logo--text">ETHERAMA</span>
+          </a>
+        </div>
+
+        <div class="d-flex align-items-center flex-wrap col-auto">
+          <div class="action-info-block" *ngIf="!isMobile">
+            <div class="mb-2">
+              <div class="d-flex align-items-center mb-1">{{ "PAGES.Trade.Labels.Balances" | translate }}
+                <span class="ml-2" [popover]='"POPOVER.MyBalances" | translate' triggers="mouseenter:mouseleave" placement="bottom">
+                    <svg class="icon gold" width="20" height="20">
+                      <use xlink:href="#info"></use>
+                    </svg>
+                  </span>
+              </div>
+              <b *ngIf="!ethAddress">~ O ETH</b>
+              <img *ngIf="ethAddress && !allTokensBalance" alt="loading" width="17" height="17" class="form-loader" src="assets/img/loader-gold-bg-black.gif">
+              <b *ngIf="ethAddress && allTokensBalance" [popover]="allTokensBalanceSumEth > 0 && myBalancesPopUp" triggers="mouseenter:mouseleave" placement="bottom">~ {{ allTokensBalanceSumEth | noexp:4 }} ETH</b>
+            </div>
+          </div>
+
+          <div class="action-info-block" *ngIf="!isMobile">
+            <div class="mb-2">
+              <div class="d-flex align-items-center mb-1">{{ "PAGES.Trade.Labels.Bonus" | translate }}
+                <span class="ml-2" [popover]='"POPOVER.MyBonus" | translate' triggers="mouseenter:mouseleave" placement="bottom">
+                    <svg class="icon gold" width="20" height="20">
+                      <use xlink:href="#info"></use>
+                    </svg>
+                  </span>
+              </div>
+              <b [popover]="myBonusPopUp" triggers="mouseenter" #myBonusPopover="bs-popover" (mouseleave)="popLeave(myBonusPopover)" (mouseenter)="popEnter(myBonusPopover)" [outsideClick]="true" placement="bottom">{{ +userTotalReward | noexp:4 }} ETH</b>
+            </div>
+          </div>
+
+          <div class="action-info-block" *ngIf="!isMobile">
+            <div class="overflow-hidden">
+              <div class="nowrap my-ref-link-container" [title]="isRefAvailable ? myGenerateRefLink : ''">
+                <div class="d-flex align-items-center mb-1">
+                  {{ "PAGES.Trade.Labels.RefLink" | translate }}
+                  <span class="ml-2" [popover]='"POPOVER.MyRefLink" | translate' triggers="mouseenter:mouseleave" placement="bottom">
+                    <svg class="icon gold" width="20" height="20">
+                      <use xlink:href="#info"></use>
+                    </svg>
+                  </span>
+                </div>
+
+                <div *ngIf="isRefAvailable">
+                  <input type="text" class="input-copy" [value]="myGenerateRefLink" #refLink readonly>
+                  <span class="input-copy-link" popover='{{ "PAGES.Trade.Labels.ClickToCopy" | translate }}' triggers="mouseenter:mouseleave" placement="bottom" (click)="onCopyData(refLink)">
+                  <b>{{ myGenerateRefLink }}</b>
+                </span>
+                </div>
+
+                <div *ngIf="!isRefAvailable">
+                  <span class="ref-link-not-available" [popover]="myRefLinkPopUp" triggers="mouseenter:mouseleave" placement="bottom">
+                    <b>{{ "PAGES.Trade.Labels.RefNotAvailable" | translate }}</b>
+                  </span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="position-relative">
+            <app-language-switcher></app-language-switcher>
+          </div>
+
+          <button class="btn btn-sm btn-primary ml-3" type="button" routerLink="/add-token">
+            {{ "HEADER.Buttons.Add" | translate }}
+          </button>
+        </div>
+      </div>
+
+
+      <div class="col-auto" *ngIf="isMobile" (click)="toggleMobileMenu($event)">
+        <svg class="icon mobile-menu-icon" width="24px" height="24px">
+          <use xlink:href="#burger" *ngIf="!isShowMobileMenu"></use>
+          <use xlink:href="#close" *ngIf="isShowMobileMenu"></use>
+        </svg>
+      </div>
+    </div>
+
+    <app-navbar *ngIf="!isMobile"></app-navbar>
+  </div>
+
+  <div id="mobile-menu-container" *ngIf="isShowMobileMenu">
+    <div class="mt-3">
+      <div class="mobile-bonus-info">
+        <div class="action-info-block">
+          <div class="mb-2">
+            <div class="d-flex align-items-center mb-1">{{ "PAGES.Trade.Labels.Balances" | translate }}
+              <span class="ml-2" [popover]='"POPOVER.MyBalances" | translate' triggers="mouseenter:mouseleave" placement="right" container="body">
+                    <svg class="icon gold" width="20" height="20">
+                      <use xlink:href="#info"></use>
+                    </svg>
+                  </span>
+            </div>
+            <b *ngIf="!ethAddress">~ O ETH</b>
+            <img *ngIf="ethAddress && !allTokensBalance" alt="loading" width="17" height="17" class="form-loader" src="assets/img/loader-gold-bg-black.gif">
+            <b *ngIf="ethAddress && allTokensBalance" [popover]="allTokensBalanceSumEth > 0 && myBalancesPopUp" triggers="mouseenter:mouseleave" placement="right" container="body">~ {{ allTokensBalanceSumEth | noexp:4 }} ETH</b>
+          </div>
+        </div>
+
+        <div class="action-info-block">
+          <div class="mb-2">
+            <div class="d-flex align-items-center mb-1">{{ "PAGES.Trade.Labels.Bonus" | translate }}
+              <span class="ml-2" [popover]='"POPOVER.MyBonus" | translate' triggers="mouseenter:mouseleave" placement="right">
+                    <svg class="icon gold" width="20" height="20">
+                      <use xlink:href="#info"></use>
+                    </svg>
+                  </span>
+            </div>
+            <b [popover]="myBonusPopUp" triggers="mouseenter" [outsideClick]="true" [placement]="+userTotalReward ? 'bottom' : 'right'" container="body">{{ +userTotalReward | noexp:4 }} ETH</b>
+          </div>
+        </div>
+
+        <div class="action-info-block">
+          <div class="overflow-hidden">
+            <div class="nowrap mb-2" [title]="isRefAvailable ? myGenerateRefLink : ''">
+              <div class="d-flex align-items-center mb-1">
+                {{ "PAGES.Trade.Labels.RefLink" | translate }}
+                <span class="ml-2" [popover]='"POPOVER.MyRefLink" | translate' triggers="mouseenter:mouseleave" placement="right">
+                    <svg class="icon gold" width="20" height="20">
+                      <use xlink:href="#info"></use>
+                    </svg>
+                  </span>
+              </div>
+
+              <div *ngIf="isRefAvailable">
+                <input type="text" class="input-copy" [value]="myGenerateRefLink" #refLink readonly>
+                <span class="input-copy-link" popover='{{ "PAGES.Trade.Labels.ClickToCopy" | translate }}' triggers="mouseenter:mouseleave" placement="top" (click)="onCopyData(refLink)">
+                  <b>{{ myGenerateRefLink }}</b>
+                </span>
+              </div>
+
+              <div *ngIf="!isRefAvailable">
+                  <span class="ref-link-not-available" [popover]="myRefLinkPopUp" triggers="mouseenter:mouseleave" placement="right">
+                    <b>{{ "PAGES.Trade.Labels.RefNotAvailable" | translate }}</b>
+                  </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-navbar></app-navbar>
+    </div>
+  </div>
+
+</header>
+
+<ng-template #myBonusPopUp>
+  <div class="my-bonus-pop-up">
+    <div class="my-bonus-pop-up-block">
+      <div class="mb-1"><b>{{ "PAGES.Trade.Labels.ShareReward" | translate }}</b></div>
+      <div>{{ +myBonusInfo?.shareReward | noexp:18 }} ETH</div>
+    </div>
+    <div class="my-bonus-pop-up-block">
+      <div class="mb-1"><b>{{ "PAGES.Trade.Labels.RefBonus" | translate }}</b></div>
+      <div>{{ +myBonusInfo?.refBonus | noexp:18 }} ETH</div>
+    </div>
+    <div class="my-bonus-pop-up-block">
+      <div class="mb-1"><b>{{ "PAGES.Trade.Labels.PromoBonus" | translate }}</b></div>
+      <div>{{ +myBonusInfo?.promoBonus | noexp:18 }} ETH</div>
+    </div>
+    <div class="my-bonus-pop-up-block d-flex align-items-center m-0">
+      <button class="btn btn-sm btn-primary m-0 pop-up-in-btn" type="button" (click)="withdraw()" [disabled]="!ethAddress || !+userTotalReward">
+        <svg  width="30" height="25">
+          <use xlink:href="#withdraw"></use>
+        </svg>
+        {{ "PAGES.Trade.Buttons.Withdraw" | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #myBalancesPopUp>
+  <div *ngFor="let token of allTokensBalance">
+    <div *ngIf="token.balance > 0">{{ token.token }}: {{ token.balance | noexp:6 }}</div>
+  </div>
+  <div class="mt-3">
+    {{ "PAGES.Trade.Labels.TotalSpent" | translate }} {{ +totalSpent | noexp:6 }} ETH
+  </div>
+</ng-template>
+
+<ng-template #myRefLinkPopUp>
+  <div [innerHTML]="'PAGES.Trade.Labels.GettingRef' | translate:{token: minRefTokenAmount, missing: minRefTokenAmount - totalSpent}"></div>
+</ng-template>

@@ -1,0 +1,55 @@
+@import '../../../assets/styles/functions'
+@import '../../../assets/styles/variables'
+
+.navbar
+  background-color: $color-black
+  padding: 0
+  width: 100%
+
+.nav
+  width: 100%
+
+  .nav-item
+    border-bottom: 4px solid transparent
+
+    &:not(:last-of-type),
+    &:not(:first-of-type)
+      margin: 0 2px
+
+    &.active
+      border-bottom-color: $color-white
+
+      .nav-link
+        background-color: $color-white
+        color: $color-black
+        transition: none
+
+
+  .nav-link
+    white-space: nowrap
+    height: 100%;
+    min-height: rem(38px)
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase
+    border-radius: 0
+    background-color: $color-brand
+    color: $color-black
+    font-weight: 700
+    font-size: rem(14px)
+    line-height: rem(18px)
+    letter-spacing: .1em
+    padding: rem(10px)
+
+    &:not(:hover),
+    &:not(:active)
+      transition: $transition-nav-header
+
+    &:hover
+      color: $color-black
+      background-color: $color-brand-hover
+
+    &:active
+      color: $color-white
+      background-color: $color-brand-hover

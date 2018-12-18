@@ -1,0 +1,70 @@
+@import 'functions'
+
+.activities-list
+  /* */
+
+.activity
+  display: flex
+
+  &:last-child
+    border-bottom: 2px solid $color-gold
+
+  + .activity
+    border-top: solid 1px $color-gray-0
+
+  &__icon
+    color: $color-gold
+    display: flex
+    align-items: center
+    width: 31px
+
+    .icon
+      max-width: 18px
+      max-height: 18px
+
+      &-deposit,
+      &-withdraw
+        width: 16px
+        height: 15px
+
+      &-password
+        width: 17px
+        height: 17px
+
+  &__info
+    flex: 1
+    width: calc(100% - 31px)
+    height: 52px
+    display: flex
+    flex-direction: column
+    justify-content: center
+
+  &__details
+    display: flex
+    align-items: flex-end
+    line-height: rem(17px)
+
+  &__type
+    font-weight: 500
+    font-size: rem(12px)
+
+  &__ip
+    font-weight: 400
+    font-size: rem(10px)
+    color: $color-gray-3
+    margin-left: rem(10px)
+
+  &__date
+    font-weight: 400
+    font-size: rem(10px)
+    color: $color-gray-3
+    margin-left: auto
+
+  &__comment
+    font-weight: 400
+    font-size: rem(12px)
+    line-height: rem(17px)
+    width: calc(100% - 15px)
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap

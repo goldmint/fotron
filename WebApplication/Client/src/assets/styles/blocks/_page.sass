@@ -1,0 +1,115 @@
+.page
+  display: block
+  padding-top: 50px
+  position: relative
+
+  &__heading
+    font-weight: 300
+    font-size: rem(48px)
+    line-height: rem(46px)
+    letter-spacing: .1em
+    text-transform: uppercase
+    margin-bottom: 0
+    min-height: 92px
+
+  &__jumbotron
+    .page--auth &
+      margin-top: 47px
+      margin-bottom: 37px
+      text-align: center
+
+  &__title
+    /* */
+
+  &__subtitle
+    font-size: rem(24px)
+    line-height: rem(30px)
+    text-transform: uppercase
+    letter-spacing: .1em
+
+    .page--auth &
+      margin-top: 16px
+      margin-bottom: 16px
+      padding: rem(16px) 0
+
+  &__sidebar
+    // padding-top: 9px /* @todo: remove it */
+    padding-top: 34px
+
+  &__section
+    position: relative
+
+    &--bottom-border
+      border-bottom: 3px solid $color-gray-0
+
+  &__note
+    font-size: rem(12px)
+    line-height: rem(14px)
+    display: inline-block
+    color: $color-gray-1
+
+.percent-btn
+  font-size: 0.75rem
+  background: transparent
+  border: 1px solid $color-gray-0
+  cursor: pointer
+  padding: 0.35rem 0.3rem 0.3rem
+  line-height: 1
+
+.percent-btn:focus
+  outline: none
+
+.percent-btn-cont
+  display: flex
+  align-items: center
+  height: 1.5rem
+
+.overflow-ellipsis
+  text-overflow: ellipsis
+  overflow: hidden
+  display: block
+
+.overflow-hidden
+  overflow: hidden !important
+
+.nowrap
+  white-space: nowrap
+
+.wrap
+  white-space: inherit !important
+
+.font-weight-500
+  font-weight: 500
+
+.line-height
+  line-height: 1.5
+
+.a-link
+  cursor: pointer
+  color: #0093e5
+
+.a-link:hover
+  text-decoration: underline
+
+.pointer
+  cursor: pointer
+
+.anychart-credits
+  display: none !important
+
+.mm-hanging-out
+  background-image: url(../../assets/img/mm-hanging-out.jpg)
+  width: 413px
+  height: 169px
+  background-size: contain
+  background-repeat: no-repeat
+  background-position-x: center
+  margin: 10px auto 0
+
+.icon.gold
+  fill: $color-brand
+
+@media only screen and (max-width: 576px)
+  .mm-hanging-out
+    width: 100%
+    height: 32vw

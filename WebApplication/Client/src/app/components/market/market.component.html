@@ -1,0 +1,221 @@
+<!-- host: .page -->
+
+<app-main-promo-bonus></app-main-promo-bonus>
+
+<div class="text-center mt-4 mb-1">
+  <a [href]="coreContractEtherscanLink" target="_blank">
+    <button class="btn btn-sm btn-primary wrap" type="button">
+      {{ 'PAGES.Market.Buttons.ViewContract' | translate }}
+    </button>
+  </a>
+</div>
+
+<section class="page__section">
+  <div class="section__content py-4">
+
+    <div class="col-12 token-search">
+      <div class="d-flex">
+        <input type="text" class="form-control" id="searchValue" name="searchValue"
+               #searchInput="ngModel"
+               [(ngModel)]="searchValue"
+               name="search-input"
+               autocomplete="off"
+               placeholder="{{ 'PAGES.Market.Placeholder.Search' | translate }}"
+               required>
+      </div>
+    </div>
+
+    <ngx-datatable class="table table--no-footer txs-table" #table
+                   [rows]="rows"
+                   [columnMode]="'force'"
+                   [headerHeight]="53"
+                   [rowHeight]="'auto'"
+                   [footerHeight]="135"
+                   [reorderable]="false"
+                   [loadingIndicator]="loading"
+                   [count]="page.size"
+                   [externalSorting]="true"
+                   [externalPaging]="true"
+                   (page)='setPage()'
+                   [messages]="messages">
+
+      <div *ngIf="!isMobile">
+        <ngx-datatable-column prop="logoUrl" [draggable]="false" [resizeable]="false" [sortable]="false" [maxWidth]="40">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            <span class="datatable-header-cell-wrapper"></span>
+          </ng-template>
+
+          <ng-template let-logoUrl="value" let-row="row" ngx-datatable-cell-template>
+            <div class="token-icon" (click)="moreInfo(row)">
+              <img [src]="logoUrl" alt="token-icon">
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="ticker" [draggable]="false" [resizeable]="false" [sortable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            <span class="datatable-header-cell-wrapper">
+             {{ "PAGES.Market.Table.Name" | translate }}
+            </span>
+          </ng-template>
+
+          <ng-template let-ticker="value" ngx-datatable-cell-template>
+            <div class="text-center">{{ ticker }}</div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="priceChangeLastDayPercent" [draggable]="false" [resizeable]="false" [sortable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            <span class="datatable-header-cell-wrapper">
+             {{ "PAGES.Market.Table.24HChange" | translate }}
+            </span>
+          </ng-template>
+
+          <ng-template let-priceChangeLastDayPercent="value" ngx-datatable-cell-template>
+            <div class="text-center" [ngClass]="{'change24-green': priceChangeLastDayPercent > 0, 'change24-red': priceChangeLastDayPercent < 0}">
+              {{ priceChangeLastDayPercent | noexp:18 }}
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="currentPriceEth" [draggable]="false" [resizeable]="false" [sortable]="false" [minWidth]="120">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            <span class="datatable-header-cell-wrapper">
+             {{ "PAGES.Market.Table.PriceETH" | translate }}
+            </span>
+          </ng-template>
+
+          <ng-template let-currentPriceEth="value" ngx-datatable-cell-template>
+            <div class="text-center">{{ currentPriceEth | noexp:18 }}</div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="tradingVolume24HEth" [draggable]="false" [resizeable]="false" [sortable]="false">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            <span class="datatable-header-cell-wrapper">
+             {{ "PAGES.Market.Table.24HVolume" | translate }}
+            </span>
+          </ng-template>
+
+          <ng-template let-tradingVolume24HEth="value" ngx-datatable-cell-template>
+            <div class="text-center">{{ tradingVolume24HEth | noexp:18 }}</div>
+          </ng-template>
+        </ngx-datatable-column>
+
+
+        <ngx-datatable-column prop="destinationWallet" [draggable]="false" [resizeable]="false" [sortable]="false" [minWidth]="175">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            <span class="datatable-header-cell-wrapper">
+             {{ "PAGES.Market.Table.Graph" | translate }}
+            </span>
+          </ng-template>
+
+          <ng-template let-destinationWallet="value" let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+            <div [ngClass]="{'pointer': row.chartData && row.chartData.length}" (click)="row.chartData && row.chartData.length && showDetailsChart(row.chartData, template)">
+              <div id="chart-container-{{ rowIndex }}" class="mini-chart-container"></div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" [maxWidth]="120">
+          <ng-template ngx-datatable-header-template>
+          </ng-template>
+
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <div class="text-center">
+              <button class="btn btn-sm btn-primary" type="button" (click)="moreInfo(row)">
+                {{ "PAGES.Market.Table.MoreInfo" | translate }}
+              </button>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" [maxWidth]="100">
+          <ng-template ngx-datatable-header-template>
+          </ng-template>
+
+          <ng-template ngx-datatable-cell-template let-row="row">
+            <div class="text-right">
+              <button class="btn btn-sm btn-primary" type="button" (click)="trade(row)">
+                {{ "PAGES.Market.Table.Trade" | translate }}
+              </button>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </div>
+
+      <ngx-datatable-column *ngIf="isMobile" [draggable]="false" [resizeable]="false" [sortable]="false">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <span class="datatable-header-cell-wrapper">{{ "PAGES.Market.Table.Name" | translate }}</span>
+        </ng-template>
+
+        <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <div class="font-weight-500 mt-1 mb-1 d-flex align-items-center">
+            <div class="token-icon" (click)="moreInfo(row)">
+              <img [src]="row.logoUrl" alt="token-icon">
+            </div>
+            <div class="ml-2">{{ row.ticker }}</div>
+          </div>
+          <div>
+            <span class="font-weight-500">{{ "PAGES.Market.Table.24HChange" | translate }}:</span>
+            <span [ngClass]="{'change24-green': row.priceChangeLastDayPercent > 0, 'change24-red': row.priceChangeLastDayPercent < 0}">
+              {{ row.priceChangeLastDayPercent | noexp:18 }}
+            </span>
+          </div>
+          <div>
+            <span class="font-weight-500">{{ "PAGES.Market.Table.PriceETH" | translate }}:</span>
+            {{ row.currentPriceEth | noexp:18 }}
+          </div>
+          <div>
+            <span class="font-weight-500">{{ "PAGES.Market.Table.24HVolume" | translate }}:</span>
+            {{ row.tradingVolume24HEth | noexp:18 }}
+          </div>
+          <div>
+            <span class="font-weight-500">{{ "PAGES.Market.Table.Graph" | translate }}:</span>
+            <div [ngClass]="{'d-none': row.chartData && !row.chartData.length}" (click)="row.chartData && row.chartData.length && showDetailsChart(row.chartData, template)">
+              <div id="chart-container-{{ rowIndex }}" class="mini-chart-container"></div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <button class="btn btn-sm btn-primary token-action-btn" type="button" (click)="moreInfo(row)">
+              {{ "PAGES.Market.Table.MoreInfo" | translate }}
+            </button>
+          </div>
+          <div class="mb-2">
+            <button class="btn btn-sm btn-primary token-action-btn" type="button" (click)="trade(row)">
+              {{ "PAGES.Market.Table.Trade" | translate }}
+            </button>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+
+    <ul class="pagination pagination--small mb-2">
+      <li class="page-item" [ngClass]="{'hidden': !isDataLoaded || page.pageNumber === 0}">
+        <a class="page-link page-link--tiny" href="javascript:void(0)" (click)="changePage(page.pageNumber = page.pageNumber-1)">
+          <svg class="icon--previous" height="17px" width="7px">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#next"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{'hidden': !isDataLoaded || page.pageNumber >= page.totalPages - 1}">
+        <a class="page-link page-link--tiny" href="javascript:void(0)" (click)="changePage(page.pageNumber = page.pageNumber+1)">
+          <svg class="icon--next" height="17px" width="7px">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#next"></use>
+          </svg>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+<ng-template #template>
+  <button type="button" class="message-box__close" (click)="modalRef.hide()">
+    <svg class="icon">
+      <use xlink:href="#close"></use>
+    </svg>
+  </button>
+  <div id="details-chart-container"></div>
+</ng-template>
