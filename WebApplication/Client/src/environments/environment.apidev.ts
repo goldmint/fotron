@@ -1,4 +1,5 @@
 export const environment = {
+  privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
   apiUrl: 'https://www.fotron.io/api/v1',
   recaptchaSiteKey: '6LcuSTcUAAAAAGGcHJdRqDN1fEmtKjYue_872F0k',
   mainContractAddress: '0x0ad203e17ffa0219d9be9ef51f6eaf2666109128',

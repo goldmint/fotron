@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import {FormControl, NG_VALIDATORS, Validator, ValidatorFn} from '@angular/forms';
-import {TronService} from "../services/tron..service";
+import {TronService} from "../services/tron.service";
 
 @Directive({
   selector: '[ethAddressValidator][ngModel]',

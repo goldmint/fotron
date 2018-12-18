@@ -9,7 +9,7 @@ import {UserService} from "../../../services/user.service";
 import {Observable} from "rxjs/Observable";
 import {TokenInfo} from "../../../interfaces/token-info";
 import {CommonService} from "../../../services/common.service";
-import {TronService} from "../../../services/tron..service";
+import {TronService} from "../../../services/tron.service";
 
 @Component({
   selector: 'app-buy',

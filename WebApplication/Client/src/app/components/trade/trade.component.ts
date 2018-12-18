@@ -10,7 +10,7 @@ import {TokenInfo} from "../../interfaces/token-info";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MainContractService} from "../../services/main-contract.service";
 import {Subscription} from "rxjs/Subscription";
-import {TronService} from "../../services/tron..service";
+import {TronService} from "../../services/tron.service";
 
 @Component({
   selector: 'app-trade',

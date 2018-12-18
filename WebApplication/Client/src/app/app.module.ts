@@ -58,7 +58,7 @@ import {StaticPagesComponent} from "./components/static-pages/static-pages.compo
 import {LegalSecurityPageComponent} from "./components/legal-security-page/legal-security-page.component";
 import {SafePipe} from "./pipes/safe.pipe";
 import {FotronMainModalComponent} from "./common/fotron-main-modal/fotron-main-modal.component";
-import {TronService} from "./services/tron..service";
+import {TronService} from "./services/tron.service";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');

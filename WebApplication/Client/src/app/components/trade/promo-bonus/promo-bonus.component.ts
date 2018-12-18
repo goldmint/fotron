@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from "rxjs/Subject";
 import {CommonService} from "../../../services/common.service";
-import {TronService} from "../../../services/tron..service";
+import {TronService} from "../../../services/tron.service";
 
 @Component({
   selector: 'app-promo-bonus',

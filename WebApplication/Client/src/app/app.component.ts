@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@an
 import {BigNumber} from "bignumber.js";
 import {CommonService} from "./services/common.service";
 import {MessageBoxService} from "./services/message-box.service";
-import {TronService} from "./services/tron..service";
+import {TronService} from "./services/tron.service";
 
 @Component({
   selector: 'app-root',

@@ -71,12 +71,12 @@ export class MainContractService {
       }
     }
 
-    if (!this._web3Metamask && (window.hasOwnProperty('web3') || window.hasOwnProperty('tron')) && this.contractAddress) {
-      let tron = window['tron'];
+    if (!this._web3Metamask && (window.hasOwnProperty('web3') || window.hasOwnProperty('ethereum')) && this.contractAddress) {
+      let ethereum = window['ethereum'];
 
-      if (tron) {
-        this._web3Metamask = new Web3(tron);
-        tron.enable().then();
+      if (ethereum) {
+        this._web3Metamask = new Web3(ethereum);
+        ethereum.enable().then();
       } else {
         this._web3Metamask = new Web3(window['web3'].currentProvider);
       }
@@ -93,7 +93,7 @@ export class MainContractService {
 
     if (this._lastAddress !== addr) {
       this._lastAddress = addr;
-      window['tron'] && window['tron'].enable().then();
+      window['ethereum'] && window['ethereum'].enable().then();
       this.emitAddress(addr);
     }
   }

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { interval } from "rxjs/observable/interval";
 import * as Web3 from "web3";
+import * as TronWeb from "tronweb";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { BigNumber } from 'bignumber.js'
 import {environment} from "../../environments/environment";
@@ -95,6 +96,8 @@ export class TronService {
         this.stopService();
       }
     });
+
+    interval(500).takeUntil(this.destroy$).subscribe(this.checkTronWeb.bind(this)); // for tron
   }
 
   private stopService() {
@@ -110,6 +113,62 @@ export class TronService {
     this.isTradePage && interval(10000).takeUntil(this.destroy$).subscribe(this.updateWinQUICKPromoBonus.bind(this));
   }
 
+  // --------------
+  private privateKey = environment.privateKey;
+  private tronWebMain = null;
+  private tronWebBrowser = null;
+  private TRX = new BigNumber("1000000");
+  private lastTronAddress: string = null;
+
+
+  checkTronWeb() {
+    if (!this.tronWebMain) {
+      const HttpProvider = TronWeb.providers.HttpProvider;
+
+      // this.fullNode = new this.HttpProvider('https://api.trongrid.io');
+      // this.solidityNode = new this.HttpProvider('https://api.trongrid.io');
+      // this.eventServer = 'https://api.trongrid.io';
+
+      const fullNode = new HttpProvider('https://api.shasta.trongrid.io');
+      const solidityNode = new HttpProvider('https://api.shasta.trongrid.io');
+      const eventServer = 'https://api.shasta.trongrid.io';
+
+      this.tronWebMain = new TronWeb(
+        fullNode,
+        solidityNode,
+        eventServer,
+        this.privateKey
+      );
+    }
+
+    if (!this.tronWebBrowser && window.hasOwnProperty('tronWeb')) {
+      this.tronWebBrowser = window['tronWeb'];
+    }
+
+    let address = this.tronWebBrowser && this.tronWebBrowser.defaultAddress.base58 ? this.tronWebBrowser.defaultAddress.base58 : null;
+
+    if (this.lastTronAddress !== address) {
+      this.lastTronAddress = address;
+      this.getBalance(address);
+
+      this.tronWebMain.setAddress(address);
+      // this.emitAddress(address);
+    }
+
+  }
+
+  getBalance(address) {
+    this.tronWebBrowser.trx.getBalance(address).then(balance => {
+      console.log(this.convertNumResult2Trx(balance));
+    }).catch();
+  }
+
+  convertNumResult2Trx(num) {
+    return new BigNumber(num.toString(10)).div(this.TRX).toString(10);
+  }
+
+  // -----------
+
   private checkWeb3() {
     if (!this._web3Infura && this.fotronContractAddress) {
       this._web3Infura = new Web3(new Web3.providers.HttpProvider(this._infuraUrl));
@@ -123,12 +182,12 @@ export class TronService {
       }
     }
 
-    if (!this._web3Metamask && (window.hasOwnProperty('web3') || window.hasOwnProperty('tron')) && this.fotronContractAddress) {
-      let tron = window['tron'];
+    if (!this._web3Metamask && (window.hasOwnProperty('web3') || window.hasOwnProperty('ethereum')) && this.fotronContractAddress) {
+      let ethereum = window['ethereum'];
 
-      if (tron) {
-        this._web3Metamask = new Web3(tron);
-        tron.enable().then();
+      if (ethereum) {
+        this._web3Metamask = new Web3(ethereum);
+        ethereum.enable().then();
       } else {
         this._web3Metamask = new Web3(window['web3'].currentProvider);
       }
@@ -153,7 +212,7 @@ export class TronService {
 
     if (this._lastAddress !== addr) {
       this._lastAddress = addr;
-      window['tron'] && window['tron'].enable().then();
+      window['ethereum'] && window['ethereum'].enable().then();
       this.emitAddress(addr);
     }
   }
