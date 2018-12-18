@@ -1,5 +1,4 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TronService} from "../../../services/tron.service";
 import {Subject} from "rxjs/Subject";
 import * as Web3 from "web3";
 import {BigNumber} from "bignumber.js";
@@ -10,6 +9,7 @@ import {UserService} from "../../../services/user.service";
 import {Observable} from "rxjs/Observable";
 import {TokenInfo} from "../../../interfaces/token-info";
 import {CommonService} from "../../../services/common.service";
+import {TronService} from "../../../services/tron..service";
 
 @Component({
   selector: 'app-sell',
@@ -58,7 +58,7 @@ export class SellComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private ethService: TronService,
+    private tronService: TronService,
     private messageBox: MessageBoxService,
     private translate: TranslateService,
     private userService: UserService,
@@ -89,14 +89,14 @@ export class SellComponent implements OnInit, OnDestroy {
 
     this.initTransactionHashModal();
 
-    this.ethService.passTokenBalance.takeUntil(this.destroy$).subscribe(gold => {
+    this.tronService.passTokenBalance.takeUntil(this.destroy$).subscribe(gold => {
       if (gold) {
         this.tokenBalance = gold;
         this.mntp = +this.substrValue(+gold);
 
         Observable.combineLatest(
-          this.ethService.getObservableTokenDealRange(),
-          this.ethService.getObservableEthDealRange()
+          this.tronService.getObservableTokenDealRange(),
+          this.tronService.getObservableEthDealRange()
         ).takeUntil(this.destroy$).subscribe(limits => {
           if (limits[0] && limits[1]) {
             this.tokenLimits.min = limits[0].min;
@@ -110,7 +110,7 @@ export class SellComponent implements OnInit, OnDestroy {
         this.cdRef.markForCheck();
       }
     });
-    this.ethService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
+    this.tronService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
       address && (this.ethAddress = address);
       if (this.ethAddress && !address) {
         this.ethAddress = address;
@@ -119,12 +119,12 @@ export class SellComponent implements OnInit, OnDestroy {
       this.cdRef.markForCheck();
     });
 
-    this.ethService.getObservable1TokenPrice().takeUntil(this.destroy$).subscribe(price => {
+    this.tronService.getObservable1TokenPrice().takeUntil(this.destroy$).subscribe(price => {
       price && (this.sellPrice = price.sell);
       this.cdRef.markForCheck();
     });
 
-    this.ethService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
+    this.tronService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
       network !== null && (this.isInvalidNetwork = network != this.MMNetwork.index);
       this.cdRef.markForCheck();
     });
@@ -176,7 +176,7 @@ export class SellComponent implements OnInit, OnDestroy {
     this.fromToken = fromToken;
 
     const wei = this.web3['toWei'](amount);
-    this.ethService._contractInfura && this.ethService._contractInfura.estimateSellOrder(wei, fromToken, (err, res) => {
+    this.tronService._contractInfura && this.tronService._contractInfura.estimateSellOrder(wei, fromToken, (err, res) => {
       if (res) {
         let estimate = +new BigNumber(res[0].toString()).div(new BigNumber(10).pow(18));
         this.estimateFee = +new BigNumber(res[1].toString()).div(new BigNumber(10).pow(18));
@@ -221,7 +221,7 @@ export class SellComponent implements OnInit, OnDestroy {
   }
 
   initTransactionHashModal() {
-    this.ethService.getSuccessSellRequestLink$.takeUntil(this.destroy$).subscribe(hash => {
+    this.tronService.getSuccessSellRequestLink$.takeUntil(this.destroy$).subscribe(hash => {
       if (hash) {
         this.translate.get('MESSAGE.SentTransaction').subscribe(phrases => {
           this.messageBox.alert(`
@@ -253,11 +253,11 @@ export class SellComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.ethService._contractInfura.getMaxGasPrice((err, res) => {
+    this.tronService._contractInfura.getMaxGasPrice((err, res) => {
       if (+res) {
         const amount = this.web3['toWei'](this.mntp);
         const minReturn = this.web3['toWei'](this.minReturn);
-        this.ethService.sell(this.ethAddress, amount, minReturn, +res);
+        this.tronService.sell(this.ethAddress, amount, minReturn, +res);
       }
     });
   }

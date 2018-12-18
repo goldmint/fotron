@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {TronService} from "./services/tron.service";
 import {BigNumber} from "bignumber.js";
 import {CommonService} from "./services/common.service";
 import {MessageBoxService} from "./services/message-box.service";
+import {TronService} from "./services/tron..service";
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   public ethAddress: string = null;
 
   constructor(
-    private ethService: TronService,
+    private tronService: TronService,
     private commonService: CommonService,
     private messageBox: MessageBoxService,
     private cdRef: ChangeDetectorRef
@@ -30,28 +30,28 @@ export class AppComponent implements OnInit {
     /*modalSessionValue === null && */this.messageBox.mainModal();
     window.sessionStorage.setItem(modalSessionKeyName, 'true');
 
-    this.ethService.getObservableEthBalance().subscribe(balance => {
+    this.tronService.getObservableEthBalance().subscribe(balance => {
       if (balance !== null && (this.ethBalance === null || !this.ethBalance.eq(balance))) {
         this.ethBalance = balance;
-        this.ethService.passEthBalance.next(balance);
+        this.tronService.passEthBalance.next(balance);
       }
     });
 
-    this.ethService.getObservableTokenBalance().subscribe((balance) => {
+    this.tronService.getObservableTokenBalance().subscribe((balance) => {
       if (balance !== null && (this.tokenBalance === null || !this.tokenBalance.eq(balance))) {
         this.tokenBalance = balance;
-        this.ethService.passTokenBalance.next(balance);
+        this.tronService.passTokenBalance.next(balance);
       }
     });
 
-    this.ethService.getObservableEthAddress().subscribe(ethAddr => {
-      if (ethAddr && this.ethService._contractInfura) {
-        this.tokenBalance && this.ethService.passTokenBalance.next(this.tokenBalance);
-        this.ethBalance && this.ethService.passEthBalance.next(this.ethBalance);
+    this.tronService.getObservableEthAddress().subscribe(ethAddr => {
+      if (ethAddr && this.tronService._contractInfura) {
+        this.tokenBalance && this.tronService.passTokenBalance.next(this.tokenBalance);
+        this.ethBalance && this.tronService.passEthBalance.next(this.ethBalance);
       }
 
       this.ethAddress = ethAddr;
-      this.ethService.passEthAddress.next(ethAddr);
+      this.tronService.passEthAddress.next(ethAddr);
       this.cdRef.markForCheck();
     });
   }

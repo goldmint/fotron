@@ -28,7 +28,6 @@ import { HeaderBlockComponent } from './blocks/header-block/header-block.compone
 import { NavbarBlockComponent } from './blocks/navbar-block/navbar-block.component';
 import { MessageBoxComponent } from './common/message-box/message-box.component';
 import { SpriteComponent } from './common/sprite/sprite.component';
-import {TronService} from "./services/tron.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MessageBoxService} from "./services/message-box.service";
 import {APIService} from "./services/api.service";
@@ -52,13 +51,14 @@ import { EthAddressValidatorDirective } from './directives/eth-address-validator
 import {environment} from "../environments/environment";
 import { EmailValidatorDirective } from './directives/email-validator.directive';
 import { MainPromoBonusComponent } from './components/market/main-promo-bonus/main-promo-bonus.component';
-import { FotronMainModalComponent } from './common/fotron-main-modal/fotron-main-modal.component';
 import {MainContractService} from "./services/main-contract.service";
 import {ShareButtonsModule} from "@ngx-share/buttons";
 import {FooterBlockComponent} from "./blocks/footer-block/footer-block.component";
 import {StaticPagesComponent} from "./components/static-pages/static-pages.component";
 import {LegalSecurityPageComponent} from "./components/legal-security-page/legal-security-page.component";
 import {SafePipe} from "./pipes/safe.pipe";
+import {FotronMainModalComponent} from "./common/fotron-main-modal/fotron-main-modal.component";
+import {TronService} from "./services/tron..service";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');

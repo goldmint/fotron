@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import {FormControl, NG_VALIDATORS, Validator, ValidatorFn} from '@angular/forms';
-import {TronService} from "../services/tron.service";
+import {TronService} from "../services/tron..service";
 
 @Directive({
   selector: '[ethAddressValidator][ngModel]',
@@ -17,7 +17,7 @@ export class EthAddressValidatorDirective implements Validator {
   validator: ValidatorFn;
 
   constructor(
-    private ethService: TronService,
+    private tronService: TronService,
   ) {
     this.validator = this.addressValidator();
   }
@@ -28,7 +28,7 @@ export class EthAddressValidatorDirective implements Validator {
 
   addressValidator(): ValidatorFn {
     return (c: FormControl) => {
-      let isValid = this.ethService.isValidAddress(c.value);
+      let isValid = this.tronService.isValidAddress(c.value);
       if (isValid) {
         return null;
       } else {

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {FotronMainModalComponent} from "./fotron-main-modal.component";
 
-import { FotronMainModalComponent } from './fotron-main-modal.component';
 
 describe('FotronMainModalComponent', () => {
   let component: FotronMainModalComponent;

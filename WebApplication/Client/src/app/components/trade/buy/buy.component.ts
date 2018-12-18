@@ -1,5 +1,4 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TronService} from "../../../services/tron.service";
 import {Subject} from "rxjs/Subject";
 import * as Web3 from "web3";
 import {BigNumber} from "bignumber.js";
@@ -10,6 +9,7 @@ import {UserService} from "../../../services/user.service";
 import {Observable} from "rxjs/Observable";
 import {TokenInfo} from "../../../interfaces/token-info";
 import {CommonService} from "../../../services/common.service";
+import {TronService} from "../../../services/tron..service";
 
 @Component({
   selector: 'app-buy',
@@ -61,7 +61,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   private timeOut: any;
 
   constructor(
-    private ethService: TronService,
+    private tronService: TronService,
     private cdRef: ChangeDetectorRef,
     private messageBox: MessageBoxService,
     private translate: TranslateService,
@@ -92,18 +92,18 @@ export class BuyComponent implements OnInit, OnDestroy {
 
     this.initTransactionHashModal();
 
-    this.ethService.passEthBalance.takeUntil(this.destroy$).subscribe(eth => {
+    this.tronService.passEthBalance.takeUntil(this.destroy$).subscribe(eth => {
       this.ethBalanceForCheck = eth;
 
       if (eth) {
-        this.ethService._contractInfura.getMaxGasPrice((err, res) => {
+        this.tronService._contractInfura.getMaxGasPrice((err, res) => {
           let gas = (+res * this.gasLimit) / Math.pow(10, 18);
           this.ethBalance = +this.substrValue(+eth - gas);
           this.eth = +this.substrValue(+eth - gas);
 
           Observable.combineLatest(
-            this.ethService.getObservableTokenDealRange(),
-            this.ethService.getObservableEthDealRange()
+            this.tronService.getObservableTokenDealRange(),
+            this.tronService.getObservableEthDealRange()
           ).takeUntil(this.destroy$).subscribe(limits => {
             if (limits[0] && limits[1]) {
               this.tokenLimits.min = limits[0].min;
@@ -119,7 +119,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.ethService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
+    this.tronService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
       if (address) {
         if (!this.ethAddress) {
            this.timeOut = setTimeout(() => {
@@ -141,12 +141,12 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.cdRef.markForCheck();
     });
 
-    this.ethService.getObservable1TokenPrice().takeUntil(this.destroy$).subscribe(price => {
+    this.tronService.getObservable1TokenPrice().takeUntil(this.destroy$).subscribe(price => {
       price && (this.buyPrice = price.buy);
       this.cdRef.markForCheck();
     });
 
-    this.ethService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
+    this.tronService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
       if (network !== null) {
         if (network != this.MMNetwork.index) {
           let networkName = this.MMNetwork.name;
@@ -207,7 +207,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.fromEth = fromEth;
     const wei = this.web3['toWei'](amount);
 
-    this.ethService._contractInfura.estimateBuyOrder(wei, fromEth, (err, res) => {
+    this.tronService._contractInfura.estimateBuyOrder(wei, fromEth, (err, res) => {
       let estimate = +new BigNumber(res[0].toString()).div(new BigNumber(10).pow(18));
       this.estimateFee = +new BigNumber(res[1].toString()).div(new BigNumber(10).pow(18));
       this.averageTokenPrice = +new BigNumber(res[2].toString()).div(new BigNumber(10).pow(18));
@@ -247,7 +247,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
 
   initTransactionHashModal() {
-    this.ethService.getSuccessBuyRequestLink$.takeUntil(this.destroy$).subscribe(hash => {
+    this.tronService.getSuccessBuyRequestLink$.takeUntil(this.destroy$).subscribe(hash => {
       if (hash) {
         this.translate.get('MESSAGE.SentTransaction').subscribe(phrases => {
           this.messageBox.alert(`
@@ -286,11 +286,11 @@ export class BuyComponent implements OnInit, OnDestroy {
     });
     let refAddress = queryParams['ref'] ? queryParams['ref'] : '0x0';
 
-    this.ethService._contractInfura.getMaxGasPrice((err, res) => {
+    this.tronService._contractInfura.getMaxGasPrice((err, res) => {
       if (+res) {
         const amount = this.web3['toWei'](this.eth);
         const minReturn = this.web3['toWei'](this.minReturn);
-        this.ethService.buy(refAddress, this.ethAddress, amount, minReturn, +res);
+        this.tronService.buy(refAddress, this.ethAddress, amount, minReturn, +res);
       }
     });
   }

@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {TronService} from "../../../services/tron.service";
 import {Subject} from "rxjs/Subject";
 import {CommonService} from "../../../services/common.service";
+import {TronService} from "../../../services/tron..service";
 
 @Component({
   selector: 'app-promo-bonus',
@@ -24,13 +24,13 @@ export class PromoBonusComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private ethService: TronService,
+    private tronService: TronService,
     private commonService: CommonService,
     private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this.ethService.getObservablePromoBonus().takeUntil(this.destroy$).subscribe(bonus => {
+    this.tronService.getObservablePromoBonus().takeUntil(this.destroy$).subscribe(bonus => {
       if (bonus) {
         this.promoBonus.big = +bonus.big;
         this.promoBonus.quick = +bonus.quick;
@@ -44,7 +44,7 @@ export class PromoBonusComponent implements OnInit, OnDestroy {
       this.isFirstLoad = false;
     });
 
-    this.ethService.getObservableWinBIGPromoBonus().takeUntil(this.destroy$).subscribe(bonus => {
+    this.tronService.getObservableWinBIGPromoBonus().takeUntil(this.destroy$).subscribe(bonus => {
       if (bonus) {
         this.bigWinPromoBonus = bonus;
         this.bigBankTimer = new Date().getTime() + (this.bigWinPromoBonus * 15000);
@@ -52,7 +52,7 @@ export class PromoBonusComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.ethService.getObservableWinQUICKPromoBonus().takeUntil(this.destroy$).subscribe(bonus => {
+    this.tronService.getObservableWinQUICKPromoBonus().takeUntil(this.destroy$).subscribe(bonus => {
       if (bonus) {
         this.quickWinPromoBonus = bonus;
         this.quickBankTimer = new Date().getTime() + (this.quickWinPromoBonus * 15000);

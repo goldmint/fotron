@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit} from '@angular/core';
 import {BigNumber} from "bignumber.js";
-import {TronService} from "../../services/tron.service";
 import {Subject} from "rxjs/Subject";
 import {MessageBoxService} from "../../services/message-box.service";
 import {environment} from "../../../environments/environment";
@@ -11,6 +10,7 @@ import {TokenInfo} from "../../interfaces/token-info";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MainContractService} from "../../services/main-contract.service";
 import {Subscription} from "rxjs/Subscription";
+import {TronService} from "../../services/tron..service";
 
 @Component({
   selector: 'app-trade',
@@ -46,7 +46,7 @@ export class TradeComponent implements OnInit, OnDestroy {
   private sub1: Subscription;
 
   constructor(
-    private ethService: TronService,
+    private tronService: TronService,
     private mainContractService: MainContractService,
     private userService: UserService,
     private apiService: APIService,
@@ -64,7 +64,7 @@ export class TradeComponent implements OnInit, OnDestroy {
           tokenId,
           addressExist = false;
 
-      if (!this.ethService.isValidAddress(address)) {
+      if (!this.tronService.isValidAddress(address)) {
         this.invalidContractAddress = true;
         this.isDataLoaded = true;
         this.cdRef.markForCheck();
@@ -109,14 +109,14 @@ export class TradeComponent implements OnInit, OnDestroy {
   }
 
   initTradePage() {
-    this.ethService.passTokenBalance.takeUntil(this.destroy$).subscribe(balance => {
+    this.tronService.passTokenBalance.takeUntil(this.destroy$).subscribe(balance => {
       if (balance) {
         this.tokenBalance = balance;
         this.cdRef.markForCheck();
       }
     });
 
-    this.ethService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
+    this.tronService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
       address && (this.ethAddress = address);
       if (this.ethAddress && !address) {
         this.ethAddress = address;
@@ -133,12 +133,12 @@ export class TradeComponent implements OnInit, OnDestroy {
       this.cdRef.markForCheck();
     });
 
-    this.ethService.getObservableTotalTokenSupply().takeUntil(this.destroy$).subscribe(supply => {
+    this.tronService.getObservableTotalTokenSupply().takeUntil(this.destroy$).subscribe(supply => {
       supply && (this.tokenSupply = +supply);
       this.cdRef.markForCheck();
     });
 
-    this.ethService.getObservableExpirationTime().takeUntil(this.destroy$).subscribe(time => {
+    this.tronService.getObservableExpirationTime().takeUntil(this.destroy$).subscribe(time => {
       if (time) {
         this.expirationTime.expiration = time.expiration;
         this.expirationTime.tillExpiration = time.tillExpiration;
@@ -147,7 +147,7 @@ export class TradeComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.ethService.getObservableTotalData().takeUntil(this.destroy$).subscribe(total => {
+    this.tronService.getObservableTotalData().takeUntil(this.destroy$).subscribe(total => {
       if (total) {
         this.totalData.totalEth = total.eth;
         this.totalData.totalTokens = total.tokens;
