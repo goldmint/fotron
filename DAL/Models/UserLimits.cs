@@ -5,7 +5,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models
 {
-	[Table("er_user_limits")]
+	[Table("ft_user_limits")]
 	public class UserLimits : DbBaseUserEntity
 	{
 		[Column("eth_deposited")]

@@ -41,13 +41,13 @@ namespace Fotron.DAL {
 		{
 			base.OnModelCreating(builder);
 
-			builder.Entity<User>(entity => { entity.ToTable("er_user"); });
-			builder.Entity<Role>(entity => { entity.ToTable("er_role"); });
-			builder.Entity<UserRole>(entity => { entity.ToTable("er_user_role"); });
-			builder.Entity<UserClaim>(entity => { entity.ToTable("er_user_claim"); });
-			builder.Entity<UserLogin>(entity => { entity.ToTable("er_user_login"); });
-			builder.Entity<UserToken>(entity => { entity.ToTable("er_user_token"); });
-			builder.Entity<RoleClaim>(entity => { entity.ToTable("er_role_claim"); });
+			builder.Entity<User>(entity => { entity.ToTable("ft_user"); });
+			builder.Entity<Role>(entity => { entity.ToTable("ft_role"); });
+			builder.Entity<UserRole>(entity => { entity.ToTable("ft_user_role"); });
+			builder.Entity<UserClaim>(entity => { entity.ToTable("ft_user_claim"); });
+			builder.Entity<UserLogin>(entity => { entity.ToTable("ft_user_login"); });
+			builder.Entity<UserToken>(entity => { entity.ToTable("ft_user_token"); });
+			builder.Entity<RoleClaim>(entity => { entity.ToTable("ft_role_claim"); });
 
 			// for currency amount
 			foreach (var property in builder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?))) {

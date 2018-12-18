@@ -5,7 +5,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_kyc_shuftipro_ticket")]
+	[Table("ft_kyc_shuftipro_ticket")]
 	public class KycTicket : DbBaseUserEntity {
 
 		[Column("reference_id"), Required, MaxLength(32)]

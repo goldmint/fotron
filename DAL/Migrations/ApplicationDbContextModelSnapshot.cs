@@ -70,7 +70,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("er_add_token_request");
+                    b.ToTable("ft_add_token_request");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.BannedCountry", b =>
@@ -106,7 +106,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_banned_country");
+                    b.ToTable("ft_banned_country");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.Role", b =>
@@ -134,7 +134,7 @@ namespace Fotron.DAL.Migrations
                         .IsUnique()
                         .HasName("RoleNameIndex");
 
-                    b.ToTable("er_role");
+                    b.ToTable("ft_role");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.RoleClaim", b =>
@@ -158,7 +158,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("er_role_claim");
+                    b.ToTable("ft_role_claim");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.User", b =>
@@ -248,7 +248,7 @@ namespace Fotron.DAL.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
-                    b.ToTable("er_user");
+                    b.ToTable("ft_user");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.UserClaim", b =>
@@ -272,7 +272,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_claim");
+                    b.ToTable("ft_user_claim");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.UserLogin", b =>
@@ -296,7 +296,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_login");
+                    b.ToTable("ft_user_login");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.UserRole", b =>
@@ -311,7 +311,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("er_user_role");
+                    b.ToTable("ft_user_role");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Identity.UserToken", b =>
@@ -333,7 +333,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("er_user_token");
+                    b.ToTable("ft_user_token");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.KycTicket", b =>
@@ -406,7 +406,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_kyc_shuftipro_ticket");
+                    b.ToTable("ft_kyc_shuftipro_ticket");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Mutex", b =>
@@ -428,7 +428,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("er_mutex");
+                    b.ToTable("ft_mutex");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Settings", b =>
@@ -460,7 +460,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("er_settings");
+                    b.ToTable("ft_settings");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.SignedDocument", b =>
@@ -513,7 +513,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_signed_document");
+                    b.ToTable("ft_signed_document");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.Token", b =>
@@ -577,7 +577,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("er_token");
+                    b.ToTable("ft_token");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.TokenStatistics", b =>
@@ -628,7 +628,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("TokenId");
 
-                    b.ToTable("er_token_statistics");
+                    b.ToTable("ft_token_statistics");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserActivity", b =>
@@ -677,7 +677,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_activity");
+                    b.ToTable("ft_user_activity");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserLimits", b =>
@@ -717,7 +717,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_limits");
+                    b.ToTable("ft_user_limits");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserOpLog", b =>
@@ -761,7 +761,7 @@ namespace Fotron.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("er_user_oplog");
+                    b.ToTable("ft_user_oplog");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserOptions", b =>
@@ -788,7 +788,7 @@ namespace Fotron.DAL.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("er_user_options");
+                    b.ToTable("ft_user_options");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.UserVerification", b =>
@@ -877,7 +877,7 @@ namespace Fotron.DAL.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("er_user_verification");
+                    b.ToTable("ft_user_verification");
                 });
 
             modelBuilder.Entity("Fotron.DAL.Models.BannedCountry", b =>

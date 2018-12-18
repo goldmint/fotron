@@ -10,7 +10,29 @@ namespace Fotron.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "er_mutex",
+                name: "ft_add_token_request",
+                columns: table => new
+                {
+                    id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    company_name = table.Column<string>(maxLength: 128, nullable: false),
+                    contact_email = table.Column<string>(maxLength: 128, nullable: false),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
+                    start_price_eth = table.Column<decimal>(type: "decimal(38, 18)", nullable: false),
+                    time_created = table.Column<DateTime>(nullable: false),
+                    token_contract_address = table.Column<string>(maxLength: 43, nullable: true),
+                    token_ticker = table.Column<string>(maxLength: 128, nullable: false),
+                    total_supply = table.Column<long>(nullable: false),
+                    website_url = table.Column<string>(maxLength: 128, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ft_add_token_request", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ft_mutex",
                 columns: table => new
                 {
                     id = table.Column<string>(maxLength: 64, nullable: false),
@@ -19,11 +41,11 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_mutex", x => x.id);
+                    table.PrimaryKey("PK_ft_mutex", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_role",
+                name: "ft_role",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
@@ -34,26 +56,52 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_role", x => x.id);
+                    table.PrimaryKey("PK_ft_role", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_settings",
+                name: "ft_settings",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     concurrency_stamp = table.Column<string>(maxLength: 64, nullable: true),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     key = table.Column<string>(maxLength: 64, nullable: false),
                     value = table.Column<string>(maxLength: 16384, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_settings", x => x.id);
+                    table.PrimaryKey("PK_ft_settings", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user",
+                name: "ft_token",
+                columns: table => new
+                {
+                    id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    current_price_eth = table.Column<decimal>(type: "decimal(38, 18)", maxLength: 1024, nullable: false),
+                    description = table.Column<string>(maxLength: 1024, nullable: false),
+                    fotron_contract_address = table.Column<string>(maxLength: 43, nullable: false),
+                    full_name = table.Column<string>(maxLength: 128, nullable: false),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
+                    logo_url = table.Column<string>(maxLength: 1024, nullable: false),
+                    start_price_eth = table.Column<decimal>(type: "decimal(38, 18)", maxLength: 1024, nullable: false),
+                    ticker = table.Column<string>(maxLength: 16, nullable: false),
+                    time_created = table.Column<DateTime>(nullable: false),
+                    time_updated = table.Column<DateTime>(nullable: false),
+                    token_contract_address = table.Column<string>(maxLength: 43, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ft_token", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ft_user",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
@@ -80,11 +128,11 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user", x => x.id);
+                    table.PrimaryKey("PK_ft_user", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_role_claim",
+                name: "ft_role_claim",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -95,39 +143,70 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_role_claim", x => x.id);
+                    table.PrimaryKey("PK_ft_role_claim", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_role_claim_er_role_role_id",
+                        name: "FK_ft_role_claim_ft_role_role_id",
                         column: x => x.role_id,
-                        principalTable: "er_role",
+                        principalTable: "ft_role",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_banned_country",
+                name: "ft_token_statistics",
+                columns: table => new
+                {
+                    id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    block_num = table.Column<long>(nullable: false),
+                    buy_count = table.Column<long>(nullable: false),
+                    date = table.Column<DateTime>(nullable: false),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
+                    price_eth = table.Column<decimal>(type: "decimal(38, 18)", nullable: false),
+                    sell_count = table.Column<long>(nullable: false),
+                    share_reward = table.Column<decimal>(type: "decimal(38, 18)", nullable: false),
+                    token_id = table.Column<long>(nullable: false),
+                    volume_eth = table.Column<decimal>(type: "decimal(38, 18)", nullable: false),
+                    volume_token = table.Column<decimal>(type: "decimal(38, 18)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ft_token_statistics", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ft_token_statistics_ft_token_token_id",
+                        column: x => x.token_id,
+                        principalTable: "ft_token",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ft_banned_country",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     code = table.Column<string>(maxLength: 3, nullable: false),
                     comment = table.Column<string>(maxLength: 512, nullable: false),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     time_created = table.Column<DateTime>(nullable: false),
                     user_id = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_banned_country", x => x.id);
+                    table.PrimaryKey("PK_ft_banned_country", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_banned_country_er_user_user_id",
+                        name: "FK_ft_banned_country_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_kyc_shuftipro_ticket",
+                name: "ft_kyc_shuftipro_ticket",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
@@ -137,6 +216,8 @@ namespace Fotron.DAL.Migrations
                     country_code = table.Column<string>(maxLength: 2, nullable: false),
                     dob = table.Column<DateTime>(nullable: false),
                     first_name = table.Column<string>(maxLength: 64, nullable: false),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     is_verified = table.Column<bool>(nullable: false),
                     last_name = table.Column<string>(maxLength: 64, nullable: false),
                     method = table.Column<string>(maxLength: 32, nullable: false),
@@ -148,23 +229,25 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_kyc_shuftipro_ticket", x => x.id);
+                    table.PrimaryKey("PK_ft_kyc_shuftipro_ticket", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_kyc_shuftipro_ticket_er_user_user_id",
+                        name: "FK_ft_kyc_shuftipro_ticket_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_signed_document",
+                name: "ft_signed_document",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     callback_event_type = table.Column<string>(maxLength: 64, nullable: true),
                     callback_status = table.Column<string>(maxLength: 16, nullable: true),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     is_signed = table.Column<bool>(nullable: false),
                     reference_id = table.Column<string>(maxLength: 64, nullable: false),
                     secret = table.Column<string>(maxLength: 64, nullable: false),
@@ -175,17 +258,17 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_signed_document", x => x.id);
+                    table.PrimaryKey("PK_ft_signed_document", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_signed_document_er_user_user_id",
+                        name: "FK_ft_signed_document_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_activity",
+                name: "ft_user_activity",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
@@ -193,6 +276,8 @@ namespace Fotron.DAL.Migrations
                     agent = table.Column<string>(maxLength: 128, nullable: false),
                     comment = table.Column<string>(maxLength: 512, nullable: false),
                     ip = table.Column<string>(maxLength: 15, nullable: false),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     locale = table.Column<int>(nullable: true),
                     time_created = table.Column<DateTime>(nullable: false),
                     type = table.Column<string>(maxLength: 32, nullable: false),
@@ -200,17 +285,17 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_activity", x => x.id);
+                    table.PrimaryKey("PK_ft_user_activity", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_user_activity_er_user_user_id",
+                        name: "FK_ft_user_activity_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_claim",
+                name: "ft_user_claim",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -221,17 +306,17 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_claim", x => x.id);
+                    table.PrimaryKey("PK_ft_user_claim", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_user_claim_er_user_user_id",
+                        name: "FK_ft_user_claim_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_limits",
+                name: "ft_user_limits",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
@@ -240,22 +325,24 @@ namespace Fotron.DAL.Migrations
                     eth_withdrawn = table.Column<decimal>(type: "decimal(38, 18)", nullable: false),
                     fiat_deposited = table.Column<long>(nullable: false),
                     fiat_withdrawn = table.Column<long>(nullable: false),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     time_created = table.Column<DateTime>(nullable: false),
                     user_id = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_limits", x => x.id);
+                    table.PrimaryKey("PK_ft_user_limits", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_user_limits_er_user_user_id",
+                        name: "FK_ft_user_limits_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_login",
+                name: "ft_user_login",
                 columns: table => new
                 {
                     login_provider = table.Column<string>(maxLength: 128, nullable: false),
@@ -265,22 +352,24 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_login", x => new { x.login_provider, x.provider_key });
+                    table.PrimaryKey("PK_ft_user_login", x => new { x.login_provider, x.provider_key });
                     table.ForeignKey(
-                        name: "FK_er_user_login_er_user_user_id",
+                        name: "FK_ft_user_login_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_oplog",
+                name: "ft_user_oplog",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     concurrency_stamp = table.Column<string>(maxLength: 64, nullable: true),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     message = table.Column<string>(maxLength: 512, nullable: false),
                     ref_id = table.Column<long>(nullable: true),
                     status = table.Column<int>(nullable: false),
@@ -289,43 +378,45 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_oplog", x => x.id);
+                    table.PrimaryKey("PK_ft_user_oplog", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_user_oplog_er_user_oplog_ref_id",
+                        name: "FK_ft_user_oplog_ft_user_oplog_ref_id",
                         column: x => x.ref_id,
-                        principalTable: "er_user_oplog",
+                        principalTable: "ft_user_oplog",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_er_user_oplog_er_user_user_id",
+                        name: "FK_ft_user_oplog_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_options",
+                name: "ft_user_options",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     init_tfa_quest = table.Column<bool>(nullable: false),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     user_id = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_options", x => x.id);
+                    table.PrimaryKey("PK_ft_user_options", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_user_options_er_user_user_id",
+                        name: "FK_ft_user_options_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_role",
+                name: "ft_user_role",
                 columns: table => new
                 {
                     user_id = table.Column<long>(nullable: false),
@@ -333,23 +424,23 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_role", x => new { x.user_id, x.role_id });
+                    table.PrimaryKey("PK_ft_user_role", x => new { x.user_id, x.role_id });
                     table.ForeignKey(
-                        name: "FK_er_user_role_er_role_role_id",
+                        name: "FK_ft_user_role_ft_role_role_id",
                         column: x => x.role_id,
-                        principalTable: "er_role",
+                        principalTable: "ft_role",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_er_user_role_er_user_user_id",
+                        name: "FK_ft_user_role_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_token",
+                name: "ft_user_token",
                 columns: table => new
                 {
                     user_id = table.Column<long>(nullable: false),
@@ -359,17 +450,17 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_token", x => new { x.user_id, x.login_provider, x.name });
+                    table.PrimaryKey("PK_ft_user_token", x => new { x.user_id, x.login_provider, x.name });
                     table.ForeignKey(
-                        name: "FK_er_user_token_er_user_user_id",
+                        name: "FK_ft_user_token_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "er_user_verification",
+                name: "ft_user_verification",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false)
@@ -381,6 +472,8 @@ namespace Fotron.DAL.Migrations
                     country_code = table.Column<string>(maxLength: 2, nullable: true),
                     dob = table.Column<DateTime>(nullable: true),
                     first_name = table.Column<string>(maxLength: 64, nullable: true),
+                    is_deleted = table.Column<bool>(nullable: false),
+                    is_enabled = table.Column<bool>(nullable: false),
                     last_kyc_ticket_id = table.Column<long>(nullable: true),
                     last_name = table.Column<string>(maxLength: 64, nullable: true),
                     middle_name = table.Column<string>(maxLength: 64, nullable: true),
@@ -395,107 +488,112 @@ namespace Fotron.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_er_user_verification", x => x.id);
+                    table.PrimaryKey("PK_ft_user_verification", x => x.id);
                     table.ForeignKey(
-                        name: "FK_er_user_verification_er_kyc_shuftipro_ticket_last_kyc_ticket_id",
+                        name: "FK_ft_user_verification_ft_kyc_shuftipro_ticket_last_kyc_ticket_id",
                         column: x => x.last_kyc_ticket_id,
-                        principalTable: "er_kyc_shuftipro_ticket",
+                        principalTable: "ft_kyc_shuftipro_ticket",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_er_user_verification_er_user_user_id",
+                        name: "FK_ft_user_verification_ft_user_user_id",
                         column: x => x.user_id,
-                        principalTable: "er_user",
+                        principalTable: "ft_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_banned_country_user_id",
-                table: "er_banned_country",
+                name: "IX_ft_banned_country_user_id",
+                table: "ft_banned_country",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_kyc_shuftipro_ticket_user_id",
-                table: "er_kyc_shuftipro_ticket",
+                name: "IX_ft_kyc_shuftipro_ticket_user_id",
+                table: "ft_kyc_shuftipro_ticket",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                table: "er_role",
+                table: "ft_role",
                 column: "normalized_name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_role_claim_role_id",
-                table: "er_role_claim",
+                name: "IX_ft_role_claim_role_id",
+                table: "ft_role_claim",
                 column: "role_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_signed_document_user_id",
-                table: "er_signed_document",
+                name: "IX_ft_signed_document_user_id",
+                table: "ft_signed_document",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ft_token_statistics_token_id",
+                table: "ft_token_statistics",
+                column: "token_id");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "er_user",
+                table: "ft_user",
                 column: "normalized_email");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "er_user",
+                table: "ft_user",
                 column: "normalized_username",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_activity_user_id",
-                table: "er_user_activity",
+                name: "IX_ft_user_activity_user_id",
+                table: "ft_user_activity",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_claim_user_id",
-                table: "er_user_claim",
+                name: "IX_ft_user_claim_user_id",
+                table: "ft_user_claim",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_limits_user_id",
-                table: "er_user_limits",
+                name: "IX_ft_user_limits_user_id",
+                table: "ft_user_limits",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_login_user_id",
-                table: "er_user_login",
+                name: "IX_ft_user_login_user_id",
+                table: "ft_user_login",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_oplog_ref_id",
-                table: "er_user_oplog",
+                name: "IX_ft_user_oplog_ref_id",
+                table: "ft_user_oplog",
                 column: "ref_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_oplog_user_id",
-                table: "er_user_oplog",
+                name: "IX_ft_user_oplog_user_id",
+                table: "ft_user_oplog",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_options_user_id",
-                table: "er_user_options",
+                name: "IX_ft_user_options_user_id",
+                table: "ft_user_options",
                 column: "user_id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_role_role_id",
-                table: "er_user_role",
+                name: "IX_ft_user_role_role_id",
+                table: "ft_user_role",
                 column: "role_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_verification_last_kyc_ticket_id",
-                table: "er_user_verification",
+                name: "IX_ft_user_verification_last_kyc_ticket_id",
+                table: "ft_user_verification",
                 column: "last_kyc_ticket_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_er_user_verification_user_id",
-                table: "er_user_verification",
+                name: "IX_ft_user_verification_user_id",
+                table: "ft_user_verification",
                 column: "user_id",
                 unique: true);
         }
@@ -503,55 +601,64 @@ namespace Fotron.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "er_banned_country");
+                name: "ft_add_token_request");
 
             migrationBuilder.DropTable(
-                name: "er_mutex");
+                name: "ft_banned_country");
 
             migrationBuilder.DropTable(
-                name: "er_role_claim");
+                name: "ft_mutex");
 
             migrationBuilder.DropTable(
-                name: "er_settings");
+                name: "ft_role_claim");
 
             migrationBuilder.DropTable(
-                name: "er_signed_document");
+                name: "ft_settings");
 
             migrationBuilder.DropTable(
-                name: "er_user_activity");
+                name: "ft_signed_document");
 
             migrationBuilder.DropTable(
-                name: "er_user_claim");
+                name: "ft_token_statistics");
 
             migrationBuilder.DropTable(
-                name: "er_user_limits");
+                name: "ft_user_activity");
 
             migrationBuilder.DropTable(
-                name: "er_user_login");
+                name: "ft_user_claim");
 
             migrationBuilder.DropTable(
-                name: "er_user_oplog");
+                name: "ft_user_limits");
 
             migrationBuilder.DropTable(
-                name: "er_user_options");
+                name: "ft_user_login");
 
             migrationBuilder.DropTable(
-                name: "er_user_role");
+                name: "ft_user_oplog");
 
             migrationBuilder.DropTable(
-                name: "er_user_token");
+                name: "ft_user_options");
 
             migrationBuilder.DropTable(
-                name: "er_user_verification");
+                name: "ft_user_role");
 
             migrationBuilder.DropTable(
-                name: "er_role");
+                name: "ft_user_token");
 
             migrationBuilder.DropTable(
-                name: "er_kyc_shuftipro_ticket");
+                name: "ft_user_verification");
 
             migrationBuilder.DropTable(
-                name: "er_user");
+                name: "ft_token");
+
+            migrationBuilder.DropTable(
+                name: "ft_role");
+
+            migrationBuilder.DropTable(
+                name: "ft_kyc_shuftipro_ticket");
+
+            migrationBuilder.DropTable(
+                name: "ft_user");
         }
     }
 }

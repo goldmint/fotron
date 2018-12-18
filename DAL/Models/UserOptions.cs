@@ -3,7 +3,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_user_options")]
+	[Table("ft_user_options")]
 	public class UserOptions : DbBaseUserEntity {
 
 		[Column("init_tfa_quest")]

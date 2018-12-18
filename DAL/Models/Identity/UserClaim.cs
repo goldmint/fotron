@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Fotron.DAL.Models.Identity {
 
-    [Table("er_user_claim")]
+    [Table("ft_user_claim")]
 	public class UserClaim : IdentityUserClaim<long> {
 
 		public UserClaim() : base() { }

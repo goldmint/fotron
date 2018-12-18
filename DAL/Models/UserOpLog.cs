@@ -6,7 +6,7 @@ using Fotron.DAL.Models.Base;
 
 namespace Fotron.DAL.Models {
 
-	[Table("er_user_oplog")]
+	[Table("ft_user_oplog")]
 	public class UserOpLog : DbBaseUserEntity, IConcurrentUpdate {
 
 		[Column("ref_id")]
