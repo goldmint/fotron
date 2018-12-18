@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit} from '@angular/core';
 import {BigNumber} from "bignumber.js";
-import {EthereumService} from "../../services/ethereum.service";
+import {TronService} from "../../services/tron.service";
 import {Subject} from "rxjs/Subject";
 import {MessageBoxService} from "../../services/message-box.service";
 import {environment} from "../../../environments/environment";
@@ -46,7 +46,7 @@ export class TradeComponent implements OnInit, OnDestroy {
   private sub1: Subscription;
 
   constructor(
-    private ethService: EthereumService,
+    private ethService: TronService,
     private mainContractService: MainContractService,
     private userService: UserService,
     private apiService: APIService,

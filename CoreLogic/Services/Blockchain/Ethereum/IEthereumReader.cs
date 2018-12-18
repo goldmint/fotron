@@ -1,10 +1,10 @@
 ﻿using System.Numerics;
 using System.Threading.Tasks;
-using Fotron.CoreLogic.Services.Blockchain.Ethereum.Models;
+using Fotron.CoreLogic.Services.Blockchain.Tron.Models;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron {
 
-	public interface IEthereumReader {
+	public interface ITronReader {
 
 		/// <summary>
 		/// Get latest block number on the logs provider side

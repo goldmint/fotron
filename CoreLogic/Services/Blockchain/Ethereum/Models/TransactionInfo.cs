@@ -1,7 +1,7 @@
 ﻿using Fotron.Common;
 using System;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Models {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron.Models {
 
 	public sealed class TransactionInfo {
 

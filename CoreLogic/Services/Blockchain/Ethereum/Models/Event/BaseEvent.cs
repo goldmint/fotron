@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Models.Event {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron.Models.Event {
 
 	public abstract class BaseEvent {
 

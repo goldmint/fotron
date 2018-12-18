@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {EthereumService} from "../../../services/ethereum.service";
+import {TronService} from "../../../services/tron.service";
 import {Subject} from "rxjs/Subject";
 import * as Web3 from "web3";
 import {BigNumber} from "bignumber.js";
@@ -58,7 +58,7 @@ export class SellComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private ethService: EthereumService,
+    private ethService: TronService,
     private messageBox: MessageBoxService,
     private translate: TranslateService,
     private userService: UserService,

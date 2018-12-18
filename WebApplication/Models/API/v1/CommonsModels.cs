@@ -222,7 +222,7 @@ namespace Fotron.WebApplication.Models.API.v1.CommonsModels {
 	public class StatusViewLimits {
 
 		/// <summary>
-		/// Ethereum limits
+		/// Tron limits
 		/// </summary>
 		[Required]
 		public Method Eth { get; set; }

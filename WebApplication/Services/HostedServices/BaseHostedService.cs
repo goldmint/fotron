@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fotron.Common;
 using Fotron.Common.Extensions;
-using Fotron.CoreLogic.Services.Blockchain.Ethereum;
+using Fotron.CoreLogic.Services.Blockchain.Tron;
 using Fotron.DAL;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,8 +16,8 @@ namespace Fotron.WebApplication.Services.HostedServices
 		protected AppConfig AppConfig { get; }
 		protected ILogger Logger { get; }
 		protected ApplicationDbContext DbContext { get; }
-		protected IEthereumReader EthereumObserver { get; }
-	    protected IEthereumWriter EthereumWriter { get; }
+		protected ITronReader TronObserver { get; }
+	    protected ITronWriter TronWriter { get; }
 
         protected abstract TimeSpan Period { get; }
 
@@ -27,8 +27,8 @@ namespace Fotron.WebApplication.Services.HostedServices
 			Logger = services.GetLoggerFor(this.GetType());
 			AppConfig = services.GetRequiredService<AppConfig>();
 			DbContext = services.GetRequiredService<ApplicationDbContext>();
-			EthereumObserver = services.GetRequiredService<IEthereumReader>();
-		    EthereumWriter = services.GetRequiredService<IEthereumWriter>();
+			TronObserver = services.GetRequiredService<ITronReader>();
+		    TronWriter = services.GetRequiredService<ITronWriter>();
 		}
 
 		public async Task StartAsync(CancellationToken cancellationToken) {

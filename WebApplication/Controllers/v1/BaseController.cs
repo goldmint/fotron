@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Fotron.Common;
 using Fotron.Common.Extensions;
-using Fotron.CoreLogic.Services.Blockchain.Ethereum;
+using Fotron.CoreLogic.Services.Blockchain.Tron;
 using Fotron.DAL;
 using Fotron.WebApplication.Core.Tokens;
 using Fotron.WebApplication.Models;
@@ -30,7 +30,7 @@ namespace Fotron.WebApplication.Controllers.v1 {
 		protected UserManager<DAL.Models.Identity.User> UserManager { get; private set; }
 		//protected IKycProvider KycExternalProvider { get; private set; }
 		protected IEmailSender EmailSender { get; private set; }
-		protected IEthereumReader EthereumObserver { get; private set; }
+		protected ITronReader TronObserver { get; private set; }
 
 	    protected IMapper Mapper { get; private set; }
 
@@ -48,7 +48,7 @@ namespace Fotron.WebApplication.Controllers.v1 {
 			UserManager = services.GetRequiredService<UserManager<DAL.Models.Identity.User>>();
 			//KycExternalProvider = services.GetRequiredService<IKycProvider>();
 			EmailSender = services.GetRequiredService<IEmailSender>();
-			EthereumObserver = services.GetRequiredService<IEthereumReader>();
+			TronObserver = services.GetRequiredService<ITronReader>();
 		    Mapper = services.GetRequiredService<IMapper>();
         }
 

@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
-using Fotron.CoreLogic.Services.Blockchain.Ethereum.Models.ContractEvent;
+using Fotron.CoreLogic.Services.Blockchain.Tron.Models.ContractEvent;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Models {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron.Models {
 
 	public sealed class GatheredTokenBuyEvents {
 

@@ -26,7 +26,7 @@ namespace Fotron.WebApplication.Services.HostedServices
         {
             foreach (var token in _tokenList)
             {
-                token.CurrentPriceEth = await EthereumObserver.GetTokenPrice(token.FotronContractAddress);
+                token.CurrentPriceEth = await TronObserver.GetTokenPrice(token.FotronContractAddress);
                 token.TimeUpdated = DateTime.Now;
             }
 

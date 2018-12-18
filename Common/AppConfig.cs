@@ -91,8 +91,8 @@
 			//}
 
 
-			public EthereumSection Ethereum { get; set; } = new EthereumSection();
-			public class EthereumSection {
+			public TronSection Tron { get; set; } = new TronSection();
+			public class TronSection {
 
                 public string FotronCoreAddress { get; set; } = "";
                 public string SetMaxGasPriceFunctionName { get; set; } = "";

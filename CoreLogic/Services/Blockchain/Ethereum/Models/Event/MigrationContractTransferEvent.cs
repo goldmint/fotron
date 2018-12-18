@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Models.Event {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron.Models.Event {
 
 	public class MigrationContractTransferEvent : Erc20TransferEvent {
 

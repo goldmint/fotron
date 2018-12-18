@@ -279,11 +279,11 @@
           "Text": "В случае покупки токенов в обход реферальной ссылки, вознаграждение добавляется к общему реферальному фонду всем участниками реферальной программы."
         },
         "8th": {
-          "Heading": "Реферальное вознаграждение автоматически попадает на мой кошелек Ethereum?",
+          "Heading": "Реферальное вознаграждение автоматически попадает на мой кошелек Tron?",
           "Text": "Нет, все вознаграждения накапливаются в саморегулируемом смарт-контракте, для снятия вознаграждения необходимо сделать запрос к смарт-контракту путем авторизации в кошельке MetaMask на сайте платформы."
         },
         "9th": {
-          "Heading": "Что делать, если я потерял доступ к своему Ethereum кошельку, на который я купил токены в смарт-контракте?",
+          "Heading": "Что делать, если я потерял доступ к своему Tron кошельку, на который я купил токены в смарт-контракте?",
           "Text": "Тут уже ничего не поделаешь."
         },
         "10th": {
@@ -324,13 +324,13 @@
   "MESSAGE": {
     "MetaMask": {
       "Heading": "To continue you'll need to have MetaMask",
-      "Text": "MetaMask is a bridge that allows you to visit the distributed web of tomorrow in your browser today. It allows you to run Ethereum dApps right in your browser without running a full Ethereum node. Please, install the MetaMask add-on in Chrome, Firefox or Opera browser. Get <a href=\"https://metamask.io\" target=\"_blank\">MetaMask</a>"
+      "Text": "MetaMask is a bridge that allows you to visit the distributed web of tomorrow in your browser today. It allows you to run Tron dApps right in your browser without running a full Tron node. Please, install the MetaMask add-on in Chrome, Firefox or Opera browser. Get <a href=\"https://metamask.io\" target=\"_blank\">MetaMask</a>"
     },
     "MMHandingOut": "Seems like your MetaMask is hanging out or doesn't work properly at the moment. Please try to turn it off and then on at your extension settings. After reloading MetaMask please click OK.",
     "LoginToMM": {
       "HeadingBuy": "BUY TOKEN",
       "HeadingSell": "SELL TOKEN",
-      "Text": "Please login to your account or approve access to the Ethereum blockchain"
+      "Text": "Please login to your account or approve access to the Tron blockchain"
     },
     "SentTransaction": {
       "Heading": "Transaction in Process:",

@@ -2,9 +2,9 @@
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron {
 
-	public interface IEthereumWriter
+	public interface ITronWriter
 	{
 	    Task<string> UpdateMaxGaxPrice(BigInteger gasPrice);
 	}

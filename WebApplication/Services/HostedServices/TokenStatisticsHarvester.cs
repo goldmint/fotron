@@ -31,13 +31,13 @@ namespace Fotron.WebApplication.Services.HostedServices
 
                 if (Math.Abs(lastStat?.Date.Subtract(DateTime.Now).Days ?? 1) < 1) continue; 
 
-                var price = await EthereumObserver.GetTokenPrice(token.FotronContractAddress);
-                var buyCount = await EthereumObserver.GetBuyCount(token.FotronContractAddress);
-                var sellCount = await EthereumObserver.GetSellCount(token.FotronContractAddress);
-                var bonusPerShare = await EthereumObserver.GetBonusPerShare(token.FotronContractAddress);
-                var volumeEth = await EthereumObserver.GetVolumeEth(token.FotronContractAddress);
-                var volumeToken = await EthereumObserver.GetVolumeToken(token.FotronContractAddress);
-                var blockNum = await EthereumObserver.GetLogsLatestBlockNumber();
+                var price = await TronObserver.GetTokenPrice(token.FotronContractAddress);
+                var buyCount = await TronObserver.GetBuyCount(token.FotronContractAddress);
+                var sellCount = await TronObserver.GetSellCount(token.FotronContractAddress);
+                var bonusPerShare = await TronObserver.GetBonusPerShare(token.FotronContractAddress);
+                var volumeEth = await TronObserver.GetVolumeEth(token.FotronContractAddress);
+                var volumeToken = await TronObserver.GetVolumeToken(token.FotronContractAddress);
+                var blockNum = await TronObserver.GetLogsLatestBlockNumber();
 
                 var tokenStat = new TokenStatistics { Date = DateTime.Now, PriceEth = price, BuyCount = buyCount, SellCount = sellCount,
                     ShareReward = bonusPerShare, VolumeEth = volumeEth, VolumeToken = volumeToken, BlockNum = blockNum, TokenId = token.Id };

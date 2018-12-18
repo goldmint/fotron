@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {EthereumService} from "../../../services/ethereum.service";
+import {TronService} from "../../../services/tron.service";
 import {Subject} from "rxjs/Subject";
 import {CommonService} from "../../../services/common.service";
 
@@ -24,7 +24,7 @@ export class PromoBonusComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private ethService: EthereumService,
+    private ethService: TronService,
     private commonService: CommonService,
     private cdRef: ChangeDetectorRef
   ) { }

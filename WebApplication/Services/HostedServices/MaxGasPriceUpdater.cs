@@ -12,9 +12,9 @@ namespace Fotron.WebApplication.Services.HostedServices
 
         protected override async void DoWork(object state)
         {
-            var gasPrice = await EthereumObserver.GetCurrentGasPrice();
+            var gasPrice = await TronObserver.GetCurrentGasPrice();
 
-            await EthereumWriter.UpdateMaxGaxPrice(gasPrice);
+            await TronWriter.UpdateMaxGaxPrice(gasPrice);
         }
     }
 }

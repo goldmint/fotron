@@ -28,7 +28,7 @@ import { HeaderBlockComponent } from './blocks/header-block/header-block.compone
 import { NavbarBlockComponent } from './blocks/navbar-block/navbar-block.component';
 import { MessageBoxComponent } from './common/message-box/message-box.component';
 import { SpriteComponent } from './common/sprite/sprite.component';
-import {EthereumService} from "./services/ethereum.service";
+import {TronService} from "./services/tron.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MessageBoxService} from "./services/message-box.service";
 import {APIService} from "./services/api.service";
@@ -126,7 +126,7 @@ export function createTranslateLoader(http: HttpClient) {
     APIService,
     UserService,
     CommonService,
-    EthereumService,
+    TronService,
     MainContractService,
     {
       provide: RECAPTCHA_SETTINGS,

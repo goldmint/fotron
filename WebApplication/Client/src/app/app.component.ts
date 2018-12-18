@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {EthereumService} from "./services/ethereum.service";
+import {TronService} from "./services/tron.service";
 import {BigNumber} from "bignumber.js";
 import {CommonService} from "./services/common.service";
 import {MessageBoxService} from "./services/message-box.service";
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   public ethAddress: string = null;
 
   constructor(
-    private ethService: EthereumService,
+    private ethService: TronService,
     private commonService: CommonService,
     private messageBox: MessageBoxService,
     private cdRef: ChangeDetectorRef

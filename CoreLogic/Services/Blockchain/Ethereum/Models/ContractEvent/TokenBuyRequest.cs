@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Models.ContractEvent {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron.Models.ContractEvent {
 
 	public sealed class TokenBuyRequest {
 

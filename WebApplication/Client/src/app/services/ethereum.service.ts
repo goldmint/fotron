@@ -10,7 +10,7 @@ import {MarketData} from "../interfaces/market-data";
 import {CommonService} from "./common.service";
 
 @Injectable()
-export class EthereumService {
+export class TronService {
 
   private _infuraUrl = environment.infuraUrl;
 
@@ -123,12 +123,12 @@ export class EthereumService {
       }
     }
 
-    if (!this._web3Metamask && (window.hasOwnProperty('web3') || window.hasOwnProperty('ethereum')) && this.fotronContractAddress) {
-      let ethereum = window['ethereum'];
+    if (!this._web3Metamask && (window.hasOwnProperty('web3') || window.hasOwnProperty('tron')) && this.fotronContractAddress) {
+      let tron = window['tron'];
 
-      if (ethereum) {
-        this._web3Metamask = new Web3(ethereum);
-        ethereum.enable().then();
+      if (tron) {
+        this._web3Metamask = new Web3(tron);
+        tron.enable().then();
       } else {
         this._web3Metamask = new Web3(window['web3'].currentProvider);
       }
@@ -153,7 +153,7 @@ export class EthereumService {
 
     if (this._lastAddress !== addr) {
       this._lastAddress = addr;
-      window['ethereum'] && window['ethereum'].enable().then();
+      window['tron'] && window['tron'].enable().then();
       this.emitAddress(addr);
     }
   }

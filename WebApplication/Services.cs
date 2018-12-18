@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Fotron.Common;
-using Fotron.CoreLogic.Services.Blockchain.Ethereum;
-using Fotron.CoreLogic.Services.Blockchain.Ethereum.Impl;
+using Fotron.CoreLogic.Services.Blockchain.Tron;
+using Fotron.CoreLogic.Services.Blockchain.Tron.Impl;
 using Fotron.DAL;
 using Fotron.DAL.Models.Identity;
 using Fotron.WebApplication.Core;
@@ -178,9 +178,9 @@ namespace Fotron.WebApplication {
 			//}
 
 
-			// ethereum reader
-			services.AddSingleton<IEthereumReader, EthereumReader>();
-			services.AddSingleton<IEthereumWriter, EthereumWriter>();
+			// tron reader
+			services.AddSingleton<ITronReader, TronReader>();
+			services.AddSingleton<ITronWriter, TronWriter>();
 
 
 

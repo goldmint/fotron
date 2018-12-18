@@ -5,16 +5,16 @@ using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using Fotron.Common.Extensions;
-using Fotron.CoreLogic.Services.Blockchain.Ethereum.Models;
+using Fotron.CoreLogic.Services.Blockchain.Tron.Models;
 using Nethereum.Util;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Impl
+namespace Fotron.CoreLogic.Services.Blockchain.Tron.Impl
 {
 
-    public class EthereumReader : EthereumBaseClient, IEthereumReader
+    public class TronReader : TronBaseClient, ITronReader
     {
 
-        public EthereumReader(AppConfig appConfig, LogFactory logFactory) : base(appConfig, logFactory)
+        public TronReader(AppConfig appConfig, LogFactory logFactory) : base(appConfig, logFactory)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Impl
 
         public async Task<BigInteger> GetCurrentGasPrice()
         {
-            var obj = await Utils.DownloadDynamicObj(AppConfig.Services.Ethereum.GasPriceUrl);
+            var obj = await Utils.DownloadDynamicObj(AppConfig.Services.Tron.GasPriceUrl);
 
             decimal gasPrice = obj?.fast ?? 20;
 
@@ -93,42 +93,42 @@ namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Impl
 
         public async Task<decimal> GetTokenPrice(string contactAddress)
         {
-            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Ethereum.TokenPriceFunctionName);
+            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Tron.TokenPriceFunctionName);
 
             return val.FromWei();
         }
 
         public async Task<long> GetBuyCount(string contactAddress)
         {
-            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Ethereum.TokenBuyCountFunctionName);
+            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Tron.TokenBuyCountFunctionName);
 
             return (long)val;
         }
 
         public async Task<long> GetSellCount(string contactAddress)
         {
-            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Ethereum.TokenSellCountFunctionName);
+            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Tron.TokenSellCountFunctionName);
 
             return (long)val;
         }
 
         public async Task<decimal> GetBonusPerShare(string contactAddress)
         {
-            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Ethereum.BonusPerShareFunctionName);
+            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Tron.BonusPerShareFunctionName);
 
             return val.FromWei();
         }
 
         public async Task<decimal> GetVolumeEth(string contactAddress)
         {
-            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Ethereum.VolumeEthFunctionName);
+            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Tron.VolumeEthFunctionName);
 
             return val.FromWei();
         }
 
         public async Task<decimal> GetVolumeToken(string contactAddress)
         {
-            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Ethereum.VolumeTokenFunctionName);
+            var val = await GetViewFuntionResult(contactAddress, AppConfig.Services.Tron.VolumeTokenFunctionName);
 
             return val.FromWei();
         }
@@ -136,7 +136,7 @@ namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Impl
 
         private async Task<BigInteger> GetViewFuntionResult(string contactAddress, string functionName)
         {
-            return await Web3Utils.GetViewFunctionResult<BigInteger>(contactAddress, AppConfig.Services.Ethereum.FotronContractAbi, functionName);
+            return await Web3Utils.GetViewFunctionResult<BigInteger>(contactAddress, AppConfig.Services.Tron.FotronContractAbi, functionName);
         }
     }
 }

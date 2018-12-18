@@ -16,8 +16,8 @@ namespace Fotron.Common {
 		public static readonly Regex RexTfaToken = new Regex("^[0-9]{6}$");
 		public static readonly Regex RexLatinAndPuncts = new Regex(@"^[a-zA-Z0-9]+[a-zA-Z0-9 \-\,\.\(\)\/]*$");
 		public static readonly Regex RexDigits = new Regex(@"^\d+$");
-		public static readonly Regex RexEthereumAddress = new Regex(@"^0x[0-9abcdefABCDEF]{40}$");
-		public static readonly Regex RexEthereumTransactionId = new Regex(@"^0x[0-9abcdefABCDEF]{64}$");
+		public static readonly Regex RexTronAddress = new Regex(@"^0x[0-9abcdefABCDEF]{40}$");
+		public static readonly Regex RexTronTransactionId = new Regex(@"^0x[0-9abcdefABCDEF]{64}$");
 
 		// ---
 
@@ -95,12 +95,12 @@ namespace Fotron.Common {
 			return x != null && Uri.TryCreate(x, UriKind.Absolute, out var test) && (test.Scheme == "http" || test.Scheme == "https");
 		}
 
-		public static bool BeValidEthereumAddress(string x) {
-			return x != null && RexEthereumAddress.IsMatch(x);
+		public static bool BeValidTronAddress(string x) {
+			return x != null && RexTronAddress.IsMatch(x);
 		}
 
-		public static bool BeValidEthereumTransactionId(string x) {
-			return x != null && RexEthereumTransactionId.IsMatch(x);
+		public static bool BeValidTronTransactionId(string x) {
+			return x != null && RexTronTransactionId.IsMatch(x);
 		}
 	}
 }

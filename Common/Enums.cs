@@ -125,11 +125,11 @@
 
 
     
-	#region Ethereum blockchain
+	#region Tron blockchain
 
 
 
-	public enum EthereumOperationType {
+	public enum TronOperationType {
 
 		/// <summary>
 		/// Transfer GOLD from HW to client address
@@ -172,7 +172,7 @@
 		SendBuyingSupportEther,
 	}
 
-	public enum EthereumOperationStatus {
+	public enum TronOperationStatus {
 
 		/// <summary>
 		/// Enqueued
@@ -368,7 +368,7 @@
 		UserHwOperation,
 
 		/// <summary>
-		/// Processing ethereum opration (operation-wide)
+		/// Processing tron opration (operation-wide)
 		/// </summary>
 		EthOperation,
 

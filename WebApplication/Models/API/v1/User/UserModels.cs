@@ -297,7 +297,7 @@ namespace Fotron.WebApplication.Models.API.v1.User.UserModels {
 		public string DstAmount { get; set; }
 
 		/// <summary>
-		/// Ethereum transaction ID to track, optional
+		/// Tron transaction ID to track, optional
 		/// </summary>
 		public string EthTxId { get; set; }
 	}

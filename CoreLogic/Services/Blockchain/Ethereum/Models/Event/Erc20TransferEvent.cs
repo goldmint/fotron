@@ -1,7 +1,7 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
 using System.Numerics;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Models.Event {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron.Models.Event {
 
 	public class Erc20TransferEvent : BaseEvent {
 

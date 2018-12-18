@@ -3,9 +3,9 @@ using NLog;
 using System;
 using Fotron.Common.Extensions;
 
-namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Impl {
+namespace Fotron.CoreLogic.Services.Blockchain.Tron.Impl {
 
-	public abstract class EthereumBaseClient {
+	public abstract class TronBaseClient {
 
 		protected ILogger Logger { get; }
 		protected Nethereum.JsonRpc.Client.IClient EthProvider { get; }
@@ -16,12 +16,12 @@ namespace Fotron.CoreLogic.Services.Blockchain.Ethereum.Impl {
 
 		// ---
 
-		protected EthereumBaseClient(AppConfig appConfig, LogFactory logFactory) {
+		protected TronBaseClient(AppConfig appConfig, LogFactory logFactory) {
 			Logger = logFactory.GetLoggerFor(this);
 			AppConfig = appConfig;
 
-			EthProvider = new Nethereum.JsonRpc.Client.RpcClient(new Uri(appConfig.Services.Ethereum.Provider));
-			//EthLogsProvider = new Nethereum.JsonRpc.Client.RpcClient(new Uri(appConfig.Services.Ethereum.LogsProvider));
+			EthProvider = new Nethereum.JsonRpc.Client.RpcClient(new Uri(appConfig.Services.Tron.Provider));
+			//EthLogsProvider = new Nethereum.JsonRpc.Client.RpcClient(new Uri(appConfig.Services.Tron.LogsProvider));
 
 			Web3Utils = new Web3Utils(EthProvider);
 		}

@@ -2,6 +2,6 @@
 
 	public static class TokensPrecision {
 
-		public const int Ethereum = 18;
+		public const int Tron = 18;
 	}
 }
