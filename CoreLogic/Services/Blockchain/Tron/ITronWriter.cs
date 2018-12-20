@@ -6,6 +6,6 @@ namespace Fotron.CoreLogic.Services.Blockchain.Tron {
 
 	public interface ITronWriter
 	{
-	    Task<string> UpdateMaxGaxPrice(BigInteger gasPrice);
+	    //Task<string> UpdateMaxGaxPrice(BigInteger gasPrice);
 	}
 }

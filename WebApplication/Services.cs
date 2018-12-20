@@ -205,15 +205,6 @@ namespace Fotron.WebApplication {
 		public void StopServices() {
 			var logger = LogManager.LogFactory.GetCurrentClassLogger();
 			logger.Info("Stop services");
-
-			try {
-
-				NetMQ.NetMQConfig.Cleanup(true);
-			}
-			catch (Exception e) {
-				logger.Error(e);
-			}
-
 			logger.Info("Services stopped");
 		}
 	}

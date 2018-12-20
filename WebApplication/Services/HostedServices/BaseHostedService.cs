@@ -17,7 +17,7 @@ namespace Fotron.WebApplication.Services.HostedServices
 		protected ILogger Logger { get; }
 		protected ApplicationDbContext DbContext { get; }
 		protected ITronReader TronObserver { get; }
-	    protected ITronWriter TronWriter { get; }
+		protected ITronWriter TronWriter { get; }
 
         protected abstract TimeSpan Period { get; }
 
@@ -28,7 +28,7 @@ namespace Fotron.WebApplication.Services.HostedServices
 			AppConfig = services.GetRequiredService<AppConfig>();
 			DbContext = services.GetRequiredService<ApplicationDbContext>();
 			TronObserver = services.GetRequiredService<ITronReader>();
-		    TronWriter = services.GetRequiredService<ITronWriter>();
+			TronWriter = services.GetRequiredService<ITronWriter>();
 		}
 
 		public async Task StartAsync(CancellationToken cancellationToken) {

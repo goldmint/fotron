@@ -20,6 +20,7 @@ namespace Fotron.WebApplication.Controllers.v1
         [ProducesResponseType(typeof(TokenBaseInfoResponseViewModel[]), 200)]
         public async Task<APIResponse> GetTokenList()
         {
+
             var query = DbContext.Tokens.Where(x => x.IsEnabled && !x.IsDeleted);
 
             var list = new List<TokenBaseInfoResponseViewModel>();
@@ -37,7 +38,6 @@ namespace Fotron.WebApplication.Controllers.v1
 
                 if (last7DStatList.Count > 1) token.TradingVolume24HEth = (last7DStatList[last7DStatList.Count - 1].VolumeEth - last7DStatList[last7DStatList.Count - 2].VolumeEth).RoundUp(2);
             }
-
             return APIResponse.Success(list);
         }
 

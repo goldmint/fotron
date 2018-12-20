@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
-using Nethereum.Hex.HexTypes;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Net;
@@ -105,11 +104,6 @@ namespace Fotron.Common
             return (double)unixTimeStampInTicks / TimeSpan.TicksPerSecond;
         }
 
-
-        public static ulong ToUlong(this HexBigInteger val)
-        {
-            return (ulong)val.Value;
-        }
 
         public static T ParseEnum<T>(string value)
         {

@@ -37,7 +37,7 @@ namespace Fotron.WebApplication.Services.HostedServices
                 var bonusPerShare = await TronObserver.GetBonusPerShare(token.FotronContractAddress);
                 var volumeEth = await TronObserver.GetVolumeEth(token.FotronContractAddress);
                 var volumeToken = await TronObserver.GetVolumeToken(token.FotronContractAddress);
-                var blockNum = await TronObserver.GetLogsLatestBlockNumber();
+                var blockNum = await TronObserver.GetLatestBlockNumber();
 
                 var tokenStat = new TokenStatistics { Date = DateTime.Now, PriceEth = price, BuyCount = buyCount, SellCount = sellCount,
                     ShareReward = bonusPerShare, VolumeEth = volumeEth, VolumeToken = volumeToken, BlockNum = blockNum, TokenId = token.Id };

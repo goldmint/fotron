@@ -95,10 +95,10 @@
 			public class TronSection {
 
                 public string FotronCoreAddress { get; set; } = "";
-                public string SetMaxGasPriceFunctionName { get; set; } = "";
+                //public string SetMaxGasPriceFunctionName { get; set; } = "";
 
-                public string FotronContractAbi { get; set; } = "";
-                public string FotronCoreAbi { get; set; } = "";
+                //public string FotronContractAbi { get; set; } = "";
+                //public string FotronCoreAbi { get; set; } = "";
 
                 public string TokenPriceFunctionName { get; set; } = "";
 			    public string TokenBuyCountFunctionName { get; set; } = "";
@@ -107,13 +107,9 @@
 			    public string VolumeEthFunctionName { get; set; } = "";
 			    public string VolumeTokenFunctionName { get; set; } = "";
 
-
-                public string EtherscanTxView { get; set; } = "";
 				public string Provider { get; set; } = "";
-				public string LogsProvider { get; set; } = "";
-
-                public string GasPriceUrl { get; set; } = "";
-                public string ManagerPrivateKey { get; set; } = "";
+                //public string GasPriceUrl { get; set; } = "";
+                //public string ManagerPrivateKey { get; set; } = "";
             }
 
 			//public WorkersSection Workers { get; set; } = new WorkersSection();
