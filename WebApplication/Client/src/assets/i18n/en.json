@@ -25,7 +25,7 @@
     "Trade": {
       "Labels": {
         "ExpDate": "Lookup exp. date:",
-        "EthContract": "ETH in contract:",
+        "TrxContract": "TRX in contract:",
         "TokensContract": "Tokens sold:",
         "TotalSupply": "Total token supply:",
         "Tokens": "My tokens:",
@@ -39,7 +39,7 @@
         "PromoBonus": "Promo bonus",
         "TotalSpent": "Total spent:",
         "RefNotAvailable": "not available yet",
-        "GettingRef": "To get you ref link you have to buy any tokens for at least <b>{{ token }}</b> ETH. You're missing <b>{{ missing }}</b> ETH"
+        "GettingRef": "To get you ref link you have to buy any tokens for at least <b>{{ token }}</b> TRX. You're missing <b>{{ missing }}</b> TRX"
       },
       "Buttons": {
         "BuySell": "Buy/sell token",
@@ -53,7 +53,7 @@
     "Statistics": {
       "Charts": {
         "Headings": {
-          "priceEth": "Token price by days",
+          "priceTrx": "Token price by days",
           "shareReward": "Collected share bonus by days",
           "buySellCount": "Total tx amount by days"
         }
@@ -87,7 +87,7 @@
       },
       "Labels": {
         "TypeNumber": "Type a valid number.",
-        "Result": "Approximately {{ amount }} ETH.",
+        "Result": "Approximately {{ amount }} TRX.",
         "Fee": "Estimated fee",
         "TokenPrice": "Average token price",
         "CurrentPrice": "Current sell price for 1 token:",
@@ -124,9 +124,9 @@
       },
       "Placeholders": {
         "Name": "Goldmint",
-        "Ticker": "MNTP",
+        "Ticker": "TRX",
         "Price": "0.01",
-        "Contract": "0x0160ae697a3538668cdb4698d3b89c7f36ad990d",
+        "Contract": "TBjSkAjXwDuQj8afcPJnYViq6G3izvY3Jw",
         "Supply": "10000000000"
       },
       "Buttons": {
@@ -147,8 +147,8 @@
       "Table": {
         "Name": "Name",
         "24HChange": "24H Change, %",
-        "PriceETH": "Price, ETH",
-        "24HVolume": "24H Volume, ETH",
+        "priceTrx": "Price, TRX",
+        "24HVolume": "24H Volume, TRX",
         "Graph": "7D price graph",
         "MoreInfo": "More info",
         "Trade": "Trade"
@@ -166,82 +166,82 @@
     "About": {
       "Sections": {
         "1th": {
-          "Heading": "Что такое Fotron?",
-          "Text": "Fotron – market place для продажи токенов ERC20 различных проектов, использующих для дистрибуции следующие общие принципы, заложенные в открытый и аудированный смарт-контракт:",
+          "Heading": "What is Fotron?",
+          "Text": "Fotron - a marketplace for the sale of ERC20 tokens of various projects that could be used for distribution the following general principles embedded in an open and audited smart contract:",
           "List": {
-            "1th": "<b>Эскроу</b> - хранение ETH, полученных от продажи токенов, и возможность обратной продажи токенов до момента окончания lockup-периода.",
-            "2th": "<b>Реферальная система</b> - за привлечение покупателя токенов, выплачивается вознаграждение в ETH.",
-            "3th": "<b>Ценообразование и ликвидность</b> - динамическое изменение стоимости токена, выраженной в ETH в зависимости от покупок и возвратов; возможность полного выкупа ранее проданных токенов.",
-            "4th": "<b>Геймификация</b> - дополнительные бонусы для покупателей токенов, привязанные к моменту покупки."
+            "1th": "<b>Escrow</b> - storage of TRX, received from the sale of tokens, and the possibility of resale of tokens until the end of the lockup-period.",
+            "2th": "<b>Referral system</b> - for attracting a buyer of tokens, remuneration is paid to TRX.",
+            "3th": "<b>Pricing and liquidity</b> - the dynamic change in the value of the token, expressed in TRX, depending on purchases and returns; the possibility of full redemption of previously sold tokens.",
+            "4th": "<b>Gamification</b> - additional bonuses for token's buyers, tied at the time of purchase."
           }
         },
         "2th": {
-          "Heading": "Вы очередная пирамида?",
-          "Text": "Нет, мы не пирамида, так как мы не используем тело вложенных инвестиций для выплаты реферальных вознаграждений; для этого используется добавленная комиссия за покупку и продажу токенов в смарт-контракте. Тело инвестиций в ETH хранится в смарт-контракте до востребования покупателем."
+          "Heading": "Are you another pyramid?",
+          "Text": "No, we aren't a pyramid, since we don't use the body of the nested investment to pay referral rewards; for this, the added fee for the purchase and sale of tokens in the smart contract is used. The body of investment in TRX is stored in a smart demand contract by the buyer."
         },
         "3th": {
-          "Heading": "Как функционирует Fotron?",
-          "Text": "Проект, допущенный на платформу, заливает выбранный им объём своих токенов в смарт контракт, определяет начальную цену в ETH, ниже которой цена не может опуститься, и lockup-период, в течении которого он не может забрать ничего из смарт-контракта.<br><br>Инвесторы, приходя на платформу, покупают токены выбранного проекта, перечисляя ETH на смарт-контракт.<br><br>Цена токена рассчитывается по сложной формуле, повышается при каждой покупке и снижается при каждой продаже.<br><br>Инвестор уплачивает комиссию при покупке и продаже, которая зависит от суммы сделки и составляет от 1 до 10%.  Чем больше объем сделки, тем выше комиссия.<br><br>В любой момент в течении lockup-периода инвестор может продать токены по текущей цене обратно в смарт-контракт и забрать ETH. Инвестор также может оставить токены себе или продать их на любой крипто-бирже. Также инвестор имеет возможность купить токены на крипто-бирже и продать их в смарт-контракт, но на сумму не более своей первоначальной покупки.<br><br>По окончании lockup-периода, проект получает из смарт-контракта оставшиеся токены и/или ETH."
+          "Heading": "How does Fotron work?",
+          "Text": "The project, which allowed on the platform, fills the volume of its tokens chosen from a smart contract. Besides, it determines the initial price at TRX, the price can't fall below it; and the lockup period during which it cannot take anything from the smart contract.<br><br>Investors, coming to the platform, buy tokens of the selected project, listing TRX on a smart contract.<br><br>The price of the token is calculated using a complex formula, increases with each purchase and decreases with each sale.<br><br>The investor pays a commission for buying and selling, which depends on the amount of the transaction and ranges from 1 to 10%. The larger the transaction volume, the higher the commission.<br><br>At any time during the lockup period, the investor can sell the tokens at the current price back to the smart contract and pick up the TRX. An investor can also keep tokens for himself or sell them on any crypto exchange. Also, the investor has the opportunity to buy tokens on a crypto exchange and sell them in a smart contract, but the amount is not more than its original purchase.<br><br>At the end of the lockup period, the project receives the remaining tokens and/or TRX from the smart contract."
         },
         "4th": {
-          "Heading": "Насколько безопасна Fotron?",
-          "Text": "Смарт-контракт имеет открытый код и может быть провалидирован. Ни у одного из проектов, включая основателей Fotron, нет доступа к ETH, хранящимся внутри смарт-контракта. Отчет по код-ревью смарт-контракта можно найти на нашем <a href='https://github.com/Goldmint/fotron/blob/master/SmartContracts/Fotron-code-review.pdf' target='_blank'>Github</a>."
+          "Heading": "How safe is Fotron?",
+          "Text": "The smart contract is open source and can be validated. None of the projects, including the founders of Fotron, have access to the TRX stored within the smart contract. A report on the code review of a smart contract can be found on our <a href='https://github.com/Goldmint/etherama/blob/master/SmartContracts/Fotron-code-review.pdf' target='_blank'>Github</a>."
         },
         "5th": {
-          "Heading": "Как происходит расчет комиссий?",
-          "Text": "- комиссия для покупки = (цена токена после транзакции – текущая цена токена)/2;<br><br>- комиссия для продажи = (текущая цена токена – цена после транзакции)/2."
+          "Heading": "How are commissions calculated?",
+          "Text": "- commission for purchase = (price of the token after the transaction - the current price of the token) / 2;<br><br>- commission for sale = (the current price of the token is the price after the transaction) / 2."
         },
         "6th": {
-          "Heading": "Как происходит распределение комиссий?",
-          "Text": "Комиссия от сделок делится следующим образом:",
+          "Heading": "How are commissions distributed?",
+          "Text": "The transaction commission is divided as follows:",
           "List": {
-            "1th": "1) 30% – получает проект;",
-            "2th": "2) 25% – бонусный фонд для токен-холдеров;",
-            "3th": "3) 20% – получает владелец реферальной ссылки, если была совершена покупка;",
-            "4th": "4) 5% от спреда идет на быстрый джекпот – QUICK promo (выплачивается раз в 20 минут, при попадании транзакции в 100-ый блок Etherum);",
-            "5th": "5) 5% от спреда идет на большой джекпот – BIG promo (выплачивается раз в три дня, при попадании транзакции в 9999-ый блок Etherum);",
-            "6th": "6) 15% идет оператору платформы на развитие проекта Fotron."
+            "1th": "1) 30% – gets the project;",
+            "2th": "2) 25% – bonus fund for token-holders;",
+            "3th": "3) 20% – gets the owner of the referral link, if the purchase was made;",
+            "4th": "4) 5% of the spread goes to the fast jackpot - QUICK promo (paid every 20 minutes, when a transaction hits the 100th Etherum block);",
+            "5th": "5) 5% of the spread goes to the big jackpot - BIG promo (paid every three days, when a transaction hits the 9999 Etherum block);",
+            "6th": "6) 15% goes to the platform operator for the development of the Fotron project."
           }
         },
         "7th": {
-          "Heading": "Как будет изменяться цена токена?",
-          "Text": "Цена токена относительно ETH изменяется согласно следующим формулам: <br/> для покупки P1 = T*P0*exp(TS),  где T - кол-во покупаемых токенов, P0 - текущая цена токена в ETH, P1 - цена токена в ETH после совершения транзакции, S - скорость прироста цены (напр, 0.05/10000 - прирост цены на 5% на каждые 10000 токенов); <br/>- для продажи P1 = T*P0*exp(-TS)."
+          "Heading": "How will change the token price?",
+          "Text": "The price of the token relative to the TRX varies according to the following formulas: <br/> for buying P1 = T * P0 * exp (TS), where T is the number of tokens purchased, P0 is the current price of the token in TRX, P1 is the price of the token in TRX after the transaction, S is the rate of price increase (eg, 0.05 / 10,000 - price increase of 5% for every 10,000 tokens); <br/>- for sale P1 = T * P0 * exp (-TS)."
         },
         "8th": {
-          "Heading": "Что Fotron дает пользователю?",
+          "Heading": "What does Fotron give to the user?",
           "List1": {
-            "Heading": "Безопасность:",
+            "Heading": "Security:",
             "Items": {
-              "1th": "В отличии от покупки токенов на ICO, пользователю для их продажи не надо ждать листинга, он всегда знает минимальную цену, ниже которой токен не упадет."
+              "1th": "In contrast to the purchase of tokens on ICO, the user does not have to wait for the listing to sell them, he always knows the minimum price below which the token won’t fall."
             }
           },
           "List2": {
-            "Heading": "Возможность заработать несколькими способами:",
+            "Heading": "The opportunity to earn in several ways:",
             "Items": {
-              "1th": "а) купить токен дешевле (оказаться в начале  периода покупки) и продать дороже (оказаться в начале периода продаж);",
-              "2th": "б) получить джекпот при покупке токенов;",
-              "3th": "в) получить 2% бонус по реферальной ссылке (для «общительных инвесторов»);",
-              "4th": "г) получить часть общего для всех бонуса – 3% комиссий делится на всех, пропорционально сумме токенов в кошельке;",
-              "5th": "д) заработать на арбитраже при разнице стоимости токена в Fotron и на бирже."
+              "1th": "a) it is cheaper to buy a token (to be at the beginning of the purchase period) and to sell more expensively (to be at the beginning of the sales period);",
+              "2th": "b) get the jackpot when buying tokens;",
+              "3th": "c) get a 2% bonus on the referral link (for \"sociable investors\")",
+              "4th": "d) receive a part of the total bonus for all - 3% of the commissions are divided into all, in proportion to the amount of tokens in the wallet;",
+              "5th": "e) make money on arbitration when the difference in the cost of a token in Fotron and on the exchange."
             }
           }
         },
         "9th": {
-          "Heading": "Что Fotron дает проекту?",
+          "Heading": "What does Fotron give to the project?",
           "List": {
-            "1th": "А) Возможность популяризировать свой токен и увеличить число инвесторов. Попадание на платформу означает определенный уровень качества проектов.",
-            "2th": "Б) Возможность реализовать дополнительный объём токенов.",
-            "3th": "В) Возможность заработать 3,5% от каждой продажи своих токенов."
+            "1th": "A) The ability to popularize your token and increase the number of investors. Hit on the platform means a certain level of project quality.",
+            "2th": "B) Ability to realize additional volume of tokens.",
+            "3th": "C) Ability to earn 3.5% from each sale of their tokens."
           },
-          "Text": "На свое усмотрение, post-ICO проект может защитить интересы своих ранних инвесторов, позволив им покупать через Fotron токены на сумму, не превышающую объём, купленный ранним инвестором на ICO."
+          "Text": "At its discretion, the post-ICO project can protect the interests of its early investors by allowing them to buy tokens through Fotron for an amount not exceeding the amount purchased by the early investor at ICO."
         },
         "10th": {
-          "Heading": "Роль команды Fotron",
+          "Heading": "The role of the Fotron team",
           "List": {
-            "1th": "а) Продвижение платформы;",
-            "2th": "б) Обеспечение регулярной поддержки пользователей и проектов в чате telegram;",
-            "3th": "в) Предоставление технического функционала платформы;",
-            "4th": "г) Предоставление договорной базы пользователям и проектам."
+            "1th": "a) Platform Promotion;",
+            "2th": "b) Providing regular user and projects support in the telegram chat;",
+            "3th": "c) Providing technical functionality of the platform;",
+            "4th": "d) Provision of a contractual base to users and projects."
           }
         }
       }
@@ -251,59 +251,60 @@
       "Support": "If you didn't find the answer to your question in our FAQ, send us an email",
       "Answers": {
         "1th": {
-          "Heading": "Ваш смарт-контракт открытый?",
-          "Text": "Да."
+          "Heading": "Is your smart contract open?",
+          "Text": "Yes."
         },
         "2th": {
-          "Heading": "Как купить токены через реферальную ссылку?",
-          "Text": "При каждой покупке токенов на смарт-контракте создается аккаунт, соответствующий номеру публичного ключа Вашего кошелька, и доступ к этой ячейке имеет только владелец приватного ключа, соответствующего этому публичному адресу."
+          "Heading": "How to buy tokens through a referral link?",
+          "Text": "Every time you buy tokens on a smart contract, an account is created that corresponds to the public key number of your wallet, and only the owner of the private key corresponding to this public address has access to this cell."
         },
         "3th": {
-          "Heading": "У меня есть токены купленные на бирже, могу ли я участвовать в распределении вознаграждения?",
-          "Text": "Нет, для участия в разделении вознаграждения необходимо купить токены в смарт-контракте."
+          "Heading": "I have tokens purchased on the stock exchange, can I participate in the distribution of remuneration?",
+          "Text": "No, to participate in the sharing of remuneration, you need to buy tokens in a smart contract."
         },
         "4th": {
-          "Heading": "Можете ли вы этот смарт-контракт аннулировать?",
-          "Text": "Нет."
+          "Heading": "Can you cancel this smart contract?",
+          "Text": "No."
         },
         "5th": {
-          "Heading": "Как нам убедиться, что вы не выведете оттуда все деньги?",
-          "Text": "Прочитайте условия смарт-контракта и результаты аудита."
+          "Heading": "How can we make sure that you don’t withdraw all the money from there?",
+          "Text": "Read the terms of the smart contract and the results of the audit."
         },
         "6th": {
-          "Heading": "Можно ли купить токены, получить вашу реферальную ссылку, и сразу продать купленные токены?",
-          "Text": "Можно, но тогда Вы будете получать только вознаграждение от привлечения новых инвесторов по реферальной ссылке. Остальные вознаграждения реферальной программы не будут распределяться на Вас из-за отсутствия токенов на Вашем кошельке."
+          "Heading": "Can I buy tokens, get your referral link, and immediately sell the purchased tokens?",
+          "Text": "It is possible, but then you will receive only rewards from attracting new investors through a referral link. The rest of the referral program rewards will not be distributed to you due to the lack of tokens on your wallet."
         },
         "7th": {
-          "Heading": "Если покупка токенов произошла без реферальной ссылки, куда деваются проценты?",
-          "Text": "В случае покупки токенов в обход реферальной ссылки, вознаграждение добавляется к общему реферальному фонду всем участниками реферальной программы."
+          "Heading": "If the purchase of tokens occurred without a referral link, where do the percentages go?",
+          "Text": "In the case of purchase of tokens bypassing the referral link, the reward is added to the general referral fund by all participants of the referral program."
         },
         "8th": {
-          "Heading": "Реферальное вознаграждение автоматически попадает на мой кошелек Tron?",
-          "Text": "Нет, все вознаграждения накапливаются в саморегулируемом смарт-контракте, для снятия вознаграждения необходимо сделать запрос к смарт-контракту путем авторизации в кошельке MetaMask на сайте платформы."
+          "Heading": "Does the referral fee automatically go into my Ethereum wallet?",
+          "Text": "No, all rewards are accumulated in a self-regulating smart contract, in order to withdraw a reward, you must make a request to the smart contract by authorizing in the TronLink wallet on the platform website."
         },
         "9th": {
-          "Heading": "Что делать, если я потерял доступ к своему Tron кошельку, на который я купил токены в смарт-контракте?",
-          "Text": "Тут уже ничего не поделаешь."
+          "Heading": "What should I do if I lose access to my Ethereum wallet for which I bought tokens in a smart contract?",
+          "Text": "There is nothing you can do."
         },
         "10th": {
-          "Heading": "Какое минимальное количество токенов необходимо купить в смарт-контракте для участия в реферальной программе?",
-          "Text": "Минимальное количество устанавливается для каждого токена индивидуально и позволяет получать вознаграждение от покупок по Вашей реферальной ссылке, а также часть вознаграждения от общего реферального фонда."
+          "Heading": "What is the minimum number of tokens you need to buy in a smart contract to participate in the referral program?",
+          "Text": "The minimum amount is set for each token individually and allows you to receive remuneration from purchases using your referral link, as well as part of the remuneration from the general referral fund."
         },
         "11th": {
-          "Heading": "Могу ли я сделать свой собственный сайт с описанием проекта и разместить там свою реферальную ссылку?",
-          "Text": "Конечно, можно! Мы поддерживаем популяризацию Fotron в сети Интернет при условии достоверности распространяемой информации. С другой стороны, мы всячески противодействуем распространению искаженной информации о правилах и условиях Fotron."
+          "Heading": "Can I make my own website with a description of the project and place my referral link there?",
+          "Text": "Sure you may! We support the popularization of Fotron on the Internet, subject to the accuracy of the information disseminated. On the other hand, we strongly oppose the dissemination of distorted information about the rules and conditions of Fotron."
         },
         "12th": {
-          "Heading": "Комиссии в Fotron",
-          "Text": "При покупке и продажи уплачивается небольшая комиссия, а также стоимость газа, которую можно указать самостоятельно в процессе сделки.<br>При небольших транзакциях потери на газ могут оказаться достаточно значительными в процентном соотношении. Рекомендуем выставлять газ вручную и не совершать множества  мелких транзакций."
+          "Heading": "Commissions in Fotron",
+          "Text": "When buying and selling a small commission is paid, as well as the cost of gas, which you can specify on your own during the transaction. With small transactions, gas losses can be quite significant as a percentage. We recommend exposing the gas manually and not making many small transactions."
         }
       }
     },
 	"MainModal": {
+      "Heading": "FOTRON QUICK TOUR",
       "Slide1": "The platform for the ERC-20 tokens distribution which based on a smart contract with a back sale guarantee.",
-      "Slide2": "ETH reward from every purchase / sale for all token holders.",
-      "Slide3": "The additional remuneration in ETH for attracting users by referral link.",
+      "Slide2": "TRX reward from every purchase / sale for all token holders.",
+      "Slide3": "The additional remuneration in TRX for attracting users by referral link.",
       "Slide4": "The possibility of a super bonus obtaining while buying tokens."
     },
     "ErrorPage": {
@@ -322,11 +323,10 @@
     }
   },
   "MESSAGE": {
-    "MetaMask": {
-      "Heading": "To continue you'll need to have MetaMask",
-      "Text": "MetaMask is a bridge that allows you to visit the distributed web of tomorrow in your browser today. It allows you to run Tron dApps right in your browser without running a full Tron node. Please, install the MetaMask add-on in Chrome, Firefox or Opera browser. Get <a href=\"https://metamask.io\" target=\"_blank\">MetaMask</a>"
+    "TronLink": {
+      "Heading": "To continue you'll need to have TronLink",
+      "Text": "TronLink is a bridge that allows you to visit the distributed web of tomorrow in your browser today. It allows you to run Tron dApps right in your browser without running a full Tron node. Please, install the TronLink add-on in Chrome, Firefox or Opera browser. Get <a href=\"https://tron.network/wallet\" target=\"_blank\">TronLink</a>"
     },
-    "MMHandingOut": "Seems like your MetaMask is hanging out or doesn't work properly at the moment. Please try to turn it off and then on at your extension settings. After reloading MetaMask please click OK.",
     "LoginToMM": {
       "HeadingBuy": "BUY TOKEN",
       "HeadingSell": "SELL TOKEN",
@@ -338,22 +338,22 @@
       "Link": "View your transaction on Etherscan"
     },
     "AddToken": "Token request has been sent",
-    "ConnectingMM": "Connecting to MetaMask...",
+    "ConnectingMM": "Connecting to TronLink...",
     "InvalidNetwork": "You must use {{ networkName }} network",
     "ServiceUnavailable": "Service is temporarily unavailable"
   },
   "POPOVER": {
     "MyTokens": "Your current balance of tokens",
-    "MyBalances": "The current value of all your tokens purchased on the Fotron platform in ETH",
+    "MyBalances": "The current value of all your tokens purchased on the Fotron platform in TRX",
     "MyBonus": "Your total earned bonus including your share bonus, referral bonus and promotional bonuses received",
     "MyRefLink": "Your referral link",
     "BigBank": "You can get this big promo bonus if your transaction turns out to be the first in each block whose number is a multiple of 9999",
     "QuickBank": "You can get this promo bonus if your transaction turns out to be the first in each block whose number is a multiple of 100",
-    "PercentBtnBuy": "Amount of ETH for the active Metamask wallet for which you want to buy tokens",
-    "PercentBtnSell": "Amount of tokens for the active Metamask wallet for which you want to sell tokens",
+    "PercentBtnBuy": "Amount of TRX for the active TronLink wallet for which you want to buy tokens",
+    "PercentBtnSell": "Amount of tokens for the active TronLink wallet for which you want to sell tokens",
     "TokenFee": "Size of the Fotron's commission excluding the cost of gas per transaction",
     "AveragePrice": "Calculated average token price of the deal",
     "EstimateBuy": "The minimum amount of tokens you will receive as soon as the transaction is confirmed",
-    "EstimateSell": "The minimum amount of ETH you will receive as soon as the transaction is confirmed"
+    "EstimateSell": "The minimum amount of TRX you will receive as soon as the transaction is confirmed"
   }
 }
