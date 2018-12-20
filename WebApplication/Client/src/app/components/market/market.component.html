@@ -78,27 +78,27 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column prop="currentPriceEth" [draggable]="false" [resizeable]="false" [sortable]="false" [minWidth]="120">
+        <ngx-datatable-column prop="currentPriceTrx" [draggable]="false" [resizeable]="false" [sortable]="false" [minWidth]="120">
           <ng-template let-column="column" ngx-datatable-header-template>
             <span class="datatable-header-cell-wrapper">
-             {{ "PAGES.Market.Table.PriceETH" | translate }}
+             {{ "PAGES.Market.Table.priceTrx" | translate }}
             </span>
           </ng-template>
 
-          <ng-template let-currentPriceEth="value" ngx-datatable-cell-template>
-            <div class="text-center">{{ currentPriceEth | noexp:18 }}</div>
+          <ng-template let-currentPriceTrx="value" ngx-datatable-cell-template>
+            <div class="text-center">{{ currentPriceTrx | noexp:18 }}</div>
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column prop="tradingVolume24HEth" [draggable]="false" [resizeable]="false" [sortable]="false">
+        <ngx-datatable-column prop="tradingVolume24HTrx" [draggable]="false" [resizeable]="false" [sortable]="false">
           <ng-template let-column="column" ngx-datatable-header-template>
             <span class="datatable-header-cell-wrapper">
              {{ "PAGES.Market.Table.24HVolume" | translate }}
             </span>
           </ng-template>
 
-          <ng-template let-tradingVolume24HEth="value" ngx-datatable-cell-template>
-            <div class="text-center">{{ tradingVolume24HEth | noexp:18 }}</div>
+          <ng-template let-tradingVolume24HTrx="value" ngx-datatable-cell-template>
+            <div class="text-center">{{ tradingVolume24HTrx | noexp:18 }}</div>
           </ng-template>
         </ngx-datatable-column>
 
@@ -163,12 +163,12 @@
             </span>
           </div>
           <div>
-            <span class="font-weight-500">{{ "PAGES.Market.Table.PriceETH" | translate }}:</span>
-            {{ row.currentPriceEth | noexp:18 }}
+            <span class="font-weight-500">{{ "PAGES.Market.Table.priceTrx" | translate }}:</span>
+            {{ row.currentPriceTrx | noexp:18 }}
           </div>
           <div>
             <span class="font-weight-500">{{ "PAGES.Market.Table.24HVolume" | translate }}:</span>
-            {{ row.tradingVolume24HEth | noexp:18 }}
+            {{ row.tradingVolume24HTrx | noexp:18 }}
           </div>
           <div>
             <span class="font-weight-500">{{ "PAGES.Market.Table.Graph" | translate }}:</span>

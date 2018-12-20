@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs/Subject";
-import * as Web3 from "web3";
 import {BigNumber} from "bignumber.js";
 import {MessageBoxService} from "../../../services/message-box.service";
 import {TranslateService} from "@ngx-translate/core";
@@ -11,6 +10,8 @@ import {TokenInfo} from "../../../interfaces/token-info";
 import {CommonService} from "../../../services/common.service";
 import {TronService} from "../../../services/tron.service";
 
+let self;
+
 @Component({
   selector: 'app-buy',
   templateUrl: './buy.component.html',
@@ -19,29 +20,28 @@ import {TronService} from "../../../services/tron.service";
 export class BuyComponent implements OnInit, OnDestroy {
 
   @Input('tokenInfo') tokenInfo: TokenInfo;
-  @ViewChild('ethInput') ethInput;
+  @ViewChild('trxInput') trxInput;
   @ViewChild('mntpInput') mntpInput;
 
   public loading: boolean = false;
   public isTyping: boolean = false;
-  public eth: number = 0;
+  public trx: number = 0;
   public mntp: number = 0;
   public estimateFee: number = 0;
   public averageTokenPrice: number = 0;
-  public ethBalance: BigNumber | any = 0;
-  public buyPrice: BigNumber | any = 0;
-  public ethAddress: string = null;
+  public trxBalance: number = 0;
+  public buyPrice: number = 0;
+  public trxAddress: string = null;
   public errors = {
     invalidBalance: false,
-    ethLimit: false,
+    trxLimit: false,
     tokenLimit: false
   };
   public etherscanUrl = environment.etherscanUrl;
-  public fromEth: boolean = true;
+  public fromTrx: boolean = true;
   public isInvalidNetwork: boolean = false;
-  public MMNetwork = environment.MMNetwork;
   public isBalanceBetter: boolean = false;
-  public ethLimits = {
+  public trxLimits = {
     min: 0,
     max: 0
   };
@@ -54,10 +54,8 @@ export class BuyComponent implements OnInit, OnDestroy {
   public isMobile: boolean = false;
 
   private minReturnPercent = 1;
-  private web3: Web3 = new Web3();
   private destroy$: Subject<boolean> = new Subject<boolean>();
-  private gasLimit: number = 600000;
-  private ethBalanceForCheck: BigNumber;
+  private trxBalanceForCheck: number;
   private timeOut: any;
 
   constructor(
@@ -67,16 +65,18 @@ export class BuyComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private userService: UserService,
     private commonService: CommonService
-  ) { }
+  ) {
+    self = this;
+  }
 
   ngOnInit() {
-    this.ethInput.valueChanges
+    this.trxInput.valueChanges
       .debounceTime(500)
       .distinctUntilChanged()
       .takeUntil(this.destroy$)
       .subscribe(value => {
-        if (this.fromEth && +value && !this.errors.invalidBalance && !this.errors.ethLimit) {
-          this.estimateBuyOrder(this.eth, true, false);
+        if (this.fromTrx && +value && !this.errors.invalidBalance && !this.errors.trxLimit) {
+          this.estimateBuyOrder(this.trx, true, false);
         }
       });
 
@@ -85,58 +85,43 @@ export class BuyComponent implements OnInit, OnDestroy {
       .distinctUntilChanged()
       .takeUntil(this.destroy$)
       .subscribe(value => {
-        if (!this.fromEth && +value && !this.errors.invalidBalance && !this.errors.tokenLimit) {
+        if (!this.fromTrx && +value && !this.errors.invalidBalance && !this.errors.tokenLimit) {
           this.estimateBuyOrder(this.mntp, false, false);
         }
       });
 
     this.initTransactionHashModal();
 
-    this.tronService.passEthBalance.takeUntil(this.destroy$).subscribe(eth => {
-      this.ethBalanceForCheck = eth;
+    this.tronService.passTrxBalance.takeUntil(this.destroy$).subscribe(trx => {
+      this.trxBalanceForCheck = trx;
 
-      if (eth) {
-        this.tronService._contractInfura.getMaxGasPrice((err, res) => {
-          let gas = (+res * this.gasLimit) / Math.pow(10, 18);
-          this.ethBalance = +this.substrValue(+eth - gas);
-          this.eth = +this.substrValue(+eth - gas);
+      if (trx !== null) {
+        this.trxBalance = trx;
+        this.trx = +this.substrValue(trx);
 
-          Observable.combineLatest(
-            this.tronService.getObservableTokenDealRange(),
-            this.tronService.getObservableEthDealRange()
-          ).takeUntil(this.destroy$).subscribe(limits => {
-            if (limits[0] && limits[1]) {
-              this.tokenLimits.min = limits[0].min;
-              this.tokenLimits.max = limits[0].max;
+        Observable.combineLatest(
+          this.tronService.getObservableTokenDealRange(),
+          this.tronService.getObservableTrxDealRange()
+        ).takeUntil(this.destroy$).subscribe(limits => {
+          if (limits[0] && limits[1]) {
+            this.tokenLimits.min = limits[0].min;
+            this.tokenLimits.max = limits[0].max;
 
-              this.ethLimits.min = limits[1].min;
-              this.ethLimits.max = limits[1].max;
-              this.estimateBuyOrder(this.eth, true, true);
-            }
-          });
+            this.trxLimits.min = limits[1].min;
+            this.trxLimits.max = limits[1].max;
+            this.estimateBuyOrder(this.trx, true, true);
+          }
         });
         this.cdRef.markForCheck();
       }
     });
 
-    this.tronService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
-      if (address) {
-        if (!this.ethAddress) {
-           this.timeOut = setTimeout(() => {
-             !this.ethBalanceForCheck && this.translate.get('MESSAGE.MMHandingOut').subscribe(phrase => {
-               this.messageBox.alert(`<div>${phrase}<div class="mm-hanging-out"></div></div>`).subscribe(ok => {
-                 ok && location.reload();
-               });
-             });
-          }, 3000);
-        }
+    this.tronService.passTrxAddress.takeUntil(this.destroy$).subscribe(address => {
+      address && (this.trxAddress = address);
 
-        this.ethAddress = address;
-      }
-
-      if (this.ethAddress && !address) {
-        this.ethAddress = address;
-        this.ethBalance = this.eth = this.mntp = 0;
+      if (this.trxAddress && !address) {
+        this.trxAddress = address;
+        this.trxBalance = this.trx = this.mntp = 0;
       }
       this.cdRef.markForCheck();
     });
@@ -146,34 +131,34 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.cdRef.markForCheck();
     });
 
-    this.tronService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
-      if (network !== null) {
-        if (network != this.MMNetwork.index) {
-          let networkName = this.MMNetwork.name;
-          this.translate.get('MESSAGE.InvalidNetwork', {networkName}).subscribe(phrase => {
-            setTimeout(() => {
-              this.messageBox.alert(phrase);
-            }, 0);
-          });
-          this.isInvalidNetwork = true;
-        } else {
-          this.isInvalidNetwork = false;
-        }
-        this.cdRef.markForCheck();
-      }
-    });
+    // this.tronService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
+    //   if (network !== null) {
+    //     if (network != this.MMNetwork.index) {
+    //       let networkName = this.MMNetwork.name;
+    //       this.translate.get('MESSAGE.InvalidNetwork', {networkName}).subscribe(phrase => {
+    //         setTimeout(() => {
+    //           this.messageBox.alert(phrase);
+    //         }, 0);
+    //       });
+    //       this.isInvalidNetwork = true;
+    //     } else {
+    //       this.isInvalidNetwork = false;
+    //     }
+    //     this.cdRef.markForCheck();
+    //   }
+    // });
 
     this.commonService.isMobile$.takeUntil(this.destroy$).subscribe(isMobile => this.isMobile = isMobile);
   }
 
-  changeValue(event, fromEth: boolean) {
+  changeValue(event, fromTrx: boolean) {
     this.isTyping = true;
-    this.fromEth = fromEth;
+    this.fromTrx = fromTrx;
 
     event.target.value = this.substrValue(event.target.value);
-    fromEth ? this.eth = +event.target.value : this.mntp = +event.target.value;
+    fromTrx ? this.trx = +event.target.value : this.mntp = +event.target.value;
 
-    this.checkErrors(fromEth, +event.target.value);
+    this.checkErrors(fromTrx, +event.target.value);
   }
 
   changeMinReturn(event) {
@@ -185,11 +170,11 @@ export class BuyComponent implements OnInit, OnDestroy {
   }
 
   setCoinBalance(percent) {
-    let value = this.substrValue(+this.ethBalance * percent);
-    this.eth = +value;
+    let value = this.substrValue(+this.trxBalance * percent);
+    this.trx = +value;
     this.checkErrors(true, value);
 
-    !this.errors.ethLimit && this.estimateBuyOrder(this.eth, true, false);
+    !this.errors.trxLimit && this.estimateBuyOrder(this.trx, true, false);
     this.cdRef.markForCheck();
   }
 
@@ -201,41 +186,42 @@ export class BuyComponent implements OnInit, OnDestroy {
       .replace(/^0+(\d)/, '$1');
   }
 
-  estimateBuyOrder(amount: number, fromEth: boolean, isFirstLoad: boolean) {
+  estimateBuyOrder(amount: number, fromTrx: boolean, isFirstLoad: boolean) {
     this.loading = true;
     this.isTyping = false;
-    this.fromEth = fromEth;
-    const wei = this.web3['toWei'](amount);
+    this.fromTrx = fromTrx;
 
-    this.tronService._contractInfura.estimateBuyOrder(wei, fromEth, (err, res) => {
-      let estimate = +new BigNumber(res[0].toString()).div(new BigNumber(10).pow(18));
-      this.estimateFee = +new BigNumber(res[1].toString()).div(new BigNumber(10).pow(18));
-      this.averageTokenPrice = +new BigNumber(res[2].toString()).div(new BigNumber(10).pow(18));
+    (async function init() {
+      let res = await self.tronService.fotronContract.estimateBuyOrder(amount * Math.pow(10, 6), fromTrx).call();
+      let estimate = +res[0] / Math.pow(10, 6);
+      self.estimateFee = +res[1] / Math.pow(10, 6);
+      self.averageTokenPrice = +res[2] / Math.pow(10, 6);
 
-      if (fromEth) {
-        this.mntp = +this.substrValue(estimate);
+      if (fromTrx) {
+        self.mntp = +this.substrValue(estimate);
       } else {
-        this.eth = +this.substrValue(estimate);
-        if (this.ethAddress && this.eth > this.ethBalance) {
-          this.errors.invalidBalance = true;
+        self.trx = +this.substrValue(estimate);
+        if (self.trxAddress && self.trx > self.trxBalance) {
+          self.errors.invalidBalance = true;
         }
       }
 
-      this.minReturn = +this.substrValue(this.mntp * this.minReturnPercent);
+      self.minReturn = +self.substrValue(self.mntp * self.minReturnPercent);
 
-      this.loading = this.isMinReturnError = false;
-      this.cdRef.markForCheck();
-    });
+      self.loading = self.isMinReturnError = false;
+      self.cdRef.markForCheck();
+    })();
+
     this.cdRef.markForCheck();
   }
 
-  checkErrors(fromEth: boolean, value: number) {
-    this.errors.invalidBalance = fromEth && this.ethAddress && this.eth > this.ethBalance;
+  checkErrors(fromTrx: boolean, value: number) {
+    this.errors.invalidBalance = fromTrx && this.trxAddress && this.trx > this.trxBalance;
 
-    this.errors.ethLimit = fromEth && this.ethAddress && value > 0 &&
-      (value < this.ethLimits.min || value > this.ethLimits.max);
+    this.errors.trxLimit = fromTrx && this.trxAddress && value > 0 &&
+      (value < this.trxLimits.min || value > this.trxLimits.max);
 
-    this.errors.tokenLimit = !fromEth && this.ethAddress && value > 0 &&
+    this.errors.tokenLimit = !fromTrx && this.trxAddress && value > 0 &&
       (value < this.tokenLimits.min || value > this.tokenLimits.max);
 
     this.cdRef.markForCheck();
@@ -263,19 +249,19 @@ export class BuyComponent implements OnInit, OnDestroy {
     });
   }
 
-  detectMetaMask(heading) {
-    if (window.hasOwnProperty('web3')) {
-      !this.ethAddress && this.userService.loginToMM(heading);
+  detectTronLink(heading) {
+    if (window.hasOwnProperty('tronWeb')) {
+      !this.trxAddress && this.userService.loginToTronLink(heading);
     } else {
-      this.translate.get('MESSAGE.MetaMask').subscribe(phrase => {
+      this.translate.get('MESSAGE.TronLink').subscribe(phrase => {
         this.messageBox.alert(phrase.Text, phrase.Heading);
       });
     }
   }
 
   onSubmit() {
-    if (!this.ethAddress) {
-      this.detectMetaMask('HeadingBuy');
+    if (!this.trxAddress) {
+      this.detectTronLink('HeadingBuy');
       return;
     }
 
@@ -286,13 +272,9 @@ export class BuyComponent implements OnInit, OnDestroy {
     });
     let refAddress = queryParams['ref'] ? queryParams['ref'] : '0x0';
 
-    this.tronService._contractInfura.getMaxGasPrice((err, res) => {
-      if (+res) {
-        const amount = this.web3['toWei'](this.eth);
-        const minReturn = this.web3['toWei'](this.minReturn);
-        this.tronService.buy(refAddress, this.ethAddress, amount, minReturn, +res);
-      }
-    });
+    const amount = this.trx * Math.pow(10, 6);
+    const minReturn = this.minReturn * Math.pow(10, 6);
+    this.tronService.buy(refAddress, this.trxAddress, amount, minReturn);
   }
 
   ngOnDestroy() {

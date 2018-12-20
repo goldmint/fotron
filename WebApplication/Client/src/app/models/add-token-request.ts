@@ -4,6 +4,6 @@ export class AddTokenRequest {
   contactEmail: string = '';
   tokenTicker: string = '';
   tokenContractAddress: string = '';
-  startPriceEth: number = 0;
+  startPrice: number = 0;
   totalSupply: number = 0;
 }

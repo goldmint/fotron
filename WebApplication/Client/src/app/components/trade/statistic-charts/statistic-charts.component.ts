@@ -16,13 +16,13 @@ import {CommonService} from "../../../services/common.service";
 export class StatisticChartsComponent implements OnInit, OnDestroy {
 
   public charts = {
-    priceEth: {
+    priceTrx: {
       chart: {},
       data: [],
-      id: 'priceEth',
-      fieldName: ['priceEth'],
+      id: 'priceTrx',
+      fieldName: ['priceTrx'],
       options: [
-        {text: "Token price", iconFill:"#63B7F7", label: 'ETH'}
+        {text: "Token price", iconFill:"#63B7F7", label: 'TRX'}
       ]
     },
     shareReward: {
@@ -31,7 +31,7 @@ export class StatisticChartsComponent implements OnInit, OnDestroy {
       id: 'shareReward',
       fieldName: ['shareReward'],
       options: [
-        {text: "Share bonus", iconFill:"#63B7F7", label: 'ETH'}
+        {text: "Share bonus", iconFill:"#63B7F7", label: 'TRX'}
       ]
     },
     buySellCount: {

@@ -83,7 +83,7 @@ export class AddTokenComponent implements OnInit {
       params.contactEmail = this.addTokenData.email;
       params.tokenTicker = this.addTokenData.ticker;
       params.tokenContractAddress = !this.addTokenData.isCreate ? this.addTokenData.contract : '';
-      params.startPriceEth = this.addTokenData.price;
+      params.startPrice = this.addTokenData.price;
       params.totalSupply = this.addTokenData.supply;
 
       this.loading = true;

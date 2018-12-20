@@ -7,7 +7,7 @@
             <div class="buy-sell__title">{{ "PAGES.Buy.Heading" | translate }}</div>
         </div>
 
-      <div class="mt-3">{{ "PAGES.Buy.Labels.CurrentPrice" | translate }}<br><b>{{ +buyPrice | noexp:18 }}</b> ETH/{{ tokenInfo.ticker }}</div>
+      <div class="mt-3">{{ "PAGES.Buy.Labels.CurrentPrice" | translate }}<br><b>{{ +buyPrice | noexp:18 }}</b> TRX/{{ tokenInfo.ticker }}</div>
     </div>
 
     <div class="mt-1">
@@ -20,12 +20,12 @@
                                 <use xlink:href="#etherium"></use>
                             </svg>
                         </div>
-                        <input type="text" class="form-control m-0" name="eth-input" id="eth-input" placeholder="0.01"
-                               #ethInput="ngModel"
+                        <input type="text" class="form-control m-0" name="trx-input" id="trx-input" placeholder="0.01"
+                               #trxInput="ngModel"
                                ngModel
                                autocomplete="off"
                                (input)="changeValue($event, true)"
-                               [value]="eth"
+                               [value]="trx"
                                required>
                     </div>
                 </div>
@@ -45,8 +45,8 @@
             </div>
 
             <div class="my-3">
-                <div *ngIf="!ethAddress">
-                  <div class="estimate-info">{{ "PAGES.Buy.Labels.Fee" | translate }}  {{ estimateFee | noexp:18 }} ETH
+                <div *ngIf="!trxAddress">
+                  <div class="estimate-info">{{ "PAGES.Buy.Labels.Fee" | translate }}  {{ estimateFee | noexp:18 }} TRX
                     <span class="d-inline-block ml-2" [popover]='"POPOVER.TokenFee" | translate' triggers="mouseenter:mouseleave"
                           placement="top" container="body">
                       <svg class="icon" width="17" height="17">
@@ -55,7 +55,7 @@
                     </span>
                   </div>
                   <div class="estimate-info">
-                    {{ "PAGES.Buy.Labels.TokenPrice" | translate }}  {{ averageTokenPrice | noexp:18 }} ETH/{{ tokenInfo.ticker }}
+                    {{ "PAGES.Buy.Labels.TokenPrice" | translate }}  {{ averageTokenPrice | noexp:18 }} TRX/{{ tokenInfo.ticker }}
                     <span class="d-inline-block ml-2" [popover]='"POPOVER.AveragePrice" | translate' triggers="mouseenter:mouseleave"
                           [placement]="isMobile ? 'auto' : 'top'" container="body">
                       <svg class="icon" width="17" height="17">
@@ -65,9 +65,9 @@
                   </div>
                 </div>
 
-                <div *ngIf="ethAddress">
-                  <span *ngIf="eth && (!errors.invalidBalance && !errors.ethLimit)">
-                    <div class="estimate-info">{{ "PAGES.Buy.Labels.Fee" | translate }}  {{ estimateFee | noexp:18 }} ETH
+                <div *ngIf="trxAddress">
+                  <span *ngIf="trx && (!errors.invalidBalance && !errors.trxLimit)">
+                    <div class="estimate-info">{{ "PAGES.Buy.Labels.Fee" | translate }}  {{ estimateFee | noexp:18 }} TRX
                       <span class="d-inline-block ml-2" [popover]='"POPOVER.TokenFee" | translate' triggers="mouseenter:mouseleave"
                             placement="top" container="body">
                       <svg class="icon" width="17" height="17">
@@ -76,7 +76,7 @@
                     </span>
                     </div>
                     <div class="estimate-info">
-                      {{ "PAGES.Buy.Labels.TokenPrice" | translate }}  {{ averageTokenPrice | noexp:18 }} ETH/{{ tokenInfo.ticker }}
+                      {{ "PAGES.Buy.Labels.TokenPrice" | translate }}  {{ averageTokenPrice | noexp:18 }} TRX/{{ tokenInfo.ticker }}
                       <span class="d-inline-block ml-2" [popover]='"POPOVER.AveragePrice" | translate' triggers="mouseenter:mouseleave"
                             [placement]="isMobile ? 'auto' : 'top'" container="body">
                       <svg class="icon" width="17" height="17">
@@ -86,10 +86,10 @@
                     </div>
                   </span>
                   <div *ngIf="errors.invalidBalance">{{ "PAGES.Buy.Errors.InvalidBalance" | translate }}</div>
-                  <div *ngIf="!errors.invalidBalance && errors.ethLimit">
-                    {{ "PAGES.Buy.Errors.Limits" | translate:{ min: ethLimits.min, max: ethLimits.max } }}
+                  <div *ngIf="!errors.invalidBalance && errors.trxLimit">
+                    {{ "PAGES.Buy.Errors.Limits" | translate:{ min: trxLimits.min, max: trxLimits.max } }}
                   </div>
-                  <div *ngIf="!eth">{{ "PAGES.Buy.Labels.TypeNumber" | translate }}</div>
+                  <div *ngIf="!trx">{{ "PAGES.Buy.Labels.TypeNumber" | translate }}</div>
                 </div>
             </div>
 
@@ -161,7 +161,7 @@
 
             <div class="text-center mt-3">
                 <div class="d-inline-block position-relative">
-                  <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="!+eth || !+mntp || errors.invalidBalance || errors.ethLimit || errors.tokenLimit || loading || isTyping || isInvalidNetwork || isMinReturnError">
+                  <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="!+trx || !+mntp || errors.invalidBalance || errors.trxLimit || errors.tokenLimit || loading || isTyping || isMinReturnError">
                         {{ "PAGES.Buy.Buttons.Buy" | translate }}
                     </button>
                     <img *ngIf="loading" alt="Processing..." width="17" height="17" class="form-loader absolute" src="assets/img/loader-gold-bg-white.gif">

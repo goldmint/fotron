@@ -46,7 +46,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public isDataLoaded: boolean = false;
   public searchValue: string = '';
-  public coreContractEtherscanLink = environment.etherscanContractUrl + environment.mainContractAddress + '#internaltx'
+  public coreContractEtherscanLink = environment.etherscanContractUrl + environment.fotronCoreContractAddress + '#internaltx'
 
   private charts: any = {};
   private miniCharts: any = [];
@@ -163,7 +163,7 @@ export class MarketComponent implements OnInit, OnDestroy {
       this.miniCharts[i].chart = anychart.stock();
       this.miniCharts[i].chart.scroller().enabled(false);
       this.miniCharts[i].chart.crosshair(false);
-      this.miniCharts[i].chart.plot(0).line(this.miniCharts[i].mapping).name('ETH');
+      this.miniCharts[i].chart.plot(0).line(this.miniCharts[i].mapping).name('TRX');
 
       this.miniCharts[i].chart.plot(0).xAxis().enabled(false);
       this.miniCharts[i].chart.plot(0).yAxis().enabled(false);
@@ -195,7 +195,7 @@ export class MarketComponent implements OnInit, OnDestroy {
       this.charts.chart = anychart.stock();
       this.charts.chart.scroller().enabled(false);
 
-      this.charts.chart.plot(0).line(this.charts.mapping).name('ETH');
+      this.charts.chart.plot(0).line(this.charts.mapping).name('TRX');
       this.charts.chart.plot(0).legend().itemsFormatter(() => {
         return [
           {text: "Token price", iconFill:"#63B7F7"}

@@ -22,14 +22,14 @@ export class TradeComponent implements OnInit, OnDestroy {
   @HostBinding('class') class = 'page';
 
   public etherscanContractUrl = environment.etherscanContractUrl;
-  public ethAddress: string = null;
+  public trxAddress: string = null;
   public tokenBalance: BigNumber | any = null;
   public refLink: string = '';
   public isRefAvailable: boolean = false;
 
   public tokenSupply: BigNumber | any = 0;
   public totalData: any = {
-    totalEth: 0,
+    totalTrx: 0,
     totalTokens: 0
   };
   public isDataLoaded: boolean = false;
@@ -116,17 +116,17 @@ export class TradeComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.tronService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
-      address && (this.ethAddress = address);
-      if (this.ethAddress && !address) {
-        this.ethAddress = address;
+    this.tronService.passTrxAddress.takeUntil(this.destroy$).subscribe(address => {
+      address && (this.trxAddress = address);
+      if (this.trxAddress && !address) {
+        this.trxAddress = address;
       }
 
       this.sub1 && this.sub1.unsubscribe();
       this.sub1 = this.mainContractService.isRefAvailable$.takeUntil(this.destroy$).subscribe(data => {
         if (data) {
           this.isRefAvailable = data.isAvailable;
-          this.refLink = this.isRefAvailable && this.ethAddress ? `${window.location.href}?ref=${this.ethAddress}` : window.location.href;
+          this.refLink = this.isRefAvailable && this.trxAddress ? `${window.location.href}?ref=${this.trxAddress}` : window.location.href;
         }
       });
 
@@ -149,7 +149,7 @@ export class TradeComponent implements OnInit, OnDestroy {
 
     this.tronService.getObservableTotalData().takeUntil(this.destroy$).subscribe(total => {
       if (total) {
-        this.totalData.totalEth = total.eth;
+        this.totalData.totalTrx = total.trx;
         this.totalData.totalTokens = total.tokens;
         this.cdRef.markForCheck();
       }

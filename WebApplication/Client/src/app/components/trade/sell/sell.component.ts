@@ -11,6 +11,8 @@ import {TokenInfo} from "../../../interfaces/token-info";
 import {CommonService} from "../../../services/common.service";
 import {TronService} from "../../../services/tron.service";
 
+let self;
+
 @Component({
   selector: 'app-sell',
   templateUrl: './sell.component.html',
@@ -20,25 +22,25 @@ export class SellComponent implements OnInit, OnDestroy {
 
   @Input('tokenInfo') tokenInfo: TokenInfo;
   @ViewChild('mntpInput') mntpInput;
-  @ViewChild('ethInput') ethInput;
+  @ViewChild('trxInput') trxInput;
 
   public loading: boolean = false;
   public isTyping: boolean = false;
   public mntp: number = 0;
-  public eth: number = 0;
+  public trx: number = 0;
   public estimateFee: number = 0;
   public averageTokenPrice: number = 0;
   public tokenBalance: BigNumber | any = 0;
   public sellPrice: BigNumber | any = 0;
-  public ethAddress: string = null;
+  public trxAddress: string = null;
   public errors = {
     invalidBalance: false,
-    ethLimit: false,
+    trxLimit: false,
     tokenLimit: false
   };
   public etherscanUrl = environment.etherscanUrl;
   public fromToken: boolean = true;
-  public ethLimits = {
+  public trxLimits = {
     min: 0,
     max: 0
   };
@@ -46,15 +48,12 @@ export class SellComponent implements OnInit, OnDestroy {
     min: 0,
     max: 0
   };
-  public isInvalidNetwork: boolean = false;
-  public MMNetwork = environment.MMNetwork;
   public isBalanceBetter: boolean = false;
   public minReturn: number;
   public isMinReturnError: boolean = false;
   public isMobile: boolean = false;
 
   private minReturnPercent = 1;
-  private web3: Web3 = new Web3();
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -64,7 +63,9 @@ export class SellComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private cdRef: ChangeDetectorRef,
     private commonService: CommonService
-  ) { }
+  ) {
+    self = this;
+  }
 
   ngOnInit() {
     this.mntpInput.valueChanges
@@ -77,44 +78,44 @@ export class SellComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.ethInput.valueChanges
+    this.trxInput.valueChanges
       .debounceTime(500)
       .distinctUntilChanged()
       .takeUntil(this.destroy$)
       .subscribe(value => {
-        if (!this.fromToken && +value && !this.errors.invalidBalance && !this.errors.ethLimit) {
-          this.estimateSellOrder(this.eth, false, false);
+        if (!this.fromToken && +value && !this.errors.invalidBalance && !this.errors.trxLimit) {
+          this.estimateSellOrder(this.trx, false, false);
         }
       });
 
     this.initTransactionHashModal();
 
     this.tronService.passTokenBalance.takeUntil(this.destroy$).subscribe(gold => {
-      if (gold) {
+      if (gold !== null) {
         this.tokenBalance = gold;
         this.mntp = +this.substrValue(+gold);
 
         Observable.combineLatest(
           this.tronService.getObservableTokenDealRange(),
-          this.tronService.getObservableEthDealRange()
+          this.tronService.getObservableTrxDealRange()
         ).takeUntil(this.destroy$).subscribe(limits => {
           if (limits[0] && limits[1]) {
             this.tokenLimits.min = limits[0].min;
             this.tokenLimits.max = limits[0].max;
 
-            this.ethLimits.min = limits[1].min;
-            this.ethLimits.max = limits[1].max;
+            this.trxLimits.min = limits[1].min;
+            this.trxLimits.max = limits[1].max;
             this.estimateSellOrder(this.mntp, true, true);
           }
         });
         this.cdRef.markForCheck();
       }
     });
-    this.tronService.passEthAddress.takeUntil(this.destroy$).subscribe(address => {
-      address && (this.ethAddress = address);
-      if (this.ethAddress && !address) {
-        this.ethAddress = address;
-        this.tokenBalance = this.mntp = this.eth = 0;
+    this.tronService.passTrxAddress.takeUntil(this.destroy$).subscribe(address => {
+      address && (this.trxAddress = address);
+      if (this.trxAddress && !address) {
+        this.trxAddress = address;
+        this.tokenBalance = this.mntp = this.trx = 0;
       }
       this.cdRef.markForCheck();
     });
@@ -124,10 +125,10 @@ export class SellComponent implements OnInit, OnDestroy {
       this.cdRef.markForCheck();
     });
 
-    this.tronService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
-      network !== null && (this.isInvalidNetwork = network != this.MMNetwork.index);
-      this.cdRef.markForCheck();
-    });
+    // this.tronService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
+    //   network !== null && (this.isInvalidNetwork = network != this.MMNetwork.index);
+    //   this.cdRef.markForCheck();
+    // });
 
     this.commonService.isMobile$.takeUntil(this.destroy$).subscribe(isMobile => this.isMobile = isMobile);
   }
@@ -137,7 +138,7 @@ export class SellComponent implements OnInit, OnDestroy {
     this.fromToken = fromToken;
 
     event.target.value = this.substrValue(event.target.value);
-    fromToken ? this.mntp = +event.target.value : this.eth = +event.target.value;
+    fromToken ? this.mntp = +event.target.value : this.trx = +event.target.value;
 
     this.checkErrors(fromToken, +event.target.value);
   }
@@ -146,12 +147,12 @@ export class SellComponent implements OnInit, OnDestroy {
     event.target.value = this.substrValue(event.target.value);
     this.minReturn = +event.target.value;
 
-    this.isMinReturnError = this.minReturn > this.eth * this.minReturnPercent || this.minReturn <= 0;
+    this.isMinReturnError = this.minReturn > this.trx * this.minReturnPercent || this.minReturn <= 0;
     this.cdRef.markForCheck();
   }
 
   setCoinBalance(percent) {
-    if (this.ethAddress) {
+    if (this.trxAddress) {
       let value = this.isBalanceBetter ? this.substrValue(this.tokenLimits.max * percent) : this.substrValue(+this.tokenBalance * percent);
       if (+value != this.mntp) {
         this.mntp = +value;
@@ -175,48 +176,47 @@ export class SellComponent implements OnInit, OnDestroy {
     this.isTyping = false;
     this.fromToken = fromToken;
 
-    const wei = this.web3['toWei'](amount);
-    this.tronService._contractInfura && this.tronService._contractInfura.estimateSellOrder(wei, fromToken, (err, res) => {
-      if (res) {
-        let estimate = +new BigNumber(res[0].toString()).div(new BigNumber(10).pow(18));
-        this.estimateFee = +new BigNumber(res[1].toString()).div(new BigNumber(10).pow(18));
-        this.averageTokenPrice = +new BigNumber(res[2].toString()).div(new BigNumber(10).pow(18));
+    (async function init() {
+      let res = await self.tronService.fotronContract.estimateSellOrder(amount * Math.pow(10, 6), fromToken).call();
+      let estimate = +res[0] / Math.pow(10, 6);
+      self.estimateFee = +res[1] / Math.pow(10, 6);
+      self.averageTokenPrice = +res[2] / Math.pow(10, 6);
 
-        isFirstLoad && (this.isBalanceBetter = this.mntp > this.tokenLimits.max);
+      isFirstLoad && (self.isBalanceBetter = self.mntp > self.tokenLimits.max);
 
-        if (fromToken) {
-          this.eth = +this.substrValue(estimate);
-          // this.errors.invalidBalance = false;
-        } else {
-          this.mntp = +this.substrValue(estimate);
-          if (this.ethAddress && this.mntp > this.tokenBalance) {
-            this.errors.invalidBalance = true;
-          }
+      if (fromToken) {
+        self.trx = +self.substrValue(estimate);
+        // self.errors.invalidBalance = false;
+      } else {
+        self.mntp = +self.substrValue(estimate);
+        if (self.trxAddress && self.mntp > self.tokenBalance) {
+          self.errors.invalidBalance = true;
         }
-
-        this.minReturn = +this.substrValue(this.eth * this.minReturnPercent);
-
-        this.loading = this.isMinReturnError = false;
-        this.cdRef.markForCheck();
       }
-    });
+
+      self.minReturn = +self.substrValue(self.trx * self.minReturnPercent);
+
+      self.loading = self.isMinReturnError = false;
+      self.cdRef.markForCheck();
+    })();
+
     this.cdRef.markForCheck();
   }
 
   checkErrors(fromToken: boolean, value: number) {
-    this.errors.invalidBalance = fromToken && this.ethAddress && this.mntp > this.tokenBalance;
+    this.errors.invalidBalance = fromToken && this.trxAddress && this.mntp > this.tokenBalance;
 
-    this.errors.tokenLimit = fromToken && this.ethAddress && value > 0 &&
+    this.errors.tokenLimit = fromToken && this.trxAddress && value > 0 &&
       (value < this.tokenLimits.min || value > this.tokenLimits.max);
 
-    this.errors.ethLimit = !fromToken && this.ethAddress && value > 0 &&
-      (value < this.ethLimits.min || value > this.ethLimits.max);
+    this.errors.trxLimit = !fromToken && this.trxAddress && value > 0 &&
+      (value < this.trxLimits.min || value > this.trxLimits.max);
 
     this.cdRef.markForCheck();
   }
 
   setMinReturn(percent: number) {
-    !this.loading && (this.minReturn = +this.substrValue(this.eth * percent));
+    !this.loading && (this.minReturn = +this.substrValue(this.trx * percent));
     this.cdRef.markForCheck();
   }
 
@@ -237,33 +237,28 @@ export class SellComponent implements OnInit, OnDestroy {
     });
   }
 
-  detectMetaMask(heading) {
-    if (window.hasOwnProperty('web3')) {
-      !this.ethAddress && this.userService.loginToMM(heading);
+  detectTronLink(heading) {
+    if (window.hasOwnProperty('tronWeb')) {
+      !this.trxAddress && this.userService.loginToTronLink(heading);
     } else {
-      this.translate.get('MESSAGE.MetaMask').subscribe(phrase => {
+      this.translate.get('MESSAGE.TronLink').subscribe(phrase => {
         this.messageBox.alert(phrase.Text, phrase.Heading);
       });
     }
   }
 
   onSubmit() {
-    if (!this.ethAddress) {
-      this.detectMetaMask('HeadingSell');
+    if (!this.trxAddress) {
+      this.detectTronLink('HeadingSell');
       return;
     }
 
-    this.tronService._contractInfura.getMaxGasPrice((err, res) => {
-      if (+res) {
-        const amount = this.web3['toWei'](this.mntp);
-        const minReturn = this.web3['toWei'](this.minReturn);
-        this.tronService.sell(this.ethAddress, amount, minReturn, +res);
-      }
-    });
+    const amount = this.mntp * Math.pow(10, 6);
+    const minReturn = this.minReturn * Math.pow(10, 6);
+    this.tronService.sell(this.trxAddress, amount, minReturn);
   }
 
   ngOnDestroy() {
     this.destroy$.next(true);
   }
-
 }

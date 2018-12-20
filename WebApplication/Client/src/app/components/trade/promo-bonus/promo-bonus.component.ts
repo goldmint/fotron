@@ -18,7 +18,6 @@ export class PromoBonusComponent implements OnInit, OnDestroy {
   public quickWinPromoBonus: number = 0;
   public bigBankTimer;
   public quickBankTimer;
-  public isDataLoaded: boolean = false;
   public isFirstLoad: boolean = true;
 
   private destroy$: Subject<boolean> = new Subject<boolean>();

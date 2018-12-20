@@ -20,12 +20,12 @@ export class UserService {
     this._locale.next(locale);
   }
 
-  loginToMM(heading: string) {
+  loginToTronLink(heading: string) {
     this.translate.get('MESSAGE.LoginToMM').subscribe(phrase => {
       this.messageBox.alert(`
         <div class="text-center">${phrase.Text}</div>
-        <div class="metamask-icon"></div>
-        <div class="text-center mt-2 mb-2">MetaMask</div>
+        <div class="tron-link-icon"></div>
+        <div class="text-center mt-2 mb-2">TronLink</div>
       `, phrase[heading]);
     });
   }

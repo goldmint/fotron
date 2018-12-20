@@ -126,7 +126,7 @@
                  (input)="checkField(null)"
                  autocomplete="off"
                  placeholder='{{ "PAGES.AddToken.Placeholders.Contract" | translate }}'
-                 ethAddressValidator
+                 tokenAddressValidator
                  required>
           <div class="invalid-feedback" *ngIf="contract.errors?.required">
             {{ "PAGES.AddToken.Errors.Required" | translate }}

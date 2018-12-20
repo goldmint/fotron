@@ -3,16 +3,16 @@ import {FormControl, NG_VALIDATORS, Validator, ValidatorFn} from '@angular/forms
 import {TronService} from "../services/tron.service";
 
 @Directive({
-  selector: '[ethAddressValidator][ngModel]',
+  selector: '[tokenAddressValidator][ngModel]',
   providers: [
     {
       provide: NG_VALIDATORS,
-      useExisting: EthAddressValidatorDirective,
+      useExisting: TokenAddressValidatorDirective,
       multi: true
     }
   ]
 })
-export class EthAddressValidatorDirective implements Validator {
+export class TokenAddressValidatorDirective implements Validator {
 
   validator: ValidatorFn;
 

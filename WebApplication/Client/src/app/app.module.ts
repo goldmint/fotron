@@ -47,7 +47,6 @@ import { FaqComponent } from './components/faq/faq.component';
 import { MarketComponent } from './components/market/market.component';
 import { TradeComponent } from './components/trade/trade.component';
 import {CommonService} from "./services/common.service";
-import { EthAddressValidatorDirective } from './directives/eth-address-validator.directive';
 import {environment} from "../environments/environment";
 import { EmailValidatorDirective } from './directives/email-validator.directive';
 import { MainPromoBonusComponent } from './components/market/main-promo-bonus/main-promo-bonus.component';
@@ -59,6 +58,7 @@ import {LegalSecurityPageComponent} from "./components/legal-security-page/legal
 import {SafePipe} from "./pipes/safe.pipe";
 import {FotronMainModalComponent} from "./common/fotron-main-modal/fotron-main-modal.component";
 import {TronService} from "./services/tron.service";
+import {TokenAddressValidatorDirective} from "./directives/token-address-validator.directive";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -110,8 +110,8 @@ export function createTranslateLoader(http: HttpClient) {
     FaqComponent,
     MarketComponent,
     TradeComponent,
-    EthAddressValidatorDirective,
     EmailValidatorDirective,
+    TokenAddressValidatorDirective,
     MainPromoBonusComponent,
     FotronMainModalComponent,
     FooterBlockComponent,

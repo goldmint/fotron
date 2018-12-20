@@ -1,14 +1,14 @@
 export interface TokenList {
-  currentPriceEth: number;
+  currentPriceTrx: number;
   fotronContractAddress: string;
   fullName: string;
   id: number;
   logoUrl: string;
   priceChangeLastDayPercent: number;
   priceStatistics7D: number[];
-  startPriceEth: number;
+  startPriceTrx: number;
   ticker: string;
   tokenContractAddress: string;
-  tradingVolume24HEth: number;
+  tradingVolume24HTrx: number;
   chartData: any[];
 }

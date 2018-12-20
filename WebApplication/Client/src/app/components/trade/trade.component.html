@@ -19,8 +19,8 @@
         <div><b>{{ "PAGES.Trade.Labels.ExpDate" | translate }}</b>
           <span *ngIf="tillExpiration">{{ expirationTime?.expiration * 1000 | date:'d.M.yyyy' }} ({{ tillExpiration | date:'d.M.yyyy H:mm:ss' }})</span>
         </div>
-        <div><b>{{ "PAGES.Trade.Labels.EthContract" | translate }}</b> {{ +totalData.totalEth | noexp }} ETH</div>
-        <div><b>{{ "PAGES.Trade.Labels.TokensContract" | translate }}</b> {{ +totalData.totalTokens | noexp }} MNTP</div>
+        <div><b>{{ "PAGES.Trade.Labels.TrxContract" | translate }}</b> {{ +totalData.totalTrx | noexp }} TRX</div>
+        <div><b>{{ "PAGES.Trade.Labels.TokensContract" | translate }}</b> {{ +totalData.totalTokens | noexp }} {{ tokenInfo.ticker }}</div>
         <div><b>{{ "PAGES.Trade.Labels.TotalSupply" | translate }}</b> {{ tokenSupply | number }}</div>
       </div>
 

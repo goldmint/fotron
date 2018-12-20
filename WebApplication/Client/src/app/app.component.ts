@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {BigNumber} from "bignumber.js";
 import {CommonService} from "./services/common.service";
 import {MessageBoxService} from "./services/message-box.service";
 import {TronService} from "./services/tron.service";
@@ -12,9 +11,9 @@ import {TronService} from "./services/tron.service";
 })
 export class AppComponent implements OnInit {
 
-  public ethBalance: BigNumber = null;
-  public tokenBalance: BigNumber | any = null;
-  public ethAddress: string = null;
+  public trxBalance: number = null;
+  public tokenBalance: number = null;
+  public trxAddress: string = null;
 
   constructor(
     private tronService: TronService,
@@ -30,28 +29,28 @@ export class AppComponent implements OnInit {
     /*modalSessionValue === null && */this.messageBox.mainModal();
     window.sessionStorage.setItem(modalSessionKeyName, 'true');
 
-    this.tronService.getObservableEthBalance().subscribe(balance => {
-      if (balance !== null && (this.ethBalance === null || !this.ethBalance.eq(balance))) {
-        this.ethBalance = balance;
-        this.tronService.passEthBalance.next(balance);
+    this.tronService.getObservableTrxBalance().subscribe(balance => {
+      if (balance !== null && (this.trxBalance === null || !this.trxBalance !== balance)) {
+        this.trxBalance = balance;
+        this.tronService.passTrxBalance.next(balance);
       }
     });
 
     this.tronService.getObservableTokenBalance().subscribe((balance) => {
-      if (balance !== null && (this.tokenBalance === null || !this.tokenBalance.eq(balance))) {
+      if (balance !== null && (this.tokenBalance === null || !this.tokenBalance !== balance)) {
         this.tokenBalance = balance;
         this.tronService.passTokenBalance.next(balance);
       }
     });
 
-    this.tronService.getObservableEthAddress().subscribe(ethAddr => {
-      if (ethAddr && this.tronService._contractInfura) {
+    this.tronService.getObservableTronAddress().subscribe(address => {
+      if (address && this.tronService.fotronContract) {
         this.tokenBalance && this.tronService.passTokenBalance.next(this.tokenBalance);
-        this.ethBalance && this.tronService.passEthBalance.next(this.ethBalance);
+        this.trxBalance && this.tronService.passTrxBalance.next(this.trxBalance);
       }
 
-      this.ethAddress = ethAddr;
-      this.tronService.passEthAddress.next(ethAddr);
+      this.trxAddress = address;
+      this.tronService.passTrxAddress.next(address);
       this.cdRef.markForCheck();
     });
   }

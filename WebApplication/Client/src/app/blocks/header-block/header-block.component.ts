@@ -9,6 +9,8 @@ import {TranslateService} from "@ngx-translate/core";
 import {MessageBoxService} from "../../services/message-box.service";
 import {environment} from "../../../environments/environment";
 
+let self;
+
 @Component({
   selector: 'app-header',
   templateUrl: './header-block.component.html',
@@ -27,7 +29,7 @@ export class HeaderBlockComponent implements OnInit {
     refBonus: null,
     promoBonus: null
   };
-  public ethAddress: string = null;
+  public trxAddress: string = null;
   public isRefAvailable: boolean = null;
   public refLink: string;
   public isTradePage: boolean = false;
@@ -35,7 +37,7 @@ export class HeaderBlockComponent implements OnInit {
   public myGenerateRefLink: string;
   public minRefTokenAmount: number = null;
   public allTokensBalance: AllTokensBalance[] = null;
-  public allTokensBalanceSumEth: number = 0;
+  public allTokensBalanceSumTrx: number = 0;
   public totalSpent: number = 0;
   public etherscanUrl = environment.etherscanUrl;
 
@@ -50,6 +52,7 @@ export class HeaderBlockComponent implements OnInit {
     private messageBox: MessageBoxService,
     private translate: TranslateService
   ) {
+    self = this;
     router.events.subscribe(route => {
       if (route instanceof NavigationEnd) {
         let queryParams = {};
@@ -91,30 +94,31 @@ export class HeaderBlockComponent implements OnInit {
       this.cdRef.markForCheck();
     };
 
-    this.mainContractService.getObservableEthAddress().subscribe(address => {
-      if (this.ethAddress && !address) {
+    this.mainContractService.getObservableTronAddress().subscribe(address => {
+      if (this.trxAddress && !address) {
         this.isRefAvailable = false;
         this.userTotalReward = 0;
       }
-      this.ethAddress = address;
-      this.myGenerateRefLink = `${window.location.origin}/#/market?ref=${this.ethAddress}`;
+      this.trxAddress = address;
+      this.myGenerateRefLink = `${window.location.origin}/#/market?ref=${this.trxAddress}`;
       this.cdRef.markForCheck();
     });
 
     this.mainContractService.getObservableUserTotalReward().subscribe(reward => {
-      if (reward) {
+      if (reward !== null && this.trxAddress) {
         if (this.isRefAvailable === null || +this.userTotalReward !== +reward) {
           this.checkRefAvailable();
 
-          this.mainContractService._contractMetamask.getCurrentUserShareBonus((err, res) => {
-            this.myBonusInfo.shareReward = +new BigNumber(res.toString()).div(new BigNumber(10).pow(18));
-          });
-          this.mainContractService._contractMetamask.getCurrentUserRefBonus((err, res) => {
-            this.myBonusInfo.refBonus = +new BigNumber(res.toString()).div(new BigNumber(10).pow(18));
-          });
-          this.mainContractService._contractMetamask.getCurrentUserPromoBonus((err, res) => {
-            this.myBonusInfo.promoBonus = +new BigNumber(res.toString()).div(new BigNumber(10).pow(18));
-          });
+          (async function init() {
+            let res = +await self.mainContractService.fotronCoreContract.getCurrentUserShareBonus().call();
+            self.myBonusInfo.shareReward = res / Math.pow(10, 6);
+
+            let res2 = +await self.mainContractService.fotronCoreContract.getCurrentUserRefBonus().call();
+            self.myBonusInfo.refBonus = res2 / Math.pow(10, 6);
+
+            let res3 = +await self.mainContractService.fotronCoreContract.getCurrentUserPromoBonus().call();
+            self.myBonusInfo.promoBonus = res3 / Math.pow(10, 6);
+          })();
         }
         this.userTotalReward = reward;
       }
@@ -123,10 +127,10 @@ export class HeaderBlockComponent implements OnInit {
 
     this.mainContractService.passTokensBalance$.subscribe((balances: AllTokensBalance[]) => {
       if (balances) {
-        this.allTokensBalanceSumEth = 0;
+        this.allTokensBalanceSumTrx = 0;
         this.allTokensBalance = balances;
         balances.forEach(item => {
-          this.allTokensBalanceSumEth += item.estimate;
+          this.allTokensBalanceSumTrx += item.estimate;
         });
         this.cdRef.markForCheck();
       }
@@ -135,21 +139,18 @@ export class HeaderBlockComponent implements OnInit {
   }
 
   checkRefAvailable() {
-    this.mainContractService._contractMetamask._minRefEthPurchase((err, res) => {
-      this.minRefTokenAmount = +res / Math.pow(10, 18);
+    (async function init() {
+      let res = +await self.mainContractService.fotronCoreContract._minRefTrxPurchase().call();
+      self.minRefTokenAmount = res / Math.pow(10, 6);
 
-      this.mainContractService._contractMetamask.getUserTotalEthVolumeSaldo(this.ethAddress, (err, res) => {
-        this.totalSpent = +res / Math.pow(10, 18);
-        this.cdRef.markForCheck();
-      });
-      this.cdRef.markForCheck();
-    });
+      let res2 = await self.mainContractService.fotronCoreContract.getUserTotalTrxVolumeSaldo(self.trxAddress).call();
+      self.totalSpent = +res2.res / Math.pow(10, 6);
 
-    this.mainContractService._contractMetamask.isRefAvailable((err, res) => {
-      this.isRefAvailable = res;
-      this.mainContractService.isRefAvailable$.next({isAvailable: res});
-      this.cdRef.markForCheck();
-    });
+      let res3 = await self.mainContractService.fotronCoreContract.isRefAvailable().call();
+      self.isRefAvailable = res3;
+      self.mainContractService.isRefAvailable$.next({isAvailable: res3});
+      self.cdRef.markForCheck();
+    })();
   }
 
   toggleMobileMenu(e) {

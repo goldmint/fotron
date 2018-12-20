@@ -4,7 +4,7 @@ export interface TokenInfo {
   fullName: string;
   id: number;
   logoUrl: string;
-  startPriceEth: number;
+  startPriceTrx: number;
   ticker: string;
   timeCreated: Date;
   tokenContractAddress: string;

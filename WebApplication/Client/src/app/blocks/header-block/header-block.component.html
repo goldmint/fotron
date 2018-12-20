@@ -7,7 +7,7 @@
             <svg class="icon gold" width="50px" height="50px">
               <use xlink:href="#logo"></use>
             </svg>
-            <span class="logo--text">ETHERAMA</span>
+            <span class="logo--text">FOTRON</span>
           </a>
         </div>
 
@@ -21,9 +21,9 @@
                     </svg>
                   </span>
               </div>
-              <b *ngIf="!ethAddress">~ O ETH</b>
-              <img *ngIf="ethAddress && !allTokensBalance" alt="loading" width="17" height="17" class="form-loader" src="assets/img/loader-gold-bg-black.gif">
-              <b *ngIf="ethAddress && allTokensBalance" [popover]="allTokensBalanceSumEth > 0 && myBalancesPopUp" triggers="mouseenter:mouseleave" placement="bottom">~ {{ allTokensBalanceSumEth | noexp:4 }} ETH</b>
+              <b *ngIf="!trxAddress">~ O TRX</b>
+              <img *ngIf="trxAddress && !allTokensBalance" alt="loading" width="17" height="17" class="form-loader" src="assets/img/loader-gold-bg-black.gif">
+              <b *ngIf="trxAddress && allTokensBalance" [popover]="allTokensBalanceSumTrx > 0 && myBalancesPopUp" triggers="mouseenter:mouseleave" placement="bottom">~ {{ allTokensBalanceSumTrx | noexp:4 }} TRX</b>
             </div>
           </div>
 
@@ -36,7 +36,7 @@
                     </svg>
                   </span>
               </div>
-              <b [popover]="myBonusPopUp" triggers="mouseenter" #myBonusPopover="bs-popover" (mouseleave)="popLeave(myBonusPopover)" (mouseenter)="popEnter(myBonusPopover)" [outsideClick]="true" placement="bottom">{{ +userTotalReward | noexp:4 }} ETH</b>
+              <b [popover]="myBonusPopUp" triggers="mouseenter" #myBonusPopover="bs-popover" (mouseleave)="popLeave(myBonusPopover)" (mouseenter)="popEnter(myBonusPopover)" [outsideClick]="true" placement="bottom">{{ +userTotalReward | noexp:4 }} TRX</b>
             </div>
           </div>
 
@@ -103,9 +103,9 @@
                     </svg>
                   </span>
             </div>
-            <b *ngIf="!ethAddress">~ O ETH</b>
-            <img *ngIf="ethAddress && !allTokensBalance" alt="loading" width="17" height="17" class="form-loader" src="assets/img/loader-gold-bg-black.gif">
-            <b *ngIf="ethAddress && allTokensBalance" [popover]="allTokensBalanceSumEth > 0 && myBalancesPopUp" triggers="mouseenter:mouseleave" placement="right" container="body">~ {{ allTokensBalanceSumEth | noexp:4 }} ETH</b>
+            <b *ngIf="!trxAddress">~ O TRX</b>
+            <img *ngIf="trxAddress && !allTokensBalance" alt="loading" width="17" height="17" class="form-loader" src="assets/img/loader-gold-bg-black.gif">
+            <b *ngIf="trxAddress && allTokensBalance" [popover]="allTokensBalanceSumTrx > 0 && myBalancesPopUp" triggers="mouseenter:mouseleave" placement="right" container="body">~ {{ allTokensBalanceSumTrx | noexp:4 }} TRX</b>
           </div>
         </div>
 
@@ -118,7 +118,7 @@
                     </svg>
                   </span>
             </div>
-            <b [popover]="myBonusPopUp" triggers="mouseenter" [outsideClick]="true" [placement]="+userTotalReward ? 'bottom' : 'right'" container="body">{{ +userTotalReward | noexp:4 }} ETH</b>
+            <b [popover]="myBonusPopUp" triggers="mouseenter" [outsideClick]="true" [placement]="+userTotalReward ? 'bottom' : 'right'" container="body">{{ +userTotalReward | noexp:4 }} TRX</b>
           </div>
         </div>
 
@@ -161,18 +161,18 @@
   <div class="my-bonus-pop-up">
     <div class="my-bonus-pop-up-block">
       <div class="mb-1"><b>{{ "PAGES.Trade.Labels.ShareReward" | translate }}</b></div>
-      <div>{{ +myBonusInfo?.shareReward | noexp:18 }} ETH</div>
+      <div>{{ +myBonusInfo?.shareReward | noexp:18 }} TRX</div>
     </div>
     <div class="my-bonus-pop-up-block">
       <div class="mb-1"><b>{{ "PAGES.Trade.Labels.RefBonus" | translate }}</b></div>
-      <div>{{ +myBonusInfo?.refBonus | noexp:18 }} ETH</div>
+      <div>{{ +myBonusInfo?.refBonus | noexp:18 }} TRX</div>
     </div>
     <div class="my-bonus-pop-up-block">
       <div class="mb-1"><b>{{ "PAGES.Trade.Labels.PromoBonus" | translate }}</b></div>
-      <div>{{ +myBonusInfo?.promoBonus | noexp:18 }} ETH</div>
+      <div>{{ +myBonusInfo?.promoBonus | noexp:18 }} TRX</div>
     </div>
     <div class="my-bonus-pop-up-block d-flex align-items-center m-0">
-      <button class="btn btn-sm btn-primary m-0 pop-up-in-btn" type="button" (click)="withdraw()" [disabled]="!ethAddress || !+userTotalReward">
+      <button class="btn btn-sm btn-primary m-0 pop-up-in-btn" type="button" (click)="withdraw()" [disabled]="!trxAddress || !+userTotalReward">
         <svg  width="30" height="25">
           <use xlink:href="#withdraw"></use>
         </svg>
@@ -187,7 +187,7 @@
     <div *ngIf="token.balance > 0">{{ token.token }}: {{ token.balance | noexp:6 }}</div>
   </div>
   <div class="mt-3">
-    {{ "PAGES.Trade.Labels.TotalSpent" | translate }} {{ +totalSpent | noexp:6 }} ETH
+    {{ "PAGES.Trade.Labels.TotalSpent" | translate }} {{ +totalSpent | noexp:6 }} TRX
   </div>
 </ng-template>
 
