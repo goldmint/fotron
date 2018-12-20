@@ -987,19 +987,19 @@ contract Fotron {
 
     //total buy count
     function getBuyCount() public view returns(uint256) {
-        return _core.getBuyCount(address(this));
+        return _core.getBuyCount(getDataContractAddress());
     }
     //total sell count
     function getSellCount() public view returns(uint256) {
-        return _core.getSellCount(address(this));
+        return _core.getSellCount(getDataContractAddress());
     }
     //total trx volume
     function getTotalVolumeTrx() public view returns(uint256) {
-        return _core.getTotalVolumeTrx(address(this));
+        return _core.getTotalVolumeTrx(getDataContractAddress());
     }   
     //total token volume
     function getTotalVolumeToken() public view returns(uint256) {
-        return _core.getTotalVolumeToken(address(this));
+        return _core.getTotalVolumeToken(getDataContractAddress());
     } 
     //current bonus per 1 token in TRX
     function getBonusPerShare() public view returns (uint256) {
