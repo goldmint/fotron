@@ -523,17 +523,17 @@ contract FotronCore is FotronCommon {
 
     //Converts real num to uint256. Works only with positive numbers.
     function convertRealTo256(int128 realVal) public pure returns(uint256) {
-        int128 roundedVal = RealMath.fromReal(RealMath.mul(realVal, RealMath.toReal(1e12)));
+        int128 roundedVal = RealMath.fromReal(realVal);
 
-        return SafeMath.mul(uint256(roundedVal), uint256(1e6));
+        return SafeMath.div(uint256(roundedVal), uint256(1e6));
     }
 
     //Converts uint256 to real num. Possible a little loose of precision
     function convert256ToReal(uint256 val) public pure returns(int128) {
-        uint256 intVal = SafeMath.div(val, 1e6);
+        uint256 intVal = SafeMath.mul(val, 1e6);
         require(RealMath.isUInt256ValidIn64(intVal));
         
-        return RealMath.fraction(int64(intVal), 1e12);
+        return RealMath.fraction(int64(intVal), 1);
     }    
 }
 
@@ -543,11 +543,11 @@ contract FotronData {
     address public _tokenContractAddress;
     
     // token price in the begining
-    uint256 constant public TOKEN_PRICE_INITIAL = 0.001 trx;
+    uint256 constant public TOKEN_PRICE_INITIAL = 1000 sun;
     // a percent of the token price which adds/subs each _priceSpeedInterval tokens
-    uint64 constant public PRICE_SPEED_PERCENT = 5;
+    uint256 constant public PRICE_SPEED_PERCENT = 500 sun;
     // Token price speed interval. For instance, if PRICE_SPEED_PERCENT = 5 and PRICE_SPEED_INTERVAL = 10000 it means that after 10000 tokens are bought/sold  token price will increase/decrease for 5%.
-    uint64 constant public PRICE_SPEED_INTERVAL = 10000;
+    uint256 constant public PRICE_SPEED_INTERVAL = 1000000 sun;
     // lock-up period in days. Until this period is expeired nobody can close the contract or withdraw users' funds
     uint64 constant public EXP_PERIOD_DAYS = 0;
 
@@ -588,8 +588,8 @@ contract FotronData {
     function init(address tokenContractAddress) public {
         require(_controllerAddress == address(0x0));
         require(tokenContractAddress != address(0x0));
-        require(RealMath.isUInt64ValidIn64(PRICE_SPEED_PERCENT) && PRICE_SPEED_PERCENT > 0);
-        require(RealMath.isUInt64ValidIn64(PRICE_SPEED_INTERVAL) && PRICE_SPEED_INTERVAL > 0);
+        require(RealMath.isUInt256ValidIn64(PRICE_SPEED_PERCENT) && PRICE_SPEED_PERCENT > 0);
+        require(RealMath.isUInt256ValidIn64(PRICE_SPEED_INTERVAL) && PRICE_SPEED_INTERVAL > 0);
         
         
         _controllerAddress = msg.sender;
@@ -1047,11 +1047,11 @@ contract Fotron {
     }
 
 
-    function getPriceSpeedPercent() public view returns(uint64) {
+    function getPriceSpeedPercent() public view returns(uint256) {
         return _data.PRICE_SPEED_PERCENT();
     }
 
-    function getPriceSpeedTokenBlock() public view returns(uint64) {
+    function getPriceSpeedTokenBlock() public view returns(uint256) {
         return _data.PRICE_SPEED_INTERVAL();
     }
 
@@ -1175,6 +1175,9 @@ contract Fotron {
         require(trxAmount > 0);
 
         uint256 tokenAmount = fromTrx ? trxToTokens(amount, true) : amount;
+
+                return (tokenAmount, 0, 0);
+
         uint256 totalFeeTrx = calcTotalFee(tokenAmount, true);
         require(trxAmount > totalFeeTrx);
 
@@ -1249,8 +1252,9 @@ contract Fotron {
     function purchaseTokens(uint256 trxAmount, address refAddress, uint256 minReturn) internal returns(uint256) {
         uint256 tokenAmount = 0; uint256 totalFeeTrx = 0; uint256 tokenPrice = 0;
         (tokenAmount, totalFeeTrx, tokenPrice) = estimateBuyOrder(trxAmount, true);
+        
         require(tokenAmount >= minReturn);
-
+    /*
         if (_data._hasMaxPurchaseLimit()) {
             //user has to have at least equal amount of tokens which he's willing to buy 
             require(getCurrentUserMaxPurchase() >= tokenAmount);
@@ -1270,7 +1274,7 @@ contract Fotron {
         checkAndSendPromoBonus(trxAmount);
         
         updateTokenPrice(_core.convert256ToReal(tokenAmount));
-        
+        */
         _core.trackBuy(msg.sender, trxAmount, tokenAmount);
 
         emit onTokenPurchase(msg.sender, trxAmount, tokenAmount, refAddress);
@@ -1365,13 +1369,17 @@ contract Fotron {
     function trxToTokens(uint256 trxAmount, bool isBuy) internal view returns(uint256) {
         int128 realTrxAmount = _core.convert256ToReal(trxAmount);
         int128 t0 = RealMath.div(realTrxAmount, _data._realTokenPrice());
+
         int128 s = getRealPriceSpeed();
 
         int128 tn =  RealMath.div(t0, RealMath.toReal(100));
+                                return _core.convertRealTo256(s);
 
         for (uint i = 0; i < 100; i++) {
 
             int128 tns = RealMath.mul(tn, s);
+                                return _core.convertRealTo256(tns);
+
             int128 exptns = RealMath.exp( RealMath.mul(tns, RealMath.toReal(isBuy ? int64(1) : int64(-1))) );
 
             int128 tn1 = RealMath.div(
@@ -1379,9 +1387,10 @@ contract Fotron {
                 RealMath.mul( exptns, RealMath.toReal(1) + tns )
             );
 
-            if (RealMath.abs(tn-tn1) < RealMath.fraction(1, 1e18)) break;
+            if (RealMath.abs(tn-tn1) < RealMath.fraction(1, 1e3)) break;
 
             tn = tn1;
+
         }
 
         return _core.convertRealTo256(tn);
@@ -1420,10 +1429,12 @@ contract Fotron {
     }
     
     function getRealPriceSpeed() internal view returns(int128) {
-        require(RealMath.isUInt64ValidIn64(_data.PRICE_SPEED_PERCENT()));
-        require(RealMath.isUInt64ValidIn64(_data.PRICE_SPEED_INTERVAL()));
+        require(RealMath.isUInt256ValidIn64(_data.PRICE_SPEED_PERCENT()));
+        require(RealMath.isUInt256ValidIn64(_data.PRICE_SPEED_INTERVAL()));
+
+        return RealMath.div(_core.convert256ToReal(_data.PRICE_SPEED_PERCENT()), 100);
         
-        return RealMath.div(RealMath.fraction(int64(_data.PRICE_SPEED_PERCENT()), 100), RealMath.toReal(int64(_data.PRICE_SPEED_INTERVAL())));
+        return RealMath.div(RealMath.div(_core.convert256ToReal(_data.PRICE_SPEED_PERCENT()), 100), _core.convert256ToReal(_data.PRICE_SPEED_INTERVAL()));
     }
 
 
