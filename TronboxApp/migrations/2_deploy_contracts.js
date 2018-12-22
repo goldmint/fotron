@@ -6,11 +6,11 @@ var fotron = artifacts.require("Fotron");
 
 var testToken = artifacts.require("TestToken");
 
-var fotronCoreAddress = "TXPnqbPSxfUjyo9K6HvrdWYzVUo1uUiUd7";
+var fotronCoreAddress = "TRaCtWTiRKevpvGGRmWEovwk8kStUAUN32";
 
-var tokenAddress = "TJiSPzUkWDGJQqA2MsQL6YyNnYYwT6kJ7p";
+var tokenAddress = "TFYeR4QywbTNu9Y78PXd17RU1psLCNC8An";
 
-var dataAddress = "TWH36nNq9dF8DLAT44ZRP7otS6L9uZZMvr";
+var dataAddress = "";
 
 
 module.exports = function(deployer) {

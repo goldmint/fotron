@@ -523,18 +523,18 @@ contract FotronCore is FotronCommon {
 
     //Converts real num to uint256. Works only with positive numbers.
     function convertRealTo256(int128 realVal) public pure returns(uint256) {
-        int128 roundedVal = RealMath.fromReal(realVal);
+        int128 roundedVal = RealMath.fromReal(RealMath.mul(realVal, RealMath.toReal(1e12)));
 
         return SafeMath.div(uint256(roundedVal), uint256(1e6));
     }
 
     //Converts uint256 to real num. Possible a little loose of precision
     function convert256ToReal(uint256 val) public pure returns(int128) {
-        uint256 intVal = SafeMath.mul(val, 1e6);
+        uint256 intVal = val;
         require(RealMath.isUInt256ValidIn64(intVal));
         
-        return RealMath.fraction(int64(intVal), 1);
-    }    
+        return RealMath.fraction(int64(intVal), int64(1e6));
+    }     
 }
 
 // Data contract for Fotron contract controller. Data contract cannot be changed so no data can be lost. On the other hand Fotron controller can be replaced if some error is found.
@@ -1176,8 +1176,6 @@ contract Fotron {
 
         uint256 tokenAmount = fromTrx ? trxToTokens(amount, true) : amount;
 
-                return (tokenAmount, 0, 0);
-
         uint256 totalFeeTrx = calcTotalFee(tokenAmount, true);
         require(trxAmount > totalFeeTrx);
 
@@ -1191,7 +1189,7 @@ contract Fotron {
         uint256 minAmount; uint256 maxAmount;
         (minAmount, maxAmount) = fromToken ? getTokenDealRange() : getTrxDealRange();
         //require(amount >= minAmount && amount <= maxAmount);
-
+        
         uint256 tokenAmount = fromToken ? amount : trxToTokens(amount, false);
         require(tokenAmount > 0);
         
@@ -1254,7 +1252,7 @@ contract Fotron {
         (tokenAmount, totalFeeTrx, tokenPrice) = estimateBuyOrder(trxAmount, true);
         
         require(tokenAmount >= minReturn);
-    /*
+    
         if (_data._hasMaxPurchaseLimit()) {
             //user has to have at least equal amount of tokens which he's willing to buy 
             require(getCurrentUserMaxPurchase() >= tokenAmount);
@@ -1263,18 +1261,18 @@ contract Fotron {
         require(tokenAmount > 0 && (SafeMath.add(tokenAmount, getTotalTokenSold()) > getTotalTokenSold()));
 
         if (refAddress == msg.sender || !_core.isRefAvailable(refAddress)) refAddress = address(0x0);
-
+        
         distributeFee(totalFeeTrx, refAddress);
 
         addUserTokens(msg.sender, tokenAmount);
-
+        
         // the user is not going to receive any reward for the current purchase
         _core.addUserRewardPayouts(msg.sender, _data.getBonusPerShare() * tokenAmount);
 
         checkAndSendPromoBonus(trxAmount);
         
         updateTokenPrice(_core.convert256ToReal(tokenAmount));
-        */
+        
         _core.trackBuy(msg.sender, trxAmount, tokenAmount);
 
         emit onTokenPurchase(msg.sender, trxAmount, tokenAmount, refAddress);
@@ -1336,7 +1334,8 @@ contract Fotron {
     }
 
     function addDevReward(uint256 totalFeeTrx) internal {
-        _core.addDevReward.value(calcDevReward(totalFeeTrx))();
+        uint256 val = calcDevReward(totalFeeTrx);
+        _core.addDevReward.value(val)();
     }    
     
     function addTokenOwnerReward(uint256 totalFeeTrx) internal {
@@ -1373,12 +1372,10 @@ contract Fotron {
         int128 s = getRealPriceSpeed();
 
         int128 tn =  RealMath.div(t0, RealMath.toReal(100));
-                                return _core.convertRealTo256(s);
 
         for (uint i = 0; i < 100; i++) {
 
             int128 tns = RealMath.mul(tn, s);
-                                return _core.convertRealTo256(tns);
 
             int128 exptns = RealMath.exp( RealMath.mul(tns, RealMath.toReal(isBuy ? int64(1) : int64(-1))) );
 
@@ -1390,7 +1387,6 @@ contract Fotron {
             if (RealMath.abs(tn-tn1) < RealMath.fraction(1, 1e3)) break;
 
             tn = tn1;
-
         }
 
         return _core.convertRealTo256(tn);
@@ -1412,6 +1408,7 @@ contract Fotron {
         int128 factor = RealMath.toReal(isBuy ? int64(1) : int64(-1));
         int128 rateAfterDeal = calc1RealTokenRateFromRealTokens(RealMath.mul(realTokenAmount, factor));
         int128 delta = RealMath.div(rateAfterDeal - _data._realTokenPrice(), RealMath.toReal(2));
+
         int128 fee = RealMath.mul(realTokenAmount, delta);
         
         //commission for sells is a bit lower due to rounding error
@@ -1428,14 +1425,14 @@ contract Fotron {
         return RealMath.mul(_data._realTokenPrice(), RealMath.exp(expArg));
     }
     
-    function getRealPriceSpeed() internal view returns(int128) {
+    function getRealPriceSpeed() public view returns(int128) {
         require(RealMath.isUInt256ValidIn64(_data.PRICE_SPEED_PERCENT()));
         require(RealMath.isUInt256ValidIn64(_data.PRICE_SPEED_INTERVAL()));
-
-        return RealMath.div(_core.convert256ToReal(_data.PRICE_SPEED_PERCENT()), 100);
         
-        return RealMath.div(RealMath.div(_core.convert256ToReal(_data.PRICE_SPEED_PERCENT()), 100), _core.convert256ToReal(_data.PRICE_SPEED_INTERVAL()));
+ 
+        return RealMath.div( RealMath.div(_core.convert256ToReal(_data.PRICE_SPEED_PERCENT()), RealMath.toReal(100)), _core.convert256ToReal(_data.PRICE_SPEED_INTERVAL()));
     }
+
 
 
     function calcTotalShareRewardFee(uint256 totalFee) internal view returns(uint256) {
