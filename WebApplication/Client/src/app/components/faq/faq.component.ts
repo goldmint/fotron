@@ -16,7 +16,7 @@ export class FaqComponent implements OnInit, OnDestroy {
   public collapse: any = {};
   public totalCollapses = {
     about: 10,
-    faq: 12
+    faq: 11
   }
   public ngForArray = new Array(this.totalCollapses.faq);
 
@@ -37,10 +37,10 @@ export class FaqComponent implements OnInit, OnDestroy {
         this.collapse['item' + params.id] = false;
         this.cdRef.markForCheck();
 
-       setTimeout(() => {
-         let element = document.querySelector('.collapse-heading.open');
-         element && element.scrollIntoView();
-       }, 0);
+        setTimeout(() => {
+          let element = document.querySelector('.collapse-heading.open');
+          element && element.scrollIntoView();
+        }, 0);
       }
 
     });

@@ -44,7 +44,7 @@
       "Buttons": {
         "BuySell": "Buy/sell token",
         "Withdraw": "Withdraw bonus",
-        "View": "View Etherscan"
+        "View": "View Tronscan"
       },
       "Errors": {
         "InvalidAddress": "Invalid the contract address"
@@ -160,88 +160,88 @@
         "Search": "Search..."
       },
       "Buttons": {
-        "ViewContract": "View smart contract on Etherscan"
+        "ViewContract": "View smart contract on Tronscan"
       }
     },
     "About": {
       "Sections": {
         "1th": {
           "Heading": "What is Fotron?",
-          "Text": "Fotron - a marketplace for the sale of ERC20 tokens of various projects that could be used for distribution the following general principles embedded in an open and audited smart contract:",
+          "Text": "Fotron is a marketplace, which is used by different projects for ERC20 token sales. Our platform shares common principles of tokens distribution, which are anchored on open and audited smart-contract:",
           "List": {
-            "1th": "<b>Escrow</b> - storage of TRX, received from the sale of tokens, and the possibility of resale of tokens until the end of the lockup-period.",
-            "2th": "<b>Referral system</b> - for attracting a buyer of tokens, remuneration is paid to TRX.",
-            "3th": "<b>Pricing and liquidity</b> - the dynamic change in the value of the token, expressed in TRX, depending on purchases and returns; the possibility of full redemption of previously sold tokens.",
-            "4th": "<b>Gamification</b> - additional bonuses for token's buyers, tied at the time of purchase."
+            "1th": "<b>Escrow</b> - holding TRX tokens that were received from selling of other tokens with the possibility of reverse selling until lockup period ends. ",
+            "2th": "<b>Referral system</b> - we pay TRX rewards for recruiting new customers.",
+            "3th": "<b>Liquidity and pricing</b> - depends on made purchases and returns, the price is dynamically changing and displayed in TRX equivalent. It is possible to buy back all previously sold tokens as well.",
+            "4th": "<b>Gamification</b> - token buyers receive extra bonuses pegged to the point of purchase."
           }
         },
         "2th": {
-          "Heading": "Are you another pyramid?",
-          "Text": "No, we aren't a pyramid, since we don't use the body of the nested investment to pay referral rewards; for this, the added fee for the purchase and sale of tokens in the smart contract is used. The body of investment in TRX is stored in a smart demand contract by the buyer."
+          "Heading": "Is it just another Ponzi scheme?",
+          "Text": "No, it is not. We don’t use invested capital for the rewards. For that purposes we use fees added on purchase and sale of tokens inside of smart-contract. Invested deposits of TRX are held as demand deposits for buyers."
         },
         "3th": {
-          "Heading": "How does Fotron work?",
-          "Text": "The project, which allowed on the platform, fills the volume of its tokens chosen from a smart contract. Besides, it determines the initial price at TRX, the price can't fall below it; and the lockup period during which it cannot take anything from the smart contract.<br><br>Investors, coming to the platform, buy tokens of the selected project, listing TRX on a smart contract.<br><br>The price of the token is calculated using a complex formula, increases with each purchase and decreases with each sale.<br><br>The investor pays a commission for buying and selling, which depends on the amount of the transaction and ranges from 1 to 10%. The larger the transaction volume, the higher the commission.<br><br>At any time during the lockup period, the investor can sell the tokens at the current price back to the smart contract and pick up the TRX. An investor can also keep tokens for himself or sell them on any crypto exchange. Also, the investor has the opportunity to buy tokens on a crypto exchange and sell them in a smart contract, but the amount is not more than its original purchase.<br><br>At the end of the lockup period, the project receives the remaining tokens and/or TRX from the smart contract."
+          "Heading": "How does Fotron work? ",
+          "Text": "A project with the platform access deposits chosen amount of tokens into smart-contract; sets opening price in TRX, which is impossible to drop lower; sets a lockup period during which assets will be frozen in smart-contract.<br><br>Investors buy tokens of any project they choose by sending TRX to a smart-contract through the platform.<br><br>Token pricing is calculated upon a complex formula that increases it on each purchase and decreases on each selling.<br><br>Investors pay fees (from 1% to 10%) on each purchase and sale. The amount of fee depends on the deal size: bigger deals - higher fees.<br><br>The process is reversible: investors may turn back purchased tokens into TRX in compliance with the actual price at any point of lockup period. Investors may keep tokens or sell them on any crypto exchange. It is also possible to buy tokens on a crypto exchange and sell them into the smart-contract, but no more than their platform purchases volume.<br><br>The project is able to receive funds from the smart-contract (unsold tokens and/or TRX) after the lockup period ends."
         },
         "4th": {
-          "Heading": "How safe is Fotron?",
-          "Text": "The smart contract is open source and can be validated. None of the projects, including the founders of Fotron, have access to the TRX stored within the smart contract. A report on the code review of a smart contract can be found on our <a href='https://github.com/Goldmint/etherama/blob/master/SmartContracts/Fotron-code-review.pdf' target='_blank'>Github</a>."
+          "Heading": "Is it safe to use Fotron?",
+          "Text": "We use open source smart-contract that can be validated. There is no access to the funds stored in smart-contract, even for the founders of Tron platform. The code-review report is available on our <a href='https://github.com/Goldmint/fotron/blob/master/SmartContracts/Fotron-code-review.pdf' target='_blank'>Github</a> page."
         },
         "5th": {
-          "Heading": "How are commissions calculated?",
-          "Text": "- commission for purchase = (price of the token after the transaction - the current price of the token) / 2;<br><br>- commission for sale = (the current price of the token is the price after the transaction) / 2."
+          "Heading": "How is the fee calculated? ",
+          "Text": "- Fee on purchase = (price of the token after transaction minus current price)/2;<br><br>- Fee on sale = (current price minus price of the token after transaction)/2."
         },
         "6th": {
-          "Heading": "How are commissions distributed?",
-          "Text": "The transaction commission is divided as follows:",
+          "Heading": "How fees are distributed?",
+          "Text": "Trading fees are distributed in a following scheme:",
           "List": {
-            "1th": "1) 30% – gets the project;",
-            "2th": "2) 25% – bonus fund for token-holders;",
-            "3th": "3) 20% – gets the owner of the referral link, if the purchase was made;",
-            "4th": "4) 5% of the spread goes to the fast jackpot - QUICK promo (paid every 20 minutes, when a transaction hits the 100th Etherum block);",
-            "5th": "5) 5% of the spread goes to the big jackpot - BIG promo (paid every three days, when a transaction hits the 9999 Etherum block);",
-            "6th": "6) 15% goes to the platform operator for the development of the Fotron project."
+            "1th": "30% – project owners;",
+            "2th": "25% – token holders bonus fund;",
+            "3th": "20% – as a referral reward (for purchases);",
+            "4th": "5% – to QUICK promo Jackpot pool (paid once in each 20 minutes, if transaction is in hundredth block of Tron);",
+            "5th": "5% – to BIG promo Jackpot pool (paid once in 3 days, if transaction fits any 9999th block of Tron);",
+            "6th": "15% – for Fotron platform developing."
           }
         },
         "7th": {
-          "Heading": "How will change the token price?",
-          "Text": "The price of the token relative to the TRX varies according to the following formulas: <br/> for buying P1 = T * P0 * exp (TS), where T is the number of tokens purchased, P0 is the current price of the token in TRX, P1 is the price of the token in TRX after the transaction, S is the rate of price increase (eg, 0.05 / 10,000 - price increase of 5% for every 10,000 tokens); <br/>- for sale P1 = T * P0 * exp (-TS)."
+          "Heading": "How tokens’ prices will change?",
+          "Text": "Prices of tokens in TRX equivalent will be changing upon following formulas:<br/><br/> For purchase: P1 = T * P0 * exp (TS), where T is the number of tokens purchased, P0 is the current price of the token in TRX, P1 is the price of the token in TRX after the transaction, S is the rate of price increase (eg, 0.05 / 10,000 - price increase of 5% for every 10,000 tokens);<br/><br/>For selling: P1 = T * P0 * exp (-TS)."
         },
         "8th": {
-          "Heading": "What does Fotron give to the user?",
+          "Heading": "Why should I use Fotron platform?",
           "List1": {
-            "Heading": "Security:",
+            "Heading": "It is safe:",
             "Items": {
-              "1th": "In contrast to the purchase of tokens on ICO, the user does not have to wait for the listing to sell them, he always knows the minimum price below which the token won’t fall."
+              "1th": "Unlike in case of ICO participation, users of Fotron don’t need to wait exchange listing to sell tokens. There is the minimal price, which can’t be dropped lower."
             }
           },
           "List2": {
-            "Heading": "The opportunity to earn in several ways:",
+            "Heading": "There are several ways of earning money:",
             "Items": {
-              "1th": "a) it is cheaper to buy a token (to be at the beginning of the purchase period) and to sell more expensively (to be at the beginning of the sales period);",
-              "2th": "b) get the jackpot when buying tokens;",
-              "3th": "c) get a 2% bonus on the referral link (for \"sociable investors\")",
-              "4th": "d) receive a part of the total bonus for all - 3% of the commissions are divided into all, in proportion to the amount of tokens in the wallet;",
-              "5th": "e) make money on arbitration when the difference in the cost of a token in Fotron and on the exchange."
+              "1th": "Buy cheap (at the start of purchasing period), sell at high price (in the beginning of selling period);",
+              "2th": "Win a Jackpot while purchasing tokens;",
+              "3th": "Earn 2% referral rewards by bringing new users to the platform;",
+              "4th": "Earn by holding funds on the platform – 3% of all fees amount are distributing among token holders proportionately to their balance;",
+              "5th": "Make profit on arbitraging the price difference of token among Fotron and crypto exchanges."
             }
           }
         },
         "9th": {
-          "Heading": "What does Fotron give to the project?",
+          "Heading": "What does Fotron give to projects?",
           "List": {
-            "1th": "A) The ability to popularize your token and increase the number of investors. Hit on the platform means a certain level of project quality.",
-            "2th": "B) Ability to realize additional volume of tokens.",
-            "3th": "C) Ability to earn 3.5% from each sale of their tokens."
+            "1th": "It may increase community knowingness of token and the number of investors. Listing on Fotron means that the project has a certain level of quality.",
+            "2th": "It is another sales channel where some extra volume of tokens may be sold.",
+            "3th": "It is possible to earn extra 3,5% of every token sold."
           },
-          "Text": "At its discretion, the post-ICO project can protect the interests of its early investors by allowing them to buy tokens through Fotron for an amount not exceeding the amount purchased by the early investor at ICO."
+          "Text": "Post-ICO projects may additionally protect interests of their early investors by allowing them to buy through Fotron platform less or the same amount of tokens as they bought during ICO."
         },
         "10th": {
-          "Heading": "The role of the Fotron team",
+          "Heading": "Fotron team functions:",
           "List": {
-            "1th": "a) Platform Promotion;",
-            "2th": "b) Providing regular user and projects support in the telegram chat;",
-            "3th": "c) Providing technical functionality of the platform;",
-            "4th": "d) Provision of a contractual base to users and projects."
+            "1th": "Promoting the platform.",
+            "2th": "Providing regular support of users and project teams via Telegram chat.",
+            "3th": "Keep the platform operating.",
+            "4th": "Providing legislative framework to users and project teams."
           }
         }
       }
@@ -251,52 +251,48 @@
       "Support": "If you didn't find the answer to your question in our FAQ, send us an email",
       "Answers": {
         "1th": {
-          "Heading": "Is your smart contract open?",
-          "Text": "Yes."
+          "Heading": "Does the smart-contract have open source?",
+          "Text": "Yes, it does."
         },
         "2th": {
-          "Heading": "How to buy tokens through a referral link?",
-          "Text": "Every time you buy tokens on a smart contract, an account is created that corresponds to the public key number of your wallet, and only the owner of the private key corresponding to this public address has access to this cell."
+          "Heading": "How to buy tokens with a referral link?",
+          "Text": "With every purchase of tokens, a new account is created in the smart-contract. That account’s number corresponds to private key’s number of your wallet, thus, only the owner of private key has the access to that cell."
         },
         "3th": {
-          "Heading": "I have tokens purchased on the stock exchange, can I participate in the distribution of remuneration?",
-          "Text": "No, to participate in the sharing of remuneration, you need to buy tokens in a smart contract."
+          "Heading": "I have tokens that I’ve bought on a crypto exchange. May I take a part in reward distribution? ",
+          "Text": "No. You have to buy tokens through the Fotron’s smart-contract, to receive a part of rewards distribution."
         },
         "4th": {
-          "Heading": "Can you cancel this smart contract?",
-          "Text": "No."
+          "Heading": "How can I be sure that you will not steal the money?",
+          "Text": "You should read smart-contract settings and the results of audition."
         },
         "5th": {
-          "Heading": "How can we make sure that you don’t withdraw all the money from there?",
-          "Text": "Read the terms of the smart contract and the results of the audit."
+          "Heading": "Is it possible to buy tokens, get your referral link, and sell the tokens right after?",
+          "Text": "Yes, it is possible. Thus, you will be able to get a referral reward only. To get other types of rewards, you have to hold tokens in your Fotron wallet."
         },
         "6th": {
-          "Heading": "Can I buy tokens, get your referral link, and immediately sell the purchased tokens?",
-          "Text": "It is possible, but then you will receive only rewards from attracting new investors through a referral link. The rest of the referral program rewards will not be distributed to you due to the lack of tokens on your wallet."
+          "Heading": "Where do the reward’s percent goes, if tokens were bought directly with no use of referral links?",
+          "Text": "In that case, the reward will be added to token holders bonus fund."
         },
         "7th": {
-          "Heading": "If the purchase of tokens occurred without a referral link, where do the percentages go?",
-          "Text": "In the case of purchase of tokens bypassing the referral link, the reward is added to the general referral fund by all participants of the referral program."
+          "Heading": "Does a referral reward go to my Tron wallet automatically?",
+          "Text": "No. All of the referral rewards are accumulating in self-regulated smart-contract. To get your reward, you have to make a request to the smart-contract through MetaMask authorization on the platform."
         },
         "8th": {
-          "Heading": "Does the referral fee automatically go into my Ethereum wallet?",
-          "Text": "No, all rewards are accumulated in a self-regulating smart contract, in order to withdraw a reward, you must make a request to the smart contract by authorizing in the TronLink wallet on the platform website."
-        },
-        "9th": {
-          "Heading": "What should I do if I lose access to my Ethereum wallet for which I bought tokens in a smart contract?",
+          "Heading": "I have lost access to my Tron wallet, on which I made purchases through the smart-contract. What should I do?",
           "Text": "There is nothing you can do."
         },
+        "9th": {
+          "Heading": "What is the minimal amount of tokens I have to buy to start participating in the referral program?",
+          "Text": "Each token has its own minimal margins for that amount."
+        },
         "10th": {
-          "Heading": "What is the minimum number of tokens you need to buy in a smart contract to participate in the referral program?",
-          "Text": "The minimum amount is set for each token individually and allows you to receive remuneration from purchases using your referral link, as well as part of the remuneration from the general referral fund."
+          "Heading": "Is it possible to make my own web-page containing Fotron project information and post there my referral link?",
+          "Text": "For sure! We support Fotron’s promotion throughout the World Wide Web, if the information spread correctly without any distortions. On the other side, we strongly act against the spread of incorrect and distorted information about rules and conditions of the Fotron project."
         },
         "11th": {
-          "Heading": "Can I make my own website with a description of the project and place my referral link there?",
-          "Text": "Sure you may! We support the popularization of Fotron on the Internet, subject to the accuracy of the information disseminated. On the other hand, we strongly oppose the dissemination of distorted information about the rules and conditions of Fotron."
-        },
-        "12th": {
-          "Heading": "Commissions in Fotron",
-          "Text": "When buying and selling a small commission is paid, as well as the cost of gas, which you can specify on your own during the transaction. With small transactions, gas losses can be quite significant as a percentage. We recommend exposing the gas manually and not making many small transactions."
+          "Heading": "Fotron fees",
+          "Text": "Small fees paid on each trade, as well as the gas costs, which is possible to set manually during a trade. On minor transactions, the percentage of gas costs might be high. We recommend to set gas price manually and to avoid numerous minor transactions."
         }
       }
     },
@@ -335,7 +331,7 @@
     "SentTransaction": {
       "Heading": "Transaction in Process:",
       "Hash": "Your transaction hash is:",
-      "Link": "View your transaction on Etherscan"
+      "Link": "View your transaction on Tronscan"
     },
     "AddToken": "Token request has been sent",
     "ConnectingMM": "Connecting to TronLink...",
