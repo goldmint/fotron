@@ -6,7 +6,7 @@ var fotron = artifacts.require("Fotron");
 
 var testToken = artifacts.require("TestToken");
 
-var fotronCoreAddress = "TRaCtWTiRKevpvGGRmWEovwk8kStUAUN32";
+var fotronCoreAddress = "TQuwB61timGbvXiqoaXWjHBqKudriWfynw";
 
 var tokenAddress = "TFYeR4QywbTNu9Y78PXd17RU1psLCNC8An";
 
