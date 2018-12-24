@@ -46,7 +46,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public isDataLoaded: boolean = false;
   public searchValue: string = '';
-  public coreContractEtherscanLink = environment.etherscanContractUrl + environment.fotronCoreContractAddress + '#internaltx'
+  public coreContractTronscanLink = environment.tronscanContractUrl + environment.fotronCoreContractAddress
 
   private charts: any = {};
   private miniCharts: any = [];
@@ -98,14 +98,6 @@ export class MarketComponent implements OnInit, OnDestroy {
       })
       .subscribe((data: any) => {
         this.originalRows = data.data || [];
-
-        // for (let i = 0; i < 30; i++) {
-        //   let obj = {};
-        //   Object.assign(obj, this.originalRows[0]);
-        //   obj['ticker'] = 'MNTP' + i;
-        //   obj['id'] = i;
-        //   this.originalRows.push(obj);
-        // }
 
         this.originalRows.forEach(row => {
           row.chartData = [];

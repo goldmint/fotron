@@ -7,6 +7,8 @@ import * as TronWeb from "tronweb";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Subject} from "rxjs/Subject";
 import {Observable} from "rxjs/Observable";
+import {APIService} from "./api.service";
+import {AllTokensBalance} from "../interfaces/all-tokens-balance";
 
 let self;
 
@@ -22,11 +24,10 @@ export class MainContractService {
 
   private fotronCoreContractAddress = environment.fotronCoreContractAddress;
   private fotronCoreContractAbi = environment.fotronCoreContractAbi;
-
-  private fotronContractAddress = environment.fotronContractAddress;
   private fotronContractAbi = environment.fotronContractAbi;
 
   public fotronCoreContract = null;
+  public fotronCoreContractLocal = null;
 
   private _obsTronAddressSubject = new BehaviorSubject(null);
   private _obsTronAddress = this._obsTronAddressSubject.asObservable();
@@ -46,13 +47,15 @@ export class MainContractService {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private providerURL = environment.providerURL;
 
+  public tokensBalance: AllTokensBalance[] = [];
   public isRefAvailable$ = new BehaviorSubject(null);
   public passTokensBalance$ = new BehaviorSubject(null);
 
   public getSuccessWithdrawRequestLink$ = new Subject();
 
   constructor(
-    private commonService: CommonService
+    private commonService: CommonService,
+    private apiService: APIService
   ) {
     self = this;
     this.commonService.initMainContract$.subscribe(init => {
@@ -91,6 +94,9 @@ export class MainContractService {
 
     if (!this.tronWebBrowser && window.hasOwnProperty('tronWeb')) {
       this.tronWebBrowser = window['tronWeb'];
+      (async function initContract() {
+        self.fotronCoreContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.fotronCoreContractAbi)).at(self.fotronCoreContractAddress);
+      })();
     }
 
     let address = this.tronWebBrowser && this.tronWebBrowser.defaultAddress.base58 ? this.tronWebBrowser.defaultAddress.base58 : null;
@@ -102,7 +108,7 @@ export class MainContractService {
   }
 
   public convertNumResult2Trx(num) {
-    return new BigNumber(num.toString(10)).div(this.TRX).toString(10);
+    return +new BigNumber(num.toString(10)).div(this.TRX).toString(10);
   }
 
   private initBankInfoMethods() {
@@ -122,34 +128,34 @@ export class MainContractService {
     this.updateUserTotalReward();
   }
 
-  // private getAllUserBalances() {
-  //   this.apiService.getTokenList().subscribe((tokenList: any) => {
-  //     let count = 0;
-  //     this.tokensBalance = [];
-  //
-  //     tokenList.data.forEach(token => {
-  //       let contractMetamask = this._web3Metamask['eth'].contract(JSON.parse(this.fotronContractABI)).at(token.fotronContractAddress);
-  //
-  //       contractMetamask && contractMetamask.getCurrentUserLocalTokenBalance((err, res) => {
-  //         const balance = +new BigNumber(res.toString()).div(new BigNumber(10).pow(18));
-  //         const wei = this.web3['toWei'](+balance);
-  //
-  //         if (balance > 0) {
-  //           contractMetamask && contractMetamask.estimateSellOrder(wei, true, (err, res) => {
-  //             const estimate = +new BigNumber(res[0].toString()).div(new BigNumber(10).pow(18));
-  //             this.tokensBalance.push({token: token.ticker, balance, estimate});
-  //             count++;
-  //             count === tokenList.data.length && this.passTokensBalance$.next(this.tokensBalance);
-  //           });
-  //         } else {
-  //           this.tokensBalance.push({token: token.ticker, balance, estimate: 0});
-  //           count++;
-  //           count === tokenList.data.length && this.passTokensBalance$.next(this.tokensBalance);
-  //         }
-  //       });
-  //     });
-  //   });
-  // }
+  private getAllUserBalances() {
+    this.apiService.getTokenList().subscribe((tokenList: any) => {
+      let count = 0;
+      this.tokensBalance = [];
+
+      tokenList.data.forEach(token => {
+        (async function initContract() {
+          let balance;
+          let fotronContract = await self.tronWebBrowser.contract(JSON.parse(self.fotronContractAbi)).at(token.fotronContractAddress);
+          fotronContract && (balance = self.convertNumResult2Trx(+await fotronContract.getCurrentUserLocalTokenBalance().call()));
+
+          if (balance > 0) {
+            let res;
+            fotronContract && (res = await fotronContract.estimateSellOrder(balance * Math.pow(10, 6), true).call());
+
+            const estimate = +res[0] / Math.pow(10, 6);
+            self.tokensBalance.push({token: token.ticker, balance, estimate});
+            count++;
+            count === tokenList.data.length && self.passTokensBalance$.next(self.tokensBalance);
+          } else {
+            self.tokensBalance.push({token: token.ticker, balance, estimate: 0});
+            count++;
+            count === tokenList.data.length && self.passTokensBalance$.next(self.tokensBalance);
+          }
+        })();
+      });
+    });
+  }
 
   private updatePromoBonus() {
     if (!this.fotronCoreContract) {
@@ -157,9 +163,10 @@ export class MainContractService {
     } else {
       (async function init() {
         let promoBonus = {};
-        promoBonus['quick'] = +await self.fotronCoreContract._currentQuickPromoBonus().call();
-        promoBonus['big'] = +await self.fotronCoreContract._currentBigPromoBonus().call();
+        promoBonus['quick'] = self.convertNumResult2Trx(+await self.fotronCoreContract._currentQuickPromoBonus().call());
+        promoBonus['big'] = self.convertNumResult2Trx(+await self.fotronCoreContract._currentBigPromoBonus().call());
         self._obsPromoBonusSubject.next(promoBonus);
+        // console.log('updatePromoBonus', promoBonus);
       })();
     }
   }
@@ -171,6 +178,7 @@ export class MainContractService {
       (async function init() {
         let res = +await self.fotronCoreContract.getBigPromoRemainingBlocks().call();
         self._obsWinBIGPromoBonusSubject.next(res);
+        // console.log('updateWinBIGPromoBonus', res);
       })();
     }
   }
@@ -182,6 +190,7 @@ export class MainContractService {
       (async function init() {
         let res = +await self.fotronCoreContract.getQuickPromoRemainingBlocks().call();
         self._obsWinQUICKPromoBonusSubject.next(res);
+        // console.log('updateWinQUICKPromoBonus', res);
       })();
     }
   }
@@ -191,12 +200,12 @@ export class MainContractService {
       this._obsUserTotalRewardSubject.next(null);
     } else {
       (async function init() {
-        let res = +await self.fotronCoreContract.getCurrentUserTotalReward().call();
+        let res = self.convertNumResult2Trx(+await self.fotronCoreContract.getCurrentUserTotalReward().call());
 
-        // self.prevUserTotalReward !== +res && self.getAllUserBalances();
+        self.prevUserTotalReward !== +res && self.getAllUserBalances();
         self.prevUserTotalReward = res;
         self._obsUserTotalRewardSubject.next(res);
-        console.log('updateUserTotalReward', res);
+        // console.log('updateUserTotalReward', res);
       })();
     }
   }
@@ -222,11 +231,8 @@ export class MainContractService {
   }
 
   public withdraw() {
-    let self = this,
-        hash;
-    (async function initContract() {
-      self.fotronCoreContract = await self.tronWebMain.contract(JSON.parse(self.fotronContractAbi)).at(self.fotronContractAddress);
-      self.fotronCoreContract && (hash = await self.fotronCoreContract.withdrawUserReward().call());
+    (async function withdraw() {
+      let hash = await self.fotronCoreContractLocal.withdrawUserReward().send();
       hash && self.getSuccessWithdrawRequestLink$.next(hash);
     })();
   }

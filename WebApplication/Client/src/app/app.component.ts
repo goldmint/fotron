@@ -30,14 +30,14 @@ export class AppComponent implements OnInit {
     window.sessionStorage.setItem(modalSessionKeyName, 'true');
 
     this.tronService.getObservableTrxBalance().subscribe(balance => {
-      if (balance !== null && (this.trxBalance === null || !this.trxBalance !== balance)) {
+      if (balance !== null && (this.trxBalance === null || this.trxBalance !== balance)) {
         this.trxBalance = balance;
         this.tronService.passTrxBalance.next(balance);
       }
     });
 
     this.tronService.getObservableTokenBalance().subscribe((balance) => {
-      if (balance !== null && (this.tokenBalance === null || !this.tokenBalance !== balance)) {
+      if (balance !== null && (this.tokenBalance === null || this.tokenBalance !== balance)) {
         this.tokenBalance = balance;
         this.tronService.passTokenBalance.next(balance);
       }

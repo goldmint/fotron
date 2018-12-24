@@ -38,7 +38,7 @@ export class SellComponent implements OnInit, OnDestroy {
     trxLimit: false,
     tokenLimit: false
   };
-  public etherscanUrl = environment.etherscanUrl;
+  public tronscanUrl = environment.tronscanUrl;
   public fromToken: boolean = true;
   public trxLimits = {
     min: 0,
@@ -176,6 +176,12 @@ export class SellComponent implements OnInit, OnDestroy {
     this.isTyping = false;
     this.fromToken = fromToken;
 
+    if (!amount && isFirstLoad) {
+      this.loading = false;
+      this.cdRef.markForCheck();
+      return;
+    }
+
     (async function init() {
       let res = await self.tronService.fotronContract.estimateSellOrder(amount * Math.pow(10, 6), fromToken).call();
       let estimate = +res[0] / Math.pow(10, 6);
@@ -229,7 +235,7 @@ export class SellComponent implements OnInit, OnDestroy {
               <div class="font-weight-500 mb-2">${phrases.Heading}</div>
               <div>${phrases.Hash}</div>
               <div class="mb-2 modal-tx-hash overflow-ellipsis">${hash}</div>
-              <a href="${this.etherscanUrl}${hash}" target="_blank">${phrases.Link}</a>
+              <a href="${this.tronscanUrl}${hash}" target="_blank">${phrases.Link}</a>
             </div>
           `);
         });

@@ -21,22 +21,16 @@ export class TronService {
   private lastTronAddress: string = null;
   private providerURL = environment.providerURL;
 
-  private tokenContractAddress = environment.tokenContractAddress;
+  private tokenContractAddress: string;
   private tokenContractAbi = environment.tokenContractAbi;
 
-  private fotronCoreContractAddress = environment.fotronCoreContractAddress;
-  private fotronCoreContractAbi = environment.fotronCoreContractAbi;
-
-  private fotronDataContractAddress = environment.fotronDataContractAddress;
-  private fotronDataContractAbi = environment.fotronDataContractAbi;
-
-  private fotronContractAddress = environment.fotronContractAddress;
+  private fotronContractAddress: string;
   private fotronContractAbi = environment.fotronContractAbi;
 
   public tokenContract = null;
-  public fotronCoreContract = null;
-  public fotronDataContract = null;
   public fotronContract = null;
+  public fotronContractLocal = null;
+  public tokenContractLocal = null;
 
   private _obsTronAddressSubject = new BehaviorSubject(null);
   private _obsTronAddress = this._obsTronAddressSubject.asObservable();
@@ -84,7 +78,7 @@ export class TronService {
   public getSuccessBuyRequestLink$ = new Subject();
   public getSuccessSellRequestLink$ = new Subject();
 
-  private isTradePage: boolean = true; // undefined
+  private isTradePage: boolean;
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -102,7 +96,6 @@ export class TronService {
         this.stopService();
       }
     });
-    this.setInterval();
   }
 
   private stopService() {
@@ -124,7 +117,7 @@ export class TronService {
 
       const fullNode = new HttpProvider(this.providerURL);
       const solidityNode = new HttpProvider(this.providerURL);
-      const eventServer = this.providerURL;
+      const eventServer = this.providerURL+'/';
 
       this.tronWebMain = new TronWeb(
         fullNode,
@@ -134,17 +127,20 @@ export class TronService {
       );
 
       (async function initContract() {
-        // self.fotronCoreContract = await self.tronWebMain.contract(JSON.parse(self.fotronCoreContractAbi)).at(self.fotronCoreContractAddress);
         self.fotronContract = await self.tronWebMain.contract(JSON.parse(self.fotronContractAbi)).at(self.fotronContractAddress);
         self.tokenContract = await self.tronWebMain.contract(JSON.parse(self.tokenContractAbi)).at(self.tokenContractAddress);
-        // self.fotronDataContract = await self.tronWebMain.contract(JSON.parse(self.fotronDataContractAbi)).at(self.fotronDataContractAddress);
         self.isTradePage && self.initMethodsFromMain();
-        // self.update1TokenPrice();
+        self.update1TokenPrice();
       })();
     }
 
     if (!this.tronWebBrowser && window.hasOwnProperty('tronWeb')) {
       this.tronWebBrowser = window['tronWeb'];
+
+      (async function initContract() {
+        self.fotronContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.fotronContractAbi)).at(self.fotronContractAddress);
+        self.tokenContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.tokenContractAbi)).at(self.tokenContractAddress);
+      })();
     }
 
     let address = this.tronWebBrowser && this.tronWebBrowser.defaultAddress.base58 ? this.tronWebBrowser.defaultAddress.base58 : null;
@@ -176,7 +172,7 @@ export class TronService {
   }
 
   private checkContractData() {
-    // this.update1TokenPrice();
+    this.update1TokenPrice();
 
     if (this.isTradePage) {
       this.updateTotalData();
@@ -213,7 +209,7 @@ export class TronService {
     } else {
       this.tronWebBrowser.trx.getBalance(address).then(balance => {
         this._obsTrxBalanceSubject.next(this.convertNumResult2Trx(balance));
-        console.log('updateTrxBalance', this.convertNumResult2Trx(balance));
+        console.warn('updateTrxBalance', this.convertNumResult2Trx(balance));
       }).catch();
     }
   }
@@ -278,7 +274,7 @@ export class TronService {
     } else {
       (async function init() {
         let res = +await self.fotronContract.getQuickPromoRemainingBlocks().call();
-        self._obsWinQUICKPromoBonusSubject.next(self.convertNumResult2Trx(res));
+        self._obsWinQUICKPromoBonusSubject.next(res);
         console.log('updateWinQUICKPromoBonus', res);
       })();
     }
@@ -289,9 +285,9 @@ export class TronService {
       this._obsTotalTokenSupplySubject.next(null);
     } else {
       (async function init() {
-        let res = +await self.fotronContract.getTotalTokenSupply().call();
-        self._obsTotalTokenSupplySubject.next(self.convertNumResult2Trx(res));
-        console.log('updateTotalTokenSupply', self.convertNumResult2Trx(res));
+        let res = self.convertNumResult2Trx(+await self.fotronContract.getTotalTokenSupply().call());
+        self._obsTotalTokenSupplySubject.next(res);
+        console.log('updateTotalTokenSupply', res);
       })();
     }
   }
@@ -343,9 +339,7 @@ export class TronService {
   }
 
   public isValidAddress(address: string): boolean {
-    if (this.tronWebMain) {
-      return this.tronWebMain.isAddress(address);
-    }
+    return TronWeb['isAddress'](address);
   }
 
   public getObservableTronAddress(): Observable<any> {
@@ -400,27 +394,21 @@ export class TronService {
     return this._obsNetwork;
   }
 
-  public buy(refAddress: string, fromAddr: string, amount: number, minReturn: number) {
-    // this.fotronContract.buy(refAddress, minReturn, { from: fromAddr, value: amount, gas: 600000, gasPrice: gasPrice }, (err, res) => {
-    //   this.getSuccessBuyRequestLink$.next(res);
-    // });
-
-    // (async function buy() {
-    //   let res = await self.fotronContract.buy('', 0.002 * Math.pow(10, 6)).send({
-    //     feeLimit: 10000,
-    //     callValue: 10000,
-    //     shouldPollResponse: false
-    //   });
-    // })();
+  public buy(fromAddr: string, amount: number, minReturn: number) {
+    (async function buy() {
+      let res = await self.fotronContractLocal.buy(fromAddr, minReturn).send({ callValue: amount });
+      res && self.getSuccessBuyRequestLink$.next(res);
+      console.log(res);
+    })();
   }
 
   public sell(fromAddr: string, amount: number, minReturn: number) {
-    // this._contractMntp.approve(this.fotronContractAddress, amount, { from: fromAddr, value: 0, gas: 600000, gasPrice: gasPrice }, (err, res) => {
-    //   res && setTimeout(() => {
-    //     this._contractMetamask.sell(amount, minReturn, { from: fromAddr, value: 0, gas: 600000, gasPrice: gasPrice }, (err, res) => {
-    //       this.getSuccessSellRequestLink$.next(res);
-    //     });
-    //   }, 1000);
-    // });
+    (async function sell() {
+      let res, res2;
+      res = await self.tokenContractLocal.approve(fromAddr, amount).send();
+      res && (res2 = await self.fotronContractLocal.sell(amount, minReturn).send());
+      res2 && self.getSuccessSellRequestLink$.next(res);
+      console.log(res2);
+    })();
   }
 }

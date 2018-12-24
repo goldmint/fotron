@@ -39,7 +39,7 @@ export class HeaderBlockComponent implements OnInit {
   public allTokensBalance: AllTokensBalance[] = null;
   public allTokensBalanceSumTrx: number = 0;
   public totalSpent: number = 0;
-  public etherscanUrl = environment.etherscanUrl;
+  public tronscanUrl = environment.tronscanUrl;
 
   private bonusPopTimer: any;
 
@@ -192,7 +192,7 @@ export class HeaderBlockComponent implements OnInit {
               <div class="font-weight-500 mb-2">${phrases.Heading}</div>
               <div>${phrases.Hash}</div>
               <div class="mb-2 modal-tx-hash overflow-ellipsis">${hash}</div>
-              <a href="${this.etherscanUrl}${hash}" target="_blank">${phrases.Link}</a>
+              <a href="${this.tronscanUrl}${hash}" target="_blank">${phrases.Link}</a>
             </div>
           `);
         });

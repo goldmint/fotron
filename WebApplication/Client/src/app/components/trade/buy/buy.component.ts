@@ -37,7 +37,7 @@ export class BuyComponent implements OnInit, OnDestroy {
     trxLimit: false,
     tokenLimit: false
   };
-  public etherscanUrl = environment.etherscanUrl;
+  public tronscanUrl = environment.tronscanUrl;
   public fromTrx: boolean = true;
   public isInvalidNetwork: boolean = false;
   public isBalanceBetter: boolean = false;
@@ -191,6 +191,12 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.isTyping = false;
     this.fromTrx = fromTrx;
 
+    if (!amount && isFirstLoad) {
+      this.loading = false;
+      this.cdRef.markForCheck();
+      return;
+    }
+
     (async function init() {
       let res = await self.tronService.fotronContract.estimateBuyOrder(amount * Math.pow(10, 6), fromTrx).call();
       let estimate = +res[0] / Math.pow(10, 6);
@@ -198,9 +204,9 @@ export class BuyComponent implements OnInit, OnDestroy {
       self.averageTokenPrice = +res[2] / Math.pow(10, 6);
 
       if (fromTrx) {
-        self.mntp = +this.substrValue(estimate);
+        self.mntp = +self.substrValue(estimate);
       } else {
-        self.trx = +this.substrValue(estimate);
+        self.trx = +self.substrValue(estimate);
         if (self.trxAddress && self.trx > self.trxBalance) {
           self.errors.invalidBalance = true;
         }
@@ -241,7 +247,7 @@ export class BuyComponent implements OnInit, OnDestroy {
               <div class="font-weight-500 mb-2">${phrases.Heading}</div>
               <div>${phrases.Hash}</div>
               <div class="mb-2 modal-tx-hash overflow-ellipsis">${hash}</div>
-              <a href="${this.etherscanUrl}${hash}" target="_blank">${phrases.Link}</a>
+              <a href="${this.tronscanUrl}${hash}" target="_blank">${phrases.Link}</a>
             </div>
           `);
         });
@@ -265,16 +271,16 @@ export class BuyComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let queryParams = {};
-    window.location.hash.replace(/^[^?]*\?/, '').split('&').forEach(item => {
-      let param = item.split('=');
-      queryParams[decodeURIComponent(param[0])] = param.length > 1 ? decodeURIComponent(param[1]) : '';
-    });
-    let refAddress = queryParams['ref'] ? queryParams['ref'] : '0x0';
+    // let queryParams = {};
+    // window.location.hash.replace(/^[^?]*\?/, '').split('&').forEach(item => {
+    //   let param = item.split('=');
+    //   queryParams[decodeURIComponent(param[0])] = param.length > 1 ? decodeURIComponent(param[1]) : '';
+    // });
+    // let refAddress = queryParams['ref'] ? queryParams['ref'] : '0x0';
 
     const amount = this.trx * Math.pow(10, 6);
     const minReturn = this.minReturn * Math.pow(10, 6);
-    this.tronService.buy(refAddress, this.trxAddress, amount, minReturn);
+    this.tronService.buy(this.trxAddress, amount, minReturn);
   }
 
   ngOnDestroy() {
