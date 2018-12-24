@@ -186,9 +186,9 @@ namespace Fotron.WebApplication {
 
             // workers
 #if !DEBUG
-		    services.AddSingleton<IHostedService, TokenPriceObserver>();
-            services.AddSingleton<IHostedService, TokenStatisticsHarvester>();
-		    services.AddSingleton<IHostedService, MaxGasPriceUpdater>();
+		    // services.AddSingleton<IHostedService, TokenPriceObserver>();
+            // services.AddSingleton<IHostedService, TokenStatisticsHarvester>();
+		    // services.AddSingleton<IHostedService, MaxGasPriceUpdater>();
 #endif
 
 
