@@ -5,32 +5,30 @@ using System.Threading.Tasks;
 using Fotron.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fotron.WebApplication.Services.HostedServices
-{
-    public class TokenPriceObserver : BaseHostedService
-    {
-        protected override TimeSpan Period => TimeSpan.FromMinutes(5);
+namespace Fotron.WebApplication.Services.HostedServices {
 
-        private List<Token> _tokenList;
+	public class TokenPriceObserver : BaseHostedService {
 
-        public TokenPriceObserver(IServiceProvider services) : base(services) { }
+		protected override TimeSpan Period => TimeSpan.FromMinutes(5);
 
-        protected override async Task OnInit()
-        {
-            await base.OnInit();
+		public TokenPriceObserver(IServiceProvider services) : base(services) { }
 
-            _tokenList = await DbContext.Tokens.Where(x => x.IsEnabled && !x.IsDeleted).ToListAsync();
-        }
+		protected override async Task OnInit() {
+			await base.OnInit();
+		}
 
-        protected override async void DoWork(object state)
-        {
-            foreach (var token in _tokenList)
-            {
-                token.CurrentPriceEth = await TronObserver.GetTokenPrice(token.FotronContractAddress);
-                token.TimeUpdated = DateTime.Now;
-            }
+		protected override async Task DoWork() {
 
-            await DbContext.SaveChangesAsync();
-        }
-    }
+			DbContext.DetachEverything();
+			var tokenList = await DbContext.Tokens.Where(x => x.IsEnabled && !x.IsDeleted).ToListAsync();
+
+			foreach (var token in tokenList) {
+				token.CurrentPriceEth = await TronObserver.GetTokenPrice(token.FotronContractAddress);
+				token.TimeUpdated = DateTime.Now;
+			}
+
+			await DbContext.SaveChangesAsync();
+		}
+
+	}
 }
