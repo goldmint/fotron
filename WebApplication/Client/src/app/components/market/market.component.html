@@ -136,7 +136,7 @@
 
           <ng-template ngx-datatable-cell-template let-row="row">
             <div class="text-right">
-              <button class="btn btn-sm btn-primary" type="button" (click)="trade(row)">
+              <button class="btn btn-sm btn-primary" type="button" (click)="trade(row)" [disabled]="!isBankLoaded">
                 {{ "PAGES.Market.Table.Trade" | translate }}
               </button>
             </div>
@@ -182,7 +182,7 @@
             </button>
           </div>
           <div class="mb-2">
-            <button class="btn btn-sm btn-primary token-action-btn" type="button" (click)="trade(row)">
+            <button class="btn btn-sm btn-primary token-action-btn" type="button" (click)="trade(row)" [disabled]="!isBankLoaded">
               {{ "PAGES.Market.Table.Trade" | translate }}
             </button>
           </div>

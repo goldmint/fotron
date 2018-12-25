@@ -45,6 +45,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   public isMobile: boolean = false;
   public loading: boolean = false;
   public isDataLoaded: boolean = false;
+  public isBankLoaded: boolean = false;
   public searchValue: string = '';
   public coreContractTronscanLink = environment.tronscanContractUrl + environment.fotronCoreContractAddress
 
@@ -79,6 +80,11 @@ export class MarketComponent implements OnInit, OnDestroy {
       });
 
     this.init();
+
+    this.commonService.isDataLoaded$.takeUntil(this.destroy$).subscribe((isLoaded: any) => {
+      this.isBankLoaded = isLoaded;
+      this.cdRef.markForCheck();
+    });
 
     this.userService.currentLocale.takeUntil(this.destroy$).subscribe(() => {
       if (this.isDataLoaded) {

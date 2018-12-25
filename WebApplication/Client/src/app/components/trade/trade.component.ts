@@ -102,7 +102,7 @@ export class TradeComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.commonService.isDataLoaded$.subscribe((isLoaded: any) => {
+    this.commonService.isDataLoaded$.takeUntil(this.destroy$).subscribe((isLoaded: any) => {
       this.isBankLoaded = isLoaded;
       this.cdRef.markForCheck();
     });
@@ -110,7 +110,7 @@ export class TradeComponent implements OnInit, OnDestroy {
 
   initTradePage() {
     this.tronService.passTokenBalance.takeUntil(this.destroy$).subscribe(balance => {
-      if (balance) {
+      if (balance !== null) {
         this.tokenBalance = balance;
         this.cdRef.markForCheck();
       }

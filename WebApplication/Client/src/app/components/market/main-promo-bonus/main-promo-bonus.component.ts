@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Subject} from "rxjs/Subject";
 import {MainContractService} from "../../../services/main-contract.service";
+import {CommonService} from "../../../services/common.service";
 
 @Component({
   selector: 'app-main-promo-bonus',
@@ -24,6 +25,7 @@ export class MainPromoBonusComponent implements OnInit {
 
   constructor(
     private mainContractService: MainContractService,
+    private commonService: CommonService,
     private cdRef: ChangeDetectorRef
   ) { }
 
@@ -37,6 +39,7 @@ export class MainPromoBonusComponent implements OnInit {
         this.promoBonus.quick = this.promoBonus.quick < Math.pow(10, -9) ? Math.pow(10, -9) : +this.promoBonus.quick.toFixed(9);
 
         this.isDataLoaded = true;
+        this.commonService.isDataLoaded$.next(true);
         this.cdRef.markForCheck();
       }
       this.isFirstLoad = false;

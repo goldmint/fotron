@@ -10,6 +10,7 @@ import {Observable} from "rxjs/Observable";
 import {TokenInfo} from "../../../interfaces/token-info";
 import {CommonService} from "../../../services/common.service";
 import {TronService} from "../../../services/tron.service";
+import {Subscription} from "rxjs/Subscription";
 
 let self;
 
@@ -55,6 +56,7 @@ export class SellComponent implements OnInit, OnDestroy {
 
   private minReturnPercent = 1;
   private destroy$: Subject<boolean> = new Subject<boolean>();
+  private sub1: Subscription;
 
   constructor(
     private tronService: TronService,
@@ -94,6 +96,7 @@ export class SellComponent implements OnInit, OnDestroy {
       if (gold !== null) {
         this.tokenBalance = gold;
         this.mntp = +this.substrValue(+gold);
+        this.sub1 && this.sub1.unsubscribe();
 
         Observable.combineLatest(
           this.tronService.getObservableTokenDealRange(),
@@ -105,7 +108,6 @@ export class SellComponent implements OnInit, OnDestroy {
 
             this.trxLimits.min = limits[1].min;
             this.trxLimits.max = limits[1].max;
-            this.estimateSellOrder(this.mntp, true, true);
           }
         });
         this.cdRef.markForCheck();
@@ -125,11 +127,6 @@ export class SellComponent implements OnInit, OnDestroy {
       this.cdRef.markForCheck();
     });
 
-    // this.tronService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
-    //   network !== null && (this.isInvalidNetwork = network != this.MMNetwork.index);
-    //   this.cdRef.markForCheck();
-    // });
-
     this.commonService.isMobile$.takeUntil(this.destroy$).subscribe(isMobile => this.isMobile = isMobile);
   }
 
@@ -143,20 +140,11 @@ export class SellComponent implements OnInit, OnDestroy {
     this.checkErrors(fromToken, +event.target.value);
   }
 
-  changeMinReturn(event) {
-    event.target.value = this.substrValue(event.target.value);
-    this.minReturn = +event.target.value;
-
-    this.isMinReturnError = this.minReturn > this.trx * this.minReturnPercent || this.minReturn <= 0;
-    this.cdRef.markForCheck();
-  }
-
   setCoinBalance(percent) {
     if (this.trxAddress) {
       let value = this.isBalanceBetter ? this.substrValue(this.tokenLimits.max * percent) : this.substrValue(+this.tokenBalance * percent);
       if (+value != this.mntp) {
         this.mntp = +value;
-        // !this.errors.tokenLimit && this.estimateSellOrder(this.mntp, true, false);
       }
       this.checkErrors(true, value);
       this.cdRef.markForCheck();
@@ -192,7 +180,6 @@ export class SellComponent implements OnInit, OnDestroy {
 
       if (fromToken) {
         self.trx = +self.substrValue(estimate);
-        // self.errors.invalidBalance = false;
       } else {
         self.mntp = +self.substrValue(estimate);
         if (self.trxAddress && self.mntp > self.tokenBalance) {
@@ -218,11 +205,6 @@ export class SellComponent implements OnInit, OnDestroy {
     this.errors.trxLimit = !fromToken && this.trxAddress && value > 0 &&
       (value < this.trxLimits.min || value > this.trxLimits.max);
 
-    this.cdRef.markForCheck();
-  }
-
-  setMinReturn(percent: number) {
-    !this.loading && (this.minReturn = +this.substrValue(this.trx * percent));
     this.cdRef.markForCheck();
   }
 

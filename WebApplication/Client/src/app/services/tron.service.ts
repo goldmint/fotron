@@ -127,10 +127,12 @@ export class TronService {
       );
 
       (async function initContract() {
-        self.fotronContract = await self.tronWebMain.contract(JSON.parse(self.fotronContractAbi)).at(self.fotronContractAddress);
-        self.tokenContract = await self.tronWebMain.contract(JSON.parse(self.tokenContractAbi)).at(self.tokenContractAddress);
-        self.isTradePage && self.initMethodsFromMain();
-        self.update1TokenPrice();
+        try {
+          self.fotronContract = await self.tronWebMain.contract(JSON.parse(self.fotronContractAbi)).at(self.fotronContractAddress);
+          self.tokenContract = await self.tronWebMain.contract(JSON.parse(self.tokenContractAbi)).at(self.tokenContractAddress);
+          self.isTradePage && self.initMethodsFromMain();
+          self.update1TokenPrice();
+        } catch(e) { }
       })();
     }
 
@@ -138,8 +140,10 @@ export class TronService {
       this.tronWebBrowser = window['tronWeb'];
 
       (async function initContract() {
-        self.fotronContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.fotronContractAbi)).at(self.fotronContractAddress);
-        self.tokenContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.tokenContractAbi)).at(self.tokenContractAddress);
+        try {
+          self.fotronContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.fotronContractAbi)).at(self.fotronContractAddress);
+          self.tokenContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.tokenContractAbi)).at(self.tokenContractAddress);
+        } catch(e) { }
       })();
     }
 
@@ -185,32 +189,49 @@ export class TronService {
     this.tronWebMain.setAddress(address);
     this.tronWebBrowser.setAddress(address);
 
+    if (this.lastTronAddress && address) {
+      (async function initContract() {
+        try {
+          self.fotronContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.fotronContractAbi)).at(self.fotronContractAddress);
+          self.tokenContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.tokenContractAbi)).at(self.tokenContractAddress);
+          self.functionsStart();
+        } catch(e) { }
+      })();
+    } else {
+      this.functionsStart();
+    }
+
     this._obsTronAddressSubject.next(address);
+  }
+
+  private functionsStart() {
     this.checkBalance();
     this.getTokenDealRange();
     this.getTrxDealRange();
   }
 
   private updateTokenBalance(addr: string) {
-    if (addr == null || this.fotronContract == null) {
+    if (addr == null || this.fotronContractLocal == null) {
       this._obsTokenBalanceSubject.next(null);
     } else {
       (async function init() {
-        let res = self.convertNumResult2Trx(+await self.fotronContract.getCurrentUserLocalTokenBalance().call());
-        self._obsTokenBalanceSubject.next(res);
-        console.log('updateTokenBalance', res);
+        try {
+          let res = self.convertNumResult2Trx(+await self.fotronContractLocal.getCurrentUserLocalTokenBalance().call());
+          self._obsTokenBalanceSubject.next(res);
+        } catch(e) { }
       })();
     }
   }
 
   private updateTrxBalance(address: string) {
-    if (address == null || this.fotronContract == null) {
+    if (address == null || this.fotronContractLocal == null) {
       this._obsTrxBalanceSubject.next(null);
     } else {
-      this.tronWebBrowser.trx.getBalance(address).then(balance => {
-        this._obsTrxBalanceSubject.next(this.convertNumResult2Trx(balance));
-        console.warn('updateTrxBalance', this.convertNumResult2Trx(balance));
-      }).catch();
+      try {
+        this.tronWebBrowser.trx.getBalance(address).then(balance => {
+          this._obsTrxBalanceSubject.next(this.convertNumResult2Trx(balance));
+        }).catch();
+      } catch(e) { }
     }
   }
 
@@ -220,10 +241,11 @@ export class TronService {
     } else {
       let price = {};
       (async function init() {
-        price['buy'] = self.convertNumResult2Trx(+await self.fotronContract.get1TokenBuyPrice().call());
-        price['sell'] = self.convertNumResult2Trx(+await self.fotronContract.get1TokenSellPrice().call());
-        self._obs1TokenPriceSubject.next(price);
-        console.log('update1TokenPrice', price);
+        try {
+          price['buy'] = self.convertNumResult2Trx(+await self.fotronContract.get1TokenBuyPrice().call());
+          price['sell'] = self.convertNumResult2Trx(+await self.fotronContract.get1TokenSellPrice().call());
+          self._obs1TokenPriceSubject.next(price);
+        } catch(e) { }
       })();
     }
   }
@@ -234,10 +256,11 @@ export class TronService {
     } else {
       let total = {};
       (async function init() {
-        total['tokens'] = self.convertNumResult2Trx(+await self.fotronContract.getTotalTokenSold().call());
-        total['trx'] = self.convertNumResult2Trx(+await self.fotronContract.getTotalTrxBalance().call());
-        self._obsTotalDataSubject.next(total);
-        console.log('updateTotalData', total);
+        try {
+          total['tokens'] = self.convertNumResult2Trx(+await self.fotronContract.getTotalTokenSold().call());
+          total['trx'] = self.convertNumResult2Trx(+await self.fotronContract.getTotalTrxBalance().call());
+          self._obsTotalDataSubject.next(total);
+        } catch(e) { }
       })();
     }
   }
@@ -248,10 +271,11 @@ export class TronService {
     } else {
       let promoBonus = {};
       (async function init() {
-        promoBonus['quick'] = self.convertNumResult2Trx(+await self.fotronContract.getCurrentQuickPromoBonus().call());
-        promoBonus['big'] = self.convertNumResult2Trx(+await self.fotronContract.getCurrentBigPromoBonus().call());
-        self._obsPromoBonusSubject.next(promoBonus);
-        console.log('updatePromoBonus', promoBonus);
+        try {
+          promoBonus['quick'] = self.convertNumResult2Trx(+await self.fotronContract.getCurrentQuickPromoBonus().call());
+          promoBonus['big'] = self.convertNumResult2Trx(+await self.fotronContract.getCurrentBigPromoBonus().call());
+          self._obsPromoBonusSubject.next(promoBonus);
+        } catch(e) { }
       })();
     }
   }
@@ -261,9 +285,10 @@ export class TronService {
       this._obsWinBIGPromoBonusSubject.next(null);
     } else {
       (async function init() {
-        let res = +await self.fotronContract.getBigPromoRemainingBlocks().call();
-        self._obsWinBIGPromoBonusSubject.next(res);
-        console.log('updateWinBIGPromoBonus', res);
+        try {
+          let res = +await self.fotronContract.getBigPromoRemainingBlocks().call();
+          self._obsWinBIGPromoBonusSubject.next(res);
+        } catch(e) { }
       })();
     }
   }
@@ -273,9 +298,10 @@ export class TronService {
       this._obsWinQUICKPromoBonusSubject.next(null);
     } else {
       (async function init() {
-        let res = +await self.fotronContract.getQuickPromoRemainingBlocks().call();
-        self._obsWinQUICKPromoBonusSubject.next(res);
-        console.log('updateWinQUICKPromoBonus', res);
+        try {
+          let res = +await self.fotronContract.getQuickPromoRemainingBlocks().call();
+          self._obsWinQUICKPromoBonusSubject.next(res);
+        } catch(e) { }
       })();
     }
   }
@@ -285,9 +311,10 @@ export class TronService {
       this._obsTotalTokenSupplySubject.next(null);
     } else {
       (async function init() {
-        let res = self.convertNumResult2Trx(+await self.fotronContract.getTotalTokenSupply().call());
-        self._obsTotalTokenSupplySubject.next(res);
-        console.log('updateTotalTokenSupply', res);
+        try {
+          let res = self.convertNumResult2Trx(+await self.fotronContract.getTotalTokenSupply().call());
+          self._obsTotalTokenSupplySubject.next(res);
+        } catch(e) { }
       })();
     }
   }
@@ -297,11 +324,12 @@ export class TronService {
       this._obsExpirationTimeSubject.next(null);
     } else {
       (async function init() {
-        let time: any = {};
-        time.expiration = +await self.fotronContract.getExpirationTime().call();
-        time.tillExpiration = +await self.fotronContract.getRemainingTimeTillExpiration().call();
-        self._obsExpirationTimeSubject.next(time);
-        console.log('getExpirationTime', time);
+        try {
+          let time: any = {};
+          time.expiration = +await self.fotronContract.getExpirationTime().call();
+          time.tillExpiration = +await self.fotronContract.getRemainingTimeTillExpiration().call();
+          self._obsExpirationTimeSubject.next(time);
+        } catch(e) { }
       })();
     }
   }
@@ -311,13 +339,14 @@ export class TronService {
       this._obsTokenDealRangeSubject.next(null);
     } else {
       (async function init() {
-        let res = await self.fotronContract.getTokenDealRange().call();
-        let limit = {
-          min: self.convertNumResult2Trx(+res[0]),
-          max: self.convertNumResult2Trx(+res[1])
-        }
-        self._obsTokenDealRangeSubject.next(limit);
-        console.log('getTokenDealRange', limit);
+        try {
+          let res = await self.fotronContract.getTokenDealRange().call();
+          let limit = {
+            min: self.convertNumResult2Trx(+res[0]),
+            max: self.convertNumResult2Trx(+res[1])
+          }
+          self._obsTokenDealRangeSubject.next(limit);
+        } catch(e) { }
       })();
     }
   }
@@ -327,13 +356,14 @@ export class TronService {
       this._obsTrxDealRangeSubject.next(null);
     } else {
       (async function init() {
-        let res = await self.fotronContract.getTrxDealRange().call();
-        let limit = {
-          min: self.convertNumResult2Trx(+res[0]),
-          max: self.convertNumResult2Trx(+res[1])
-        }
-        self._obsTrxDealRangeSubject.next(limit);
-        console.log('getTrxDealRange', limit);
+        try {
+          let res = await self.fotronContract.getTrxDealRange().call();
+          let limit = {
+            min: self.convertNumResult2Trx(+res[0]),
+            max: self.convertNumResult2Trx(+res[1])
+          }
+          self._obsTrxDealRangeSubject.next(limit);
+        } catch(e) { }
       })();
     }
   }
@@ -398,7 +428,6 @@ export class TronService {
     (async function buy() {
       let res = await self.fotronContractLocal.buy(fromAddr, minReturn).send({ callValue: amount });
       res && self.getSuccessBuyRequestLink$.next(res);
-      console.log(res);
     })();
   }
 
@@ -408,7 +437,6 @@ export class TronService {
       res = await self.tokenContractLocal.approve(fromAddr, amount).send();
       res && (res2 = await self.fotronContractLocal.sell(amount, minReturn).send());
       res2 && self.getSuccessSellRequestLink$.next(res);
-      console.log(res2);
     })();
   }
 }

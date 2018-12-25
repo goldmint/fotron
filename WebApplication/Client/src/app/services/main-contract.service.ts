@@ -119,9 +119,18 @@ export class MainContractService {
 
   private emitAddress(address: string) {
     this.tronWebMain.setAddress(address);
+    this.tronWebBrowser.setAddress(address);
+
+    if (this.lastTronAddress && address) {
+      (async function initContract() {
+        self.fotronCoreContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.fotronCoreContractAbi)).at(self.fotronCoreContractAddress);
+        self.checkBalance();
+      })();
+    } else {
+      this.checkBalance();
+    }
 
     this._obsTronAddressSubject.next(address);
-    this.checkBalance();
   }
 
   private checkBalance() {
@@ -129,7 +138,7 @@ export class MainContractService {
   }
 
   private getAllUserBalances() {
-    this.apiService.getTokenList().subscribe((tokenList: any) => {
+    this.lastTronAddress && this.apiService.getTokenList().subscribe((tokenList: any) => {
       let count = 0;
       this.tokensBalance = [];
 
@@ -162,11 +171,12 @@ export class MainContractService {
       this._obsPromoBonusSubject.next(null);
     } else {
       (async function init() {
-        let promoBonus = {};
-        promoBonus['quick'] = self.convertNumResult2Trx(+await self.fotronCoreContract._currentQuickPromoBonus().call());
-        promoBonus['big'] = self.convertNumResult2Trx(+await self.fotronCoreContract._currentBigPromoBonus().call());
-        self._obsPromoBonusSubject.next(promoBonus);
-        // console.log('updatePromoBonus', promoBonus);
+        try {
+          let promoBonus = {};
+          promoBonus['quick'] = self.convertNumResult2Trx(+await self.fotronCoreContract._currentQuickPromoBonus().call());
+          promoBonus['big'] = self.convertNumResult2Trx(+await self.fotronCoreContract._currentBigPromoBonus().call());
+          self._obsPromoBonusSubject.next(promoBonus);
+        } catch(e) { }
       })();
     }
   }
@@ -176,9 +186,10 @@ export class MainContractService {
       this._obsWinBIGPromoBonusSubject.next(null);
     } else {
       (async function init() {
-        let res = +await self.fotronCoreContract.getBigPromoRemainingBlocks().call();
-        self._obsWinBIGPromoBonusSubject.next(res);
-        // console.log('updateWinBIGPromoBonus', res);
+        try {
+          let res = +await self.fotronCoreContract.getBigPromoRemainingBlocks().call();
+          self._obsWinBIGPromoBonusSubject.next(res);
+        } catch(e) { }
       })();
     }
   }
@@ -188,9 +199,10 @@ export class MainContractService {
       this._obsWinQUICKPromoBonusSubject.next(null);
     } else {
       (async function init() {
-        let res = +await self.fotronCoreContract.getQuickPromoRemainingBlocks().call();
-        self._obsWinQUICKPromoBonusSubject.next(res);
-        // console.log('updateWinQUICKPromoBonus', res);
+        try {
+          let res = +await self.fotronCoreContract.getQuickPromoRemainingBlocks().call();
+          self._obsWinQUICKPromoBonusSubject.next(res);
+        } catch(e) { }
       })();
     }
   }
@@ -200,12 +212,13 @@ export class MainContractService {
       this._obsUserTotalRewardSubject.next(null);
     } else {
       (async function init() {
-        let res = self.convertNumResult2Trx(+await self.fotronCoreContract.getCurrentUserTotalReward().call());
+        try {
+          let res = self.convertNumResult2Trx(+await self.fotronCoreContractLocal.getCurrentUserTotalReward().call());
 
-        self.prevUserTotalReward !== +res && self.getAllUserBalances();
-        self.prevUserTotalReward = res;
-        self._obsUserTotalRewardSubject.next(res);
-        // console.log('updateUserTotalReward', res);
+          self.prevUserTotalReward !== +res && self.getAllUserBalances();
+          self.prevUserTotalReward = res;
+          self._obsUserTotalRewardSubject.next(res);
+        } catch(e) { }
       })();
     }
   }

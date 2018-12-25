@@ -31,11 +31,10 @@ export class HeaderBlockComponent implements OnInit {
   };
   public trxAddress: string = null;
   public isRefAvailable: boolean = null;
-  public refLink: string;
   public isTradePage: boolean = false;
   public userRefLink: string;
   public myGenerateRefLink: string;
-  public minRefTokenAmount: number = null;
+  public minRefTokenAmount: number = 0;
   public allTokensBalance: AllTokensBalance[] = null;
   public allTokensBalanceSumTrx: number = 0;
   public totalSpent: number = 0;
@@ -110,14 +109,16 @@ export class HeaderBlockComponent implements OnInit {
           this.checkRefAvailable();
 
           (async function init() {
-            let res = +await self.mainContractService.fotronCoreContract.getCurrentUserShareBonus().call();
-            self.myBonusInfo.shareReward = res / Math.pow(10, 6);
+            try {
+              let res = +await self.mainContractService.fotronCoreContractLocal.getCurrentUserShareBonus().call();
+              self.myBonusInfo.shareReward = res / Math.pow(10, 6);
 
-            let res2 = +await self.mainContractService.fotronCoreContract.getCurrentUserRefBonus().call();
-            self.myBonusInfo.refBonus = res2 / Math.pow(10, 6);
+              let res2 = +await self.mainContractService.fotronCoreContractLocal.getCurrentUserRefBonus().call();
+              self.myBonusInfo.refBonus = res2 / Math.pow(10, 6);
 
-            let res3 = +await self.mainContractService.fotronCoreContract.getCurrentUserPromoBonus().call();
-            self.myBonusInfo.promoBonus = res3 / Math.pow(10, 6);
+              let res3 = +await self.mainContractService.fotronCoreContractLocal.getCurrentUserPromoBonus().call();
+              self.myBonusInfo.promoBonus = res3 / Math.pow(10, 6);
+            } catch(e) { }
           })();
         }
         this.userTotalReward = reward;
@@ -140,16 +141,19 @@ export class HeaderBlockComponent implements OnInit {
 
   checkRefAvailable() {
     (async function init() {
-      let res = +await self.mainContractService.fotronCoreContract._minRefTrxPurchase().call();
-      self.minRefTokenAmount = res / Math.pow(10, 6);
+      try {
+        let res = +await self.mainContractService.fotronCoreContractLocal._minRefTrxPurchase().call();
+        self.minRefTokenAmount = res / Math.pow(10, 6);
 
-      let res2 = await self.mainContractService.fotronCoreContract.getUserTotalTrxVolumeSaldo(self.trxAddress).call();
-      self.totalSpent = +res2.res / Math.pow(10, 6);
+        let res2 = await self.mainContractService.fotronCoreContractLocal.getUserTotalTrxVolumeSaldo(self.trxAddress).call();
+        self.totalSpent = +res2.res / Math.pow(10, 6);
 
-      let res3 = await self.mainContractService.fotronCoreContract.isRefAvailable().call();
-      self.isRefAvailable = res3;
-      self.mainContractService.isRefAvailable$.next({isAvailable: res3});
-      self.cdRef.markForCheck();
+        let res3 = await self.mainContractService.fotronCoreContractLocal.isRefAvailable().call();
+        self.isRefAvailable = res3;
+
+        self.mainContractService.isRefAvailable$.next({isAvailable: res3});
+        self.cdRef.markForCheck();
+      } catch(e) { }
     })();
   }
 

@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs/Subject";
-import {BigNumber} from "bignumber.js";
 import {MessageBoxService} from "../../../services/message-box.service";
 import {TranslateService} from "@ngx-translate/core";
 import {environment} from "../../../../environments/environment";
@@ -9,6 +8,7 @@ import {Observable} from "rxjs/Observable";
 import {TokenInfo} from "../../../interfaces/token-info";
 import {CommonService} from "../../../services/common.service";
 import {TronService} from "../../../services/tron.service";
+import {Subscription} from "rxjs/Subscription";
 
 let self;
 
@@ -57,6 +57,7 @@ export class BuyComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private trxBalanceForCheck: number;
   private timeOut: any;
+  private sub1: Subscription;
 
   constructor(
     private tronService: TronService,
@@ -94,12 +95,13 @@ export class BuyComponent implements OnInit, OnDestroy {
 
     this.tronService.passTrxBalance.takeUntil(this.destroy$).subscribe(trx => {
       this.trxBalanceForCheck = trx;
+      this.sub1 && this.sub1.unsubscribe();
 
       if (trx !== null) {
         this.trxBalance = trx;
         this.trx = +this.substrValue(trx);
 
-        Observable.combineLatest(
+        this.sub1 = Observable.combineLatest(
           this.tronService.getObservableTokenDealRange(),
           this.tronService.getObservableTrxDealRange()
         ).takeUntil(this.destroy$).subscribe(limits => {
@@ -109,7 +111,6 @@ export class BuyComponent implements OnInit, OnDestroy {
 
             this.trxLimits.min = limits[1].min;
             this.trxLimits.max = limits[1].max;
-            this.estimateBuyOrder(this.trx, true, true);
           }
         });
         this.cdRef.markForCheck();
@@ -159,14 +160,6 @@ export class BuyComponent implements OnInit, OnDestroy {
     fromTrx ? this.trx = +event.target.value : this.mntp = +event.target.value;
 
     this.checkErrors(fromTrx, +event.target.value);
-  }
-
-  changeMinReturn(event) {
-    event.target.value = this.substrValue(event.target.value);
-    this.minReturn = +event.target.value;
-
-    this.isMinReturnError = this.minReturn > this.mntp * this.minReturnPercent || this.minReturn <= 0;
-    this.cdRef.markForCheck();
   }
 
   setCoinBalance(percent) {
@@ -230,11 +223,6 @@ export class BuyComponent implements OnInit, OnDestroy {
     this.errors.tokenLimit = !fromTrx && this.trxAddress && value > 0 &&
       (value < this.tokenLimits.min || value > this.tokenLimits.max);
 
-    this.cdRef.markForCheck();
-  }
-
-  setMinReturn(percent: number) {
-    !this.loading && (this.minReturn = +this.substrValue(this.mntp * percent));
     this.cdRef.markForCheck();
   }
 
