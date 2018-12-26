@@ -183,11 +183,9 @@ namespace Fotron.WebApplication {
 			services.AddSingleton<ITronWriter, TronWriter>();
 
             // workers
-#if !DEBUG
 		    services.AddSingleton<IHostedService, TokenPriceObserver>();
             services.AddSingleton<IHostedService, TokenStatisticsHarvester>();
 		    services.AddSingleton<IHostedService, MaxGasPriceUpdater>();
-#endif
 
             services.AddSingleton(new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); }).CreateMapper());
 
