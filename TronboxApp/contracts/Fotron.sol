@@ -543,13 +543,13 @@ contract FotronData {
     address public _tokenContractAddress;
     
     // token price in the begining
-    uint256 constant public TOKEN_PRICE_INITIAL = 1000 sun;
+    uint256 constant public TOKEN_PRICE_INITIAL = 7000 sun;
     // a percent of the token price which adds/subs each _priceSpeedInterval tokens
-    uint256 constant public PRICE_SPEED_PERCENT = 500 sun;
+    uint256 constant public PRICE_SPEED_PERCENT = 5 sun;
     // Token price speed interval. For instance, if PRICE_SPEED_PERCENT = 5 and PRICE_SPEED_INTERVAL = 10000 it means that after 10000 tokens are bought/sold  token price will increase/decrease for 5%.
-    uint256 constant public PRICE_SPEED_INTERVAL = 1000000 sun;
+    uint256 constant public PRICE_SPEED_INTERVAL = 10000 sun;
     // lock-up period in days. Until this period is expeired nobody can close the contract or withdraw users' funds
-    uint64 constant public EXP_PERIOD_DAYS = 0;
+    uint64 constant public EXP_PERIOD_DAYS = 365;
 
     
     mapping(address => bool) private _administrators;
