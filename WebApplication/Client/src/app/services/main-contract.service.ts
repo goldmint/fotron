@@ -46,13 +46,10 @@ export class MainContractService {
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private providerURL = environment.providerURL;
-  private firstLoad: boolean = true;
 
-  public tokensBalance: AllTokensBalance[] = [];
   public isRefAvailable$ = new BehaviorSubject(null);
   public passTokensBalance$ = new BehaviorSubject(null);
 
-  public passTokenBalance$ = new Subject();
   public getSuccessWithdrawRequestLink$ = new Subject();
 
   constructor(
@@ -64,18 +61,13 @@ export class MainContractService {
     this.commonService.initMainContract$.subscribe(init => {
       init && this.setInterval();
     });
-
-    let firstLoad = true;
-    this.passTokenBalance$.subscribe(() => {
-      !firstLoad && this.getAllUserBalances();
-      firstLoad = false;
-    });
   }
 
   private setInterval() {
     interval(500).takeUntil(this.destroy$).subscribe(this.checkTronWeb.bind(this));
     interval(7500).takeUntil(this.destroy$).subscribe(this.checkBalance.bind(this));
     interval(60000).takeUntil(this.destroy$).subscribe(this.updatePromoBonus.bind(this));
+    interval(60000).takeUntil(this.destroy$).subscribe(this.getAllUserBalances.bind(this));
     interval(10000).takeUntil(this.destroy$).subscribe(this.updateWinBIGPromoBonus.bind(this));
     interval(10000).takeUntil(this.destroy$).subscribe(this.updateWinQUICKPromoBonus.bind(this));
   }
@@ -134,9 +126,11 @@ export class MainContractService {
       (async function initContract() {
         self.fotronCoreContractLocal = await self.tronWebBrowser.contract(JSON.parse(self.fotronCoreContractAbi)).at(self.fotronCoreContractAddress);
         self.checkBalance();
+        self.getAllUserBalances();
       })();
     } else {
       this.checkBalance();
+      this.getAllUserBalances();
     }
 
     this._obsTronAddressSubject.next(address);
@@ -148,8 +142,8 @@ export class MainContractService {
 
   private getAllUserBalances() {
     this.lastTronAddress && this.apiService.getTokenList().subscribe((tokenList: any) => {
-      let count = 0;
-      this.tokensBalance = [];
+      let count = 0,
+          tokensBalance: AllTokensBalance[] = [];
 
       tokenList.data.forEach(token => {
         (async function initContract() {
@@ -162,13 +156,13 @@ export class MainContractService {
             fotronContract && (res = await fotronContract.estimateSellOrder(balance * Math.pow(10, 6), true).call());
 
             const estimate = +res[0] / Math.pow(10, 6);
-            self.tokensBalance.push({token: token.ticker, balance, estimate});
+            tokensBalance.push({token: token.ticker, balance, estimate});
             count++;
-            count === tokenList.data.length && self.passTokensBalance$.next(self.tokensBalance);
+            count === tokenList.data.length && self.passTokensBalance$.next(tokensBalance);
           } else {
-            self.tokensBalance.push({token: token.ticker, balance, estimate: 0});
+            tokensBalance.push({token: token.ticker, balance, estimate: 0});
             count++;
-            count === tokenList.data.length && self.passTokensBalance$.next(self.tokensBalance);
+            count === tokenList.data.length && self.passTokensBalance$.next(tokensBalance);
           }
         })();
       });
@@ -223,8 +217,6 @@ export class MainContractService {
       (async function init() {
         try {
           let res = self.convertNumResult2Trx(+await self.fotronCoreContractLocal.getCurrentUserTotalReward().call());
-          self.firstLoad && self.getAllUserBalances();
-          self.firstLoad = false;
           self._obsUserTotalRewardSubject.next(res);
         } catch(e) { }
       })();

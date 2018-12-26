@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@an
 import {CommonService} from "./services/common.service";
 import {MessageBoxService} from "./services/message-box.service";
 import {TronService} from "./services/tron.service";
-import {MainContractService} from "./services/main-contract.service";
 
 @Component({
   selector: 'app-root',
@@ -19,7 +18,6 @@ export class AppComponent implements OnInit {
   constructor(
     private tronService: TronService,
     private commonService: CommonService,
-    private mainContractService: MainContractService,
     private messageBox: MessageBoxService,
     private cdRef: ChangeDetectorRef
   ) {}
@@ -42,7 +40,6 @@ export class AppComponent implements OnInit {
       if (balance !== null && (this.tokenBalance === null || this.tokenBalance !== balance)) {
         this.tokenBalance = balance;
         this.tronService.passTokenBalance.next(balance);
-        this.mainContractService.passTokenBalance$.next(balance);
       }
     });
 
