@@ -9,6 +9,7 @@ import {Subject} from "rxjs/Subject";
 import {Observable} from "rxjs/Observable";
 import {APIService} from "./api.service";
 import {AllTokensBalance} from "../interfaces/all-tokens-balance";
+import {TronService} from "./tron.service";
 
 let self;
 
@@ -20,7 +21,6 @@ export class MainContractService {
   private tronWebBrowser = null;
   private TRX = new BigNumber("1000000");
   private lastTronAddress: string = null;
-  public prevUserTotalReward: number = null;
 
   private fotronCoreContractAddress = environment.fotronCoreContractAddress;
   private fotronCoreContractAbi = environment.fotronCoreContractAbi;
@@ -54,12 +54,21 @@ export class MainContractService {
   public getSuccessWithdrawRequestLink$ = new Subject();
 
   constructor(
+    private tronService: TronService,
     private commonService: CommonService,
     private apiService: APIService
   ) {
     self = this;
     this.commonService.initMainContract$.subscribe(init => {
       init && this.setInterval();
+    });
+
+    let tokenBalance;
+    this.tronService.passTokenBalance.takeUntil(this.destroy$).subscribe(balance => {
+      if (balance !== null && balance !== tokenBalance) {
+        this.getAllUserBalances();
+        tokenBalance = balance
+      }
     });
   }
 
@@ -214,9 +223,6 @@ export class MainContractService {
       (async function init() {
         try {
           let res = self.convertNumResult2Trx(+await self.fotronCoreContractLocal.getCurrentUserTotalReward().call());
-
-          self.prevUserTotalReward !== +res && self.getAllUserBalances();
-          self.prevUserTotalReward = res;
           self._obsUserTotalRewardSubject.next(res);
         } catch(e) { }
       })();
