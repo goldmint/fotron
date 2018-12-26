@@ -436,7 +436,7 @@ export class TronService {
       let res, res2;
       res = await self.tokenContractLocal.approve(fromAddr, amount).send();
       res && (res2 = await self.fotronContractLocal.sell(amount, minReturn).send());
-      res2 && self.getSuccessSellRequestLink$.next(res);
+      res2 && self.getSuccessSellRequestLink$.next(res2);
     })();
   }
 }
