@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs/Subject";
-import * as Web3 from "web3";
 import {BigNumber} from "bignumber.js";
 import {environment} from "../../../../environments/environment";
 import {TranslateService} from "@ngx-translate/core";

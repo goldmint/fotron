@@ -132,23 +132,6 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.cdRef.markForCheck();
     });
 
-    // this.tronService.getObservableNetwork().takeUntil(this.destroy$).subscribe(network => {
-    //   if (network !== null) {
-    //     if (network != this.MMNetwork.index) {
-    //       let networkName = this.MMNetwork.name;
-    //       this.translate.get('MESSAGE.InvalidNetwork', {networkName}).subscribe(phrase => {
-    //         setTimeout(() => {
-    //           this.messageBox.alert(phrase);
-    //         }, 0);
-    //       });
-    //       this.isInvalidNetwork = true;
-    //     } else {
-    //       this.isInvalidNetwork = false;
-    //     }
-    //     this.cdRef.markForCheck();
-    //   }
-    // });
-
     this.commonService.isMobile$.takeUntil(this.destroy$).subscribe(isMobile => this.isMobile = isMobile);
   }
 
@@ -258,13 +241,6 @@ export class BuyComponent implements OnInit, OnDestroy {
       this.detectTronLink('HeadingBuy');
       return;
     }
-
-    // let queryParams = {};
-    // window.location.hash.replace(/^[^?]*\?/, '').split('&').forEach(item => {
-    //   let param = item.split('=');
-    //   queryParams[decodeURIComponent(param[0])] = param.length > 1 ? decodeURIComponent(param[1]) : '';
-    // });
-    // let refAddress = queryParams['ref'] ? queryParams['ref'] : '0x0';
 
     const amount = this.trx * Math.pow(10, 6);
     const minReturn = this.minReturn * Math.pow(10, 6);
