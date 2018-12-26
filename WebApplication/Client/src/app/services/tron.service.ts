@@ -426,15 +426,18 @@ export class TronService {
 
   public buy(fromAddr: string, amount: number, minReturn: number) {
     (async function buy() {
-      let res = await self.fotronContractLocal.buy(fromAddr, minReturn).send({ callValue: amount });
+      const address = window['tronWeb'].address.toHex(fromAddr);
+      let res = await self.fotronContractLocal.buy(address, minReturn).send({ callValue: amount });
       res && self.getSuccessBuyRequestLink$.next(res);
     })();
   }
 
-  public sell(fromAddr: string, amount: number, minReturn: number) {
+  public sell(amount: number, minReturn: number) {
     (async function sell() {
       let res, res2;
-      res = await self.tokenContractLocal.approve(fromAddr, amount).send();
+      const fotronContractAddressHex = window['tronWeb'].address.toHex(self.fotronContractAddress);
+      res = await self.tokenContractLocal.approve(fotronContractAddressHex, amount).send();
+
       res && (res2 = await self.fotronContractLocal.sell(amount, minReturn).send());
       res2 && self.getSuccessSellRequestLink$.next(res2);
     })();

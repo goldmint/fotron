@@ -46,11 +46,13 @@ export class MainContractService {
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private providerURL = environment.providerURL;
+  private firstLoad: boolean = true;
 
   public tokensBalance: AllTokensBalance[] = [];
   public isRefAvailable$ = new BehaviorSubject(null);
   public passTokensBalance$ = new BehaviorSubject(null);
 
+  public passTokenBalance$ = new Subject();
   public getSuccessWithdrawRequestLink$ = new Subject();
 
   constructor(
@@ -63,12 +65,10 @@ export class MainContractService {
       init && this.setInterval();
     });
 
-    let tokenBalance;
-    this.tronService.passTokenBalance.takeUntil(this.destroy$).subscribe(balance => {
-      if (balance !== null && balance !== tokenBalance) {
-        this.getAllUserBalances();
-        tokenBalance = balance
-      }
+    let firstLoad = true;
+    this.passTokenBalance$.subscribe(() => {
+      !firstLoad && this.getAllUserBalances();
+      firstLoad = false;
     });
   }
 
@@ -223,6 +223,8 @@ export class MainContractService {
       (async function init() {
         try {
           let res = self.convertNumResult2Trx(+await self.fotronCoreContractLocal.getCurrentUserTotalReward().call());
+          self.firstLoad && self.getAllUserBalances();
+          self.firstLoad = false;
           self._obsUserTotalRewardSubject.next(res);
         } catch(e) { }
       })();

@@ -242,7 +242,7 @@ export class SellComponent implements OnInit, OnDestroy {
 
     const amount = this.mntp * Math.pow(10, 6);
     const minReturn = this.minReturn * Math.pow(10, 6);
-    this.tronService.sell(this.trxAddress, amount, minReturn);
+    this.tronService.sell(amount, minReturn);
   }
 
   ngOnDestroy() {
