@@ -22,6 +22,7 @@
         <div><b>{{ "PAGES.Trade.Labels.TrxContract" | translate }}</b> {{ +totalData.totalTrx | noexp }} TRX</div>
         <div><b>{{ "PAGES.Trade.Labels.TokensContract" | translate }}</b> {{ +totalData.totalTokens | noexp }} {{ tokenInfo.ticker }}</div>
         <div><b>{{ "PAGES.Trade.Labels.TotalSupply" | translate }}</b> {{ tokenSupply | number }}</div>
+        <div class="overflow-ellipsis"><b>{{ "PAGES.Trade.Labels.TokenAddress" | translate }}</b> <a class="token-address-link" [href]="tronscanContractUrl + tokenInfo?.tokenContractAddress" target="_blank">{{ tokenInfo?.tokenContractAddress }}</a></div>
       </div>
 
       <div class="text-justify">

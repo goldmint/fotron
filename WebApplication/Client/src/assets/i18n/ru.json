@@ -28,6 +28,7 @@
         "TrxContract": "TRX в контракте:",
         "TokensContract": "Продано токенов:",
         "TotalSupply": "Общее количество токенов:",
+        "TokenAddress": "Адрес токена:",
         "Tokens": "Мои токены:",
         "Balances": "Мой баланс:",
         "Bonus": "Мой бонус:",

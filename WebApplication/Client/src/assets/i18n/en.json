@@ -28,6 +28,7 @@
         "TrxContract": "TRX in contract:",
         "TokensContract": "Tokens sold:",
         "TotalSupply": "Total token supply:",
+        "TokenAddress": "Token address:",
         "Tokens": "My tokens:",
         "Balances": "My balance:",
         "Bonus": "My bonus:",
