@@ -29,7 +29,7 @@
         "TokensContract": "Продано токенов:",
         "TotalSupply": "Общее количество токенов:",
         "Tokens": "Мои токены:",
-        "Balances": "Иои балансы:",
+        "Balances": "Мой баланс:",
         "Bonus": "Мой бонус:",
         "RefLink": "Моя реф. ссылка:",
         "Description": "Описание проекта:",
@@ -248,7 +248,7 @@
     },
     "FAQ": {
       "Heading": "FAQ",
-      "Support": "If you didn't find the answer to your question in our FAQ, send us an email",
+      "Support": "Если Вы не нашли ответ на свой вопрос в нашем FAQ, отправьте нам письмо",
       "Answers": {
         "1th": {
           "Heading": "Ваш смарт-контракт открытый?",
