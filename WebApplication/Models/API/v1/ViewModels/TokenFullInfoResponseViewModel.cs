@@ -16,6 +16,8 @@ namespace Fotron.WebApplication.Models.API.v1.ViewModels
 
         public string LogoUrl { get; set; }
 
+        public string SiteUrl { get; set; }
+
         public string Description { get; set; }
 
         public decimal StartPriceEth { get; set; }

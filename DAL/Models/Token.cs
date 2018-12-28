@@ -26,6 +26,9 @@ namespace Fotron.DAL.Models
         [Column("logo_url"), Required, MaxLength(1024)]
         public string LogoUrl { get; set; }
 
+        [Column("site_url"), Required, MaxLength(1024)]
+        public string SiteUrl { get; set; }
+
         [Column("start_price_eth"), Required, MaxLength(1024)]
         public decimal StartPriceEth { get; set; }
 
