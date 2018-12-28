@@ -116,7 +116,8 @@ export class MarketComponent implements OnInit, OnDestroy {
                              + (month.length > 1 ? month : '0' + month) + '-'
                              + (day.length >1 ? day : '0' + day);
 
-            row.chartData.unshift([dateString, row.priceStatistics7D[i]]);
+            let value = row.priceStatistics7D[i] < 1 * Math.pow(10,-6) ? 0 : row.priceStatistics7D[i];
+            row.chartData.unshift([dateString, value]);
             currentDate.setDate(currentDate.getDate()-1);
           };
         });

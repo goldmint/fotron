@@ -20,7 +20,7 @@ export class StatisticChartsComponent implements OnInit, OnDestroy {
       chart: {},
       data: [],
       id: 'priceTrx',
-      fieldName: ['priceTrx'],
+      fieldName: ['priceEth'],
       options: [
         {text: "Token price", iconFill:"#63B7F7", label: 'TRX'}
       ]
@@ -86,7 +86,8 @@ export class StatisticChartsComponent implements OnInit, OnDestroy {
 
         let arr = [dateString];
         fieldName.forEach(field => {
-          arr.push(item[field]);
+          let value = item[field] < 1 * Math.pow(10,-6) ? 0 : item[field];
+          arr.push(value);
         });
         chartDataSource.push(arr);
       });
