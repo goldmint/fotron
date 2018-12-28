@@ -48,7 +48,7 @@ export class MainPromoBonusComponent implements OnInit {
     this.mainContractService.getObservableWinBIGPromoBonus().takeUntil(this.destroy$).subscribe(bonus => {
       if (bonus) {
         this.bigWinPromoBonus = bonus;
-        this.bigBankTimer = new Date().getTime() + (this.bigWinPromoBonus * 15000);
+        this.bigBankTimer = new Date().getTime() + (this.bigWinPromoBonus * 3000);
         this.cdRef.markForCheck();
       }
     });
@@ -56,7 +56,7 @@ export class MainPromoBonusComponent implements OnInit {
     this.mainContractService.getObservableWinQUICKPromoBonus().takeUntil(this.destroy$).subscribe(bonus => {
       if (bonus) {
         this.quickWinPromoBonus = bonus;
-        this.quickBankTimer = new Date().getTime() + (this.quickWinPromoBonus * 15000);
+        this.quickBankTimer = new Date().getTime() + (this.quickWinPromoBonus * 3000);
         this.cdRef.markForCheck();
       }
     });

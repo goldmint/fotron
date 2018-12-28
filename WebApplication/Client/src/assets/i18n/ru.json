@@ -325,7 +325,7 @@
   "MESSAGE": {
     "TronLink": {
       "Heading": "Чтобы продолжить, Вам понадобится TronLink",
-      "Text": "TronLink - это мост, который позволяет вам посещать распределенную сеть будущего в вашем браузере сегодня. Он позволяет запускать Tron dApps прямо в вашем браузере без запуска полного узла Tron. Пожалуйста, установите расширение TronLink в браузере Chrome, Firefox или Opera. Узнать о <a href=\"https://tron.network/wallet\" target=\"_blank\">TronLink</a>"
+      "Text": "TronLink - это мост, который позволяет вам посещать распределенную сеть будущего в вашем браузере сегодня. Он позволяет запускать Tron dApps прямо в вашем браузере без запуска полного узла Tron. Пожалуйста, установите расширение TronLink в браузере Chrome, Firefox или Opera. Узнать о <a href=\"https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec?utm_source=chrome-ntp-icon\" target=\"_blank\">TronLink</a>.<br>After installing TronLink, please, press OK button."
     },
     "LoginToMM": {
       "HeadingBuy": "КУПИТЬ ТОКЕНЫ",

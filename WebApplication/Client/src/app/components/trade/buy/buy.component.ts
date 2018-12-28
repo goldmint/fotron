@@ -147,10 +147,11 @@ export class BuyComponent implements OnInit, OnDestroy {
 
   setCoinBalance(percent) {
     let value = this.substrValue(+this.trxBalance * percent);
+    if (!value) {
+      return
+    }
     this.trx = +value;
     this.checkErrors(true, value);
-
-    !this.errors.trxLimit && this.estimateBuyOrder(this.trx, true, false);
     this.cdRef.markForCheck();
   }
 
@@ -231,7 +232,9 @@ export class BuyComponent implements OnInit, OnDestroy {
       !this.trxAddress && this.userService.loginToTronLink(heading);
     } else {
       this.translate.get('MESSAGE.TronLink').subscribe(phrase => {
-        this.messageBox.alert(phrase.Text, phrase.Heading);
+        this.messageBox.alert(phrase.Text, phrase.Heading).subscribe(ok => {
+          ok && window.location.reload();
+        });
       });
     }
   }

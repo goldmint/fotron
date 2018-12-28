@@ -325,7 +325,7 @@
   "MESSAGE": {
     "TronLink": {
       "Heading": "To continue you'll need to have TronLink",
-      "Text": "TronLink is a bridge that allows you to visit the distributed web of tomorrow in your browser today. It allows you to run Tron dApps right in your browser without running a full Tron node. Please, install the TronLink add-on in Chrome, Firefox or Opera browser. Get <a href=\"https://tron.network/wallet\" target=\"_blank\">TronLink</a>"
+      "Text": "TronLink is a bridge that allows you to visit the distributed web of tomorrow in your browser today. It allows you to run Tron dApps right in your browser without running a full Tron node. Please, install the TronLink add-on in Chrome, Firefox or Opera browser. Get <a href=\"https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec?utm_source=chrome-ntp-icon\" target=\"_blank\">TronLink</a>.<br>After installing TronLink, please, press OK button."
     },
     "LoginToMM": {
       "HeadingBuy": "BUY TOKEN",
