@@ -22,6 +22,8 @@ namespace Fotron.WebApplication.Models.API.v1.ViewModels
 
         public decimal StartPriceEth { get; set; }
 
+        public decimal CurrentPriceEth { get; set; }
+
         public DateTime TimeCreated { get; set; }
     }
 }
