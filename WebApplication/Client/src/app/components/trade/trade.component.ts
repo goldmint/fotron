@@ -11,6 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MainContractService} from "../../services/main-contract.service";
 import {Subscription} from "rxjs/Subscription";
 import {TronService} from "../../services/tron.service";
+import {TokenList} from "../../interfaces/token-list";
 
 @Component({
   selector: 'app-trade',
@@ -39,7 +40,8 @@ export class TradeComponent implements OnInit, OnDestroy {
     tillExpiration: '-'
   };
   public tillExpiration: number = null;
-  public tokenInfo: TokenInfo;
+  public tokenInfoDetails: TokenInfo;
+  public tokenInfo: TokenList;
   public invalidContractAddress: boolean = false;
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
@@ -74,6 +76,7 @@ export class TradeComponent implements OnInit, OnDestroy {
       this.apiService.getTokenList().subscribe((list: any) => {
         list.data.forEach(token => {
           if (token.fotronContractAddress === address) {
+            this.tokenInfo = token;
             addressExist = true;
             tokenId = token.id;
             tokenAddress = token.tokenContractAddress;
@@ -89,7 +92,7 @@ export class TradeComponent implements OnInit, OnDestroy {
           this.commonService.passMarketData$.next(data);
 
           this.apiService.getTokenInfo(tokenId).subscribe((data: any) => {
-            this.tokenInfo = data.data;
+            this.tokenInfoDetails = data.data;
             this.initTradePage();
             this.isDataLoaded = true;
             this.cdRef.markForCheck();
