@@ -122,7 +122,7 @@
         "Price": "Start price",
         "CreateLabel": "Would you like to create a new token or use your existing one?",
         "Create": "Create a new token for me",
-        "Exist": "I'd like use me ERC20 token",
+        "Exist": "I'd like use me TRC10/20 token",
         "Contract": "Token contract address",
         "Supply": "Total supply"
       },
@@ -171,7 +171,7 @@
       "Sections": {
         "1th": {
           "Heading": "What is Fotron?",
-          "Text": "Fotron is a marketplace, which is used by different projects for ERC20 token sales. Our platform shares common principles of tokens distribution, which are anchored on open and audited smart-contract:",
+          "Text": "Fotron is a marketplace, which is used by different projects for TRC10/20 token sales. Our platform shares common principles of tokens distribution, which are anchored on open and audited smart-contract:",
           "List": {
             "1th": "<b>Escrow</b> - holding TRX tokens that were received from selling of other tokens with the possibility of reverse selling until lockup period ends. ",
             "2th": "<b>Referral system</b> - we pay TRX rewards for recruiting new customers.",
