@@ -6,9 +6,12 @@ import 'rxjs/add/operator/catch';
 
 import { MessageBoxService } from '../../services/message-box.service';
 import {TranslateService} from "@ngx-translate/core";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class APIHttpInterceptor implements HttpInterceptor {
+
+  private serviceUrl = environment.apiUrl;
 
   constructor(
     private _messageBox: MessageBoxService,
@@ -19,7 +22,7 @@ export class APIHttpInterceptor implements HttpInterceptor {
 
     return next.handle(req)
       .catch((error, caught) => {
-        this.translate.get('MESSAGE.ServiceUnavailable').subscribe(phrase => {
+        req.url.indexOf(this.serviceUrl) >= 0 && this.translate.get('MESSAGE.ServiceUnavailable').subscribe(phrase => {
           this._messageBox.alert(phrase);
         });
 
